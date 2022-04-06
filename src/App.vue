@@ -1,32 +1,48 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <Navbar />
     </div>
     <router-view/>
   </div>
 </template>
+<script>
+import MainService from './services/MainService';
+export default {
+  components: {
+    Navbar: () => import('@/components/ui/Navbar')
+  },
+  mounted (){
+    const data = {
+      route: `/login`,
+      params: {}
+    }
+     MainService.get(data)
+      .then((response) => {
+        console.log('aqui');
+        const res = response.data
+        if (res.statusCode === 0) {
+          console.log(res);
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+      .then(() => {
+        console.log('ok');
+      })
+  }
+}
+</script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  height: 100vh;
+  background-color: #000;
 }
 
-#nav {
-  padding: 30px;
+.color-royal {
+  color: #817a61;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
