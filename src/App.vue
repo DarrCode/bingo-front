@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <div v-if="$route.name != 'Auth'">
       <Navbar />
     </div>
     <router-view/>

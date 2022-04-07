@@ -63,7 +63,50 @@
 				class="mb-2 card-cartoons"
 			>
 				<b-card-text>
-					Some quick example text to build on the card title and make up the bulk of the card's content.
+					<table class="bingoBoard" cellspacing="10" cellpadding="5">
+						<tr>
+								<th>B</th>
+								<th>I</th>
+								<th>N</th>
+								<th>G</th>
+								<th>O</th>
+						</tr>
+						<tr class="first_line">
+								<td>01</td>
+								<td>02</td>
+								<td>03</td>
+								<td>04</td>
+								<td>05</td>
+						</tr>
+						<tr>
+								<td>06</td>
+								<td>07</td>
+								<td>08</td>
+								<td>09</td>
+								<td>10</td>
+						</tr>
+						<tr>
+								<td>11</td>
+								<td>12</td>
+								<td>15</td>
+								<td>13</td>
+								<td>14</td>
+						</tr>
+						<tr>
+								<td>15</td>
+								<td>16</td>
+								<td>17</td>
+								<td>18</td>
+								<td>19</td>
+						</tr>
+						<tr>
+								<td>20</td>
+								<td>21</td>
+								<td>22</td>
+								<td>23</td>
+								<td>24</td>
+						</tr>
+					</table>
 				</b-card-text>
 
 			</b-card>
@@ -74,7 +117,50 @@
 				class="mb-2 card-cartoons"
 			>
 				<b-card-text>
-					Some quick example text to build on the card title and make up the bulk of the card's content.
+					<table class="bingoBoard" cellspacing="10" cellpadding="5">
+						<tr>
+								<th>B</th>
+								<th>I</th>
+								<th>N</th>
+								<th>G</th>
+								<th>O</th>
+						</tr>
+						<tr class="first_line">
+								<td>01</td>
+								<td>02</td>
+								<td>03</td>
+								<td>04</td>
+								<td>05</td>
+						</tr>
+						<tr>
+								<td>06</td>
+								<td>07</td>
+								<td>08</td>
+								<td>09</td>
+								<td>10</td>
+						</tr>
+						<tr>
+								<td>11</td>
+								<td>12</td>
+								<td>15</td>
+								<td>13</td>
+								<td>14</td>
+						</tr>
+						<tr>
+								<td>15</td>
+								<td>16</td>
+								<td>17</td>
+								<td>18</td>
+								<td>19</td>
+						</tr>
+						<tr>
+								<td>20</td>
+								<td>21</td>
+								<td>22</td>
+								<td>23</td>
+								<td>24</td>
+						</tr>
+					</table>
 				</b-card-text>
 
 			</b-card>
@@ -100,7 +186,7 @@ export default {
   height: 100%;
 }
 .card-cartoons {
-	background-image: url('../assets/bg-cartones.jpg');
+	background-image: url('../assets/images/bg-cartones.jpg');
 	background-size: cover;
 	height: 100%;
 }

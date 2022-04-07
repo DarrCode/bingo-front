@@ -1,0 +1,35 @@
+label {
+	font-size: 20px;
+  color: #949494;
+}
+
+.form-control {
+	background-color: #151515;
+	border-radius: 25px;
+	color: #817a61;
+	border: none;
+	padding: 0.6rem 1rem;
+}
+
+.btn-secondary, .btn-secondary:hover, .btn-secondary:focus {
+	background: none;
+	border: none;
+	box-shadow: none;
+	color: #d82d39;
+	border-top: 1.5px solid #66623f;
+	border-bottom: 1.5px solid #66623f;
+}
+
+.btn-auth {
+	border-radius: 0;
+	letter-spacing: 2px;
+	color: #c62f3a;
+	font-size: 20px;
+	font-weight: 600;
+	border-top: 1.5px solid #66623f;
+	border-bottom: 1.5px solid #66623f;
+	-moz-border-image: -moz-linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
+  -webkit-border-image: -webkit-linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
+  border-image: linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
+  border-image-slice: 1;
+}

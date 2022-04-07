@@ -1,7 +1,7 @@
 <template>
   <div>
 		<!--b-card class="mb-5 jugar">
-		 <img src="../../assets/jugar.jpg" alt="Snow" style="width:100%;">
+		 <img src="../../assets/images/jugar.jpg" alt="Snow" style="width:100%;">
 		 <b-card-text>
 				<div class="bottom-left">Bottom Left</div>
 				<div class="top-right">
@@ -46,19 +46,19 @@
 					</b-col>
 				</b-row>
 
-						<b-button block class="btn-jugar w-100">
-							JUGAR
-						</b-button>
+				<b-button block class="btn-jugar w-100">
+					JUGAR
+				</b-button>
 				
 			</b-card-text>
 		</b-card>
 		<b-button block>
 			<span class="text-button_jugada color-royal">Cartones y Jugadas</span>
-			<img src="../../assets/jugadas.jpg" width="300" alt="">
+			<img src="../../assets/images/jugadas.jpg" width="300" alt="">
 		</b-button>
 		<b-button block>
 			<span class="text-button_jugada color-royal">Perfil y Seguridad</span>
-			<img src="../../assets/perfil.jpg" width="300" alt="">
+			<img src="../../assets/images/perfil.jpg" width="300" alt="">
 		</b-button>
   </div>    
 </template>
