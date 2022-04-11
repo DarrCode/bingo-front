@@ -1,5 +1,11 @@
 <template>
-  <b-form  @submit="onSubmit" @reset="onReset" v-if="show">
+  <b-form  @submit.prevent="submitHandler">
+		<div
+      class="alert alert-danger"
+      v-if="form.error"
+    >
+      {{ form.error }}
+    </div>
 		<label class="mb-1">Correo electrónico:</label>		
 		<b-form-input
 				v-model="form.email"
@@ -17,29 +23,75 @@
 				required
 			></b-form-input>
 			<div class="form-text text-end">
-				<a class="forgot" to="">¿Olvidaste tu contraseña?</a>
+				<a class="forgot" @click="changeToForgot">¿Olvidaste tu contraseña?</a>
 			</div>
   	</div>
 		<div class="text-center">
-			<b-button type="submit" class="btn-auth">BINGO</b-button>
+			<b-button 
+				type="submit" 
+				class="btn-auth"
+				:disabled="form.button.disabled"
+        v-html="form.button.innerText"
+				>
+				BINGO
+			</b-button>
 		</div>
   </b-form>
 </template>
 <script>
+import MainService from '@/services/MainService';
+
 export default {
 	  data() {
       return {
         form: {
           email: '',
           password: '',
+					error: null,
+					button: {
+						disabled: false,
+						innerText: 'Iniciar sesión',
+						original: 'Iniciar sesión',
+						onEvent: 'Iniciando sesión'
+					}
         },
-        show: true
+        forgotPass: true
       }
     },
     methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
+			changeToForgot() {
+				this.$emit("changeToForgot", this.forgotPass);
+			},
+      submitHandler() {
+        this.form.button.disabled = true
+				this.form.button.innerText = this.form.button.onEvent
+				this.form.error = null
+
+        const data = {
+					route: '/login',
+					params: {
+						email: this.form.email,
+          	password: this.form.password,
+					}
+				}
+     		MainService.post(data)
+      		.then((response) => {
+        		console.log('aqui');
+						const res = response.data
+						
+
+							console.log('res', res);
+							this.$session.set('access_token', res.accessToken)
+							this.$session.set('token_type', res.tokenType)
+							this.$session.set('expires_at', res.expiresAt)
+						
+					})
+					.catch((e) => {
+						console.log(e)
+					})
+					.then(() => {
+						console.log('ok');
+					})
       },
     }
 }

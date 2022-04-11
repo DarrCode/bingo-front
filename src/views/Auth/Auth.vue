@@ -6,14 +6,18 @@
           <b-card-text>
             <h1 class="text-center mb-4 title-auth">BINGO ROYALTY</h1>
             
-            <FormLogin v-if="loginActive"/>
-            <FormRegister v-if="!loginActive"/>
+            <FormLogin @changeToForgot="changeToForgot" v-if="auth == 1"/>
+            <FormRegister v-else-if="auth == 2"/>
+            <FormForgotPass v-else-if="auth == 3"/>
 
-            <div v-if="loginActive" class="text-center mt-3 text-register">
-              <a @click="changeAuth()">¿No tienes una cuenta? Regístrate</a>
+            <div v-if="auth == 1" class="text-center mt-3 text-register">
+              <a @click="changeToRegister()">¿No tienes una cuenta? Regístrate</a>
             </div>
-            <div v-if="!loginActive" class="text-center mt-3 text-register">
-              <a @click="changeAuth()">Ya tienes una cuenta? Inicia sesion</a>
+            <div v-if="auth == 2" class="text-center mt-3 text-register">
+              <a @click="changeToLogin()">¿Ya tienes una cuenta? Inicia sesion</a>
+            </div>
+            <div v-if="auth == 3" class="text-center mt-3 text-register">
+              <a @click="changeToLogin()">Inicia sesion</a>
             </div>
 					</b-card-text>
 				</b-card>
@@ -25,20 +29,29 @@
 <script>
   export default {
     components: {
-      FormLogin: () => import('@/components/forms/auth/FormLogin'),
-      FormRegister: () => import('@/components/forms/auth/FormRegister')
+      FormLogin: ()      => import('@/components/forms/auth/FormLogin'),
+      FormRegister: ()   => import('@/components/forms/auth/FormRegister'),
+      FormForgotPass: () => import('@/components/forms/auth/FormForgotPass'),
     },
     data () {
       return {
-        loginActive: true
+        auth: 1
       }
     },
     mounted() {
-      this.loginActive = true
+      this.auth = 1
     },
     methods: {
-      changeAuth() {
-        this.loginActive = !this.loginActive
+      changeToLogin() {
+        this.auth = 1
+      },
+      changeToRegister() {
+        this.auth = 2
+      },
+      changeToForgot(info) {
+        if (info) {
+          this.auth = 3
+        }
       }
     }  
   }
