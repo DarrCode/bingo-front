@@ -74,13 +74,14 @@ export default {
           	password: this.form.password,
 					}
 				}
+				window.location.href = '/home'
      		MainService.post(data)
       		.then((response) => {
 						const res = response.data
-						this.$session.set('access_token', res.accessToken)
-						this.$session.set('token_type', res.tokenType)
-						this.$session.set('expires_at', res.expiresAt)
-						window.location.href = '/home'
+						// this.$session.set('access_token', res.accessToken)
+						// this.$session.set('token_type', res.tokenType)
+						// this.$session.set('expires_at', res.expiresAt)
+						
 					})
 					.catch((e) => {
 						console.log(e)
