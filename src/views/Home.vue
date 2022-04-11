@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Navbar />
   <div class="home">
     <b-container class="bv-example-row">
       <b-row>
@@ -11,12 +13,14 @@
       </b-row>
     </b-container>
   </div>
+</div>
 </template>
 
 <script>
 export default {
   name: 'Home',
   components: {
+    Navbar: () => import('@/components/ui/Navbar'),
     SideHome: () => import('@/components/ui/SidebarHome'),
     Cardboards: () => import('@/components/cardboardsHome')
   }

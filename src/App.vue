@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-    <div v-if="$route.name != 'Auth'">
-      <Navbar />
-    </div>
+
     <router-view/>
   </div>
 </template>
 <script>
 export default {
-  components: {
-    Navbar: () => import('@/components/ui/Navbar')
-  }
+  
 }
 </script>
 
