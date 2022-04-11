@@ -4,7 +4,7 @@
       <b-col cols="6">
         <b-card class="card-auth mt-5" >
           <b-card-text>
-            <h1 class="text-center mb-4 title-auth">BINGO ROYALTY</h1>
+            <h1 class="text-center mb-4 title-auth">BINGO - ROYALTY</h1>
             
             <FormLogin @changeToForgot="changeToForgot" v-if="auth == 1"/>
             <FormRegister v-else-if="auth == 2"/>
