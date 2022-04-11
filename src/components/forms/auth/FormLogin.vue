@@ -87,7 +87,7 @@ export default {
 					})
 					.then(() => {
 						console.log('ok');
-						window.location.href = '/'
+						window.location.href = '/home'
 					})
       },
     }
