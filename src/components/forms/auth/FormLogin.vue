@@ -80,14 +80,10 @@ export default {
 						this.$session.set('access_token', res.accessToken)
 						this.$session.set('token_type', res.tokenType)
 						this.$session.set('expires_at', res.expiresAt)
-						
+						window.location.href = '/home'
 					})
 					.catch((e) => {
 						console.log(e)
-					})
-					.then(() => {
-						console.log('ok');
-						window.location.href = '/home'
 					})
       },
     }
