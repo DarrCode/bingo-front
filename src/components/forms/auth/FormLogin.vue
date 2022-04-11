@@ -74,7 +74,7 @@ export default {
           	password: this.form.password,
 					}
 				}
-				window.location.href = '/home'
+				window.location.href = '/'
      		MainService.post(data)
       		.then((response) => {
 						const res = response.data

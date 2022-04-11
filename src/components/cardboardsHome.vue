@@ -55,7 +55,6 @@
 				</b-card-text>
 
 			</b-card>
-			asasas
     </slide>
     <slide>
        <b-card
