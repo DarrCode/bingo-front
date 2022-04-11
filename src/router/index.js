@@ -20,7 +20,7 @@ const routes = [
     name: 'Auth',
     component: () => import('../views/Auth/Auth.vue')
   },
-  { path: "**", component: Home }
+  { path: "*", component: () => import('../views/Auth/Auth.vue') }
 ]
 
 const router = new VueRouter({

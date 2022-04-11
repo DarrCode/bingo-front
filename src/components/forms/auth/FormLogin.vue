@@ -76,14 +76,10 @@ export default {
 				}
      		MainService.post(data)
       		.then((response) => {
-        		console.log('aqui');
 						const res = response.data
-						
-
-							console.log('res', res);
-							this.$session.set('access_token', res.accessToken)
-							this.$session.set('token_type', res.tokenType)
-							this.$session.set('expires_at', res.expiresAt)
+						this.$session.set('access_token', res.accessToken)
+						this.$session.set('token_type', res.tokenType)
+						this.$session.set('expires_at', res.expiresAt)
 						
 					})
 					.catch((e) => {
@@ -91,6 +87,7 @@ export default {
 					})
 					.then(() => {
 						console.log('ok');
+						window.location.href = '/'
 					})
       },
     }

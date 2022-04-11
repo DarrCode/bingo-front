@@ -186,9 +186,12 @@ export default {
   height: 100%;
 }
 .card-cartoons {
-	background-image: url('../assets/images/bg-cartones.jpg');
-	background-size: cover;
-	height: 100%;
+	/*background-image: url('../assets/images/bg-cartones.jpg');
+	background-size: cover;*/
+	background-color: #000;
+	border: 4px solid #66623f;
+	border-radius: 5px;
+	margin: 3px;
 }
 
 .bingoBoard {
