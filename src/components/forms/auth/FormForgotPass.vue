@@ -1,5 +1,5 @@
 <template>
-  <b-form  @submit="onSubmit" >
+  <b-form @submit="onSubmit" >
 	 <div class="mb-3">
 			<label class="form-label">Correo electrónico:</label>
 			<b-form-input

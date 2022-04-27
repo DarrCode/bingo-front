@@ -6,20 +6,38 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: () => import('../views/Home.vue')
+    redirect: '/login',
+    component: () => import('../views/Auth/Login.vue'),
+    meta: { requiresAuth: false }
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue')
+    path: '/',
+    redirect: '/home',
+    component: () => import('../views/Home.vue'),
+    meta: { requiresAuth: true }
   },
   {
-    path: '/auth',
-    name: 'Auth',
-    component: () => import('../views/Auth/Auth.vue')
+    path: '/home',
+    name: 'home',
+    component: () => import('../views/Home.vue'),
+    meta: { requiresAuth: true }
   },
-  { path: "*", component: () => import('../views/Auth/Auth.vue') }
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/Auth/Login.vue')  
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('../views/Auth/Register.vue')  
+  },
+  {
+    path: '/forgot-password',
+    name: 'ForgotPass',
+    component: () => import('../views/Auth/ForgotPass.vue')  
+  },
+  { path: "*", component: () => import('../views/404.vue') }
 ]
 
 const router = new VueRouter({

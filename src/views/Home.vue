@@ -23,7 +23,7 @@ export default {
     Navbar: () => import('@/components/ui/Navbar'),
     SideHome: () => import('@/components/ui/SidebarHome'),
     Cardboards: () => import('@/components/cardboardsHome')
-  }
+  },
 }
 </script>
 

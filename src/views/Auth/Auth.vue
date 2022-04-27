@@ -9,13 +9,7 @@
             <FormLogin @changeToForgot="changeToForgot" v-if="auth == 1"/>
             <FormRegister v-else-if="auth == 2"/>
             <FormForgotPass v-else-if="auth == 3"/>
-
-            <div v-if="auth == 1" class="text-center mt-3 text-register">
-              <a @click="changeToRegister()">¿No tienes una cuenta? Regístrate</a>
-            </div>
-            <div v-if="auth == 2" class="text-center mt-3 text-register">
-              <a @click="changeToLogin()">¿Ya tienes una cuenta? Inicia sesion</a>
-            </div>
+            
             <div v-if="auth == 3" class="text-center mt-3 text-register">
               <a @click="changeToLogin()">Inicia sesion</a>
             </div>

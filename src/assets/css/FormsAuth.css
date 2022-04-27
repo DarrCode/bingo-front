@@ -1,3 +1,29 @@
+.card-auth{
+  background-color: transparent;
+  border: 2px solid #66623f;
+  border-radius: 0px;
+  padding: 15px;
+}
+.title-auth {
+  color: #c62f3a;
+  border-top: 1.5px solid #66623f;
+	border-bottom: 1.5px solid #66623f;
+  -moz-border-image: -moz-linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
+  -webkit-border-image: -webkit-linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
+  border-image: linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
+  border-image-slice: 1;
+	letter-spacing: 4px;
+}
+
+.text-register {
+  cursor: pointer;
+  color: #949494;
+}
+
+.text-register:hover {
+  text-decoration: underline;
+}
+
 label {
 	font-size: 20px;
   color: #949494;
