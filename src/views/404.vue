@@ -12,7 +12,9 @@
       <h1>Error!</h1>
       <h2>Esta pagina no existe</h2>
 
-      <p><a href="/login">Login</a></p>
+      <p>
+        <router-link to="/home">Jugar</router-link>
+      </p>
     </div>
 
     <svg aria-labelledby="Starry sky" alt="Starry sky" class="starry-sky">

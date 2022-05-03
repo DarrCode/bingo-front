@@ -38,8 +38,7 @@ export default new Vuex.Store({
       MainService.get(data)
         .then((response) => {
           const res = response.data
-
-          commit('SET_USER', res)
+          commit('SET_USER', res.user)
           commit("SET_AUTHENTICATED", true);
         })
         .catch((err) => {

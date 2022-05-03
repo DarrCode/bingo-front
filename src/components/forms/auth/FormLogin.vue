@@ -8,12 +8,6 @@
     </div>
 
 		<b-form @submit.prevent="submitHandler">
-			<div
-				class="alert alert-danger"
-				v-if="form.error"
-			>
-				{{ form.error }}
-			</div>
 			<label class="mb-1">Correo electrónico:</label>		
 			<b-form-input
 					v-model="form.email"
@@ -83,8 +77,8 @@ export default {
 			
      		MainService.post(data)
       		.then((response) => {
-
 						const res = response.data
+						
 						if (res.statusCode === 1) {
 							this.form.error = res.message
 							this.form.button.disabled = false
@@ -94,8 +88,6 @@ export default {
 							this.form.button.disabled = false
 							this.form.button.innerText = this.form.button.original
 						} else if (res.statusCode === 0) {
-							console.log(res.accessToken);
-							//axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.accessToken;
 							this.$session.start()
               this.$session.set('access_token', res.accessToken)
 							this.$session.set('token_type', res.tokenType)

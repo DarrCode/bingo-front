@@ -56,7 +56,7 @@
 			<span class="text-button_jugada color-royal">Cartones y Jugadas</span>
 			<img src="../../assets/images/jugadas.jpg" width="300" alt="">
 		</b-button>
-		<b-button block>
+		<b-button to="/perfil" block>
 			<span class="text-button_jugada color-royal">Perfil y Seguridad</span>
 			<img src="../../assets/images/perfil.jpg" width="300" alt="">
 		</b-button>
