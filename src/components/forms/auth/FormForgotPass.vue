@@ -1,5 +1,5 @@
 <template>
-  <b-form @submit="onSubmit" >
+  <b-form @submit.prevent="sendEmail" >
 	 <div class="mb-3">
 			<label class="form-label">Correo electrónico:</label>
 			<b-form-input
@@ -10,7 +10,7 @@
 			></b-form-input>
   	</div>
 		<div class="text-center">
-			<b-button type="submit" class="btn-auth">BINGO</b-button>
+			<b-button type="submit" class="btn-bingo">BINGO</b-button>
 		</div>
   </b-form>
 </template>
@@ -20,18 +20,30 @@ export default {
       return {
         form: {
           email: '',
+          error: false
         },
       }
     },
     methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
+      sendEmail() {
+        const data = {
+					route: '/reset-password',
+					params: {
+						email: this.form.email,
+					}
+				}
+			
+     		MainService.post(data)
+      		.then((response) => {
+            console.log(response.data)
+        }, error => {
+            console.error(error)
+        })
       },
     }
 }
 </script>
 
 <style>
-@import url('../../../assets/css/FormsAuth.css');
+	@import url('../../../assets/css/Forms.css');
 </style>

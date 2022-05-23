@@ -21,7 +21,7 @@
 <script>
   export default {
     components: {
-      FormForgotPass: () => import('@/components/forms/auth/FormForgotPass'),
-    },
+      FormForgotPass: () => import('@/components/forms/auth/FormForgotPass')
+    }
   }
 </script>

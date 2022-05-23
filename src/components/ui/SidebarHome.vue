@@ -46,13 +46,13 @@
 					</b-col>
 				</b-row>
 
-				<b-button block class="btn-jugar w-100">
+				<b-button to="/jugada" block class="btn-jugar w-100">
 					JUGAR
 				</b-button>
 				
 			</b-card-text>
 		</b-card>
-		<b-button block>
+		<b-button to="/cartones-jugadas" block>
 			<span class="text-button_jugada color-royal">Cartones y Jugadas</span>
 			<img src="../../assets/images/jugadas.jpg" width="300" alt="">
 		</b-button>

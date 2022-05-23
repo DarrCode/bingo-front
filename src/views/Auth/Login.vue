@@ -21,5 +21,8 @@
     components: {
       FormLogin: () => import('@/components/forms/auth/FormLogin'),
     },
+    mounted () {
+      this.$session.destroy()
+    }
   }
 </script>

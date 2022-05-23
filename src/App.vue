@@ -1,7 +1,7 @@
 <template>
   <div id="app">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
     <Navbar v-if="$session.exists()" />
-    
     <router-view/>
   </div>
 </template>
@@ -55,5 +55,15 @@ body, #app {
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(106, 102, 67, .5);
   opacity: 1;
+}
+.card-bingo {
+  border-radius: 0.5em;
+  border: 2px solid var(--gold);
+  background-color: rgb(8, 8, 8);
+  font-size: 20px;
+  color: #949494;
+}
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 </style>
