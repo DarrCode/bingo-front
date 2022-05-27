@@ -41,7 +41,7 @@
             class="btn-bingo"
             :disabled="form.button.disabled"
             v-html="form.button.innerText"
-            >
+          >
             Enviar
           </b-button>
         </div>

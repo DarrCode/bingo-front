@@ -18,9 +18,10 @@
     <div class="card account_active mt-3" v-if="account==null">
       {{ account.name }} - {{ account.type_account }}
     </div>
-    <small v-else>
-      No tienes una cuenta activa dirigite a tu <router-link to="perfil">perfil</router-link> y activala
-    </small>
+    <p class="text-danger text-center" v-else>
+      <small>No tienes una cuenta activa dirigite a tu <router-link to="perfil">perfil</router-link> y activala</small>
+    </p>
+    
     <b-form @submit.prevent="sendRequestPayment">
 
       <input type="hidden" v-model="account.type_account">

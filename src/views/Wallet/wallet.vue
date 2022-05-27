@@ -1,11 +1,14 @@
 <template>
   <b-container>
     <b-row class="mt-5">
-      <b-col cols="12" md="4">
+      <b-col cols="12" md="3">
         <StateWallet class="mb-4" :updateBalance="updateBalance"/>
         <TransferBalance class="mb-4" @refreshBalance="refreshBalance" />
       </b-col>
-      <b-col cols="12" md="5">
+       <b-col cols="12" md="5">
+        <RechargeWallet />
+      </b-col>
+      <b-col cols="12" md="4">
         <PaymentRequest />
       </b-col>
     </b-row>
@@ -19,7 +22,7 @@ export default {
     StateWallet:     () => import('@/components/wallet/stateWallet'),
     RechargeWallet:  () => import('@/components/wallet/rechargeWallet'),
     TransferBalance: () => import('@/components/wallet/transferBalance'),
-    PaymentRequest: () => import('@/components/wallet/paymentRequest'),
+    PaymentRequest:  () => import('@/components/wallet/paymentRequest'),
   },
   data () {
     return {

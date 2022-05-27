@@ -4,7 +4,12 @@
       <b-row >
         <b-col cols="12" lg="5" > 
           <div class="card card-profile text-center mb-3">
-            <img src="https://picsum.photos/200/300" class="card-img-profile" alt="asas">
+            <img 
+              class="img-profile"
+              :src="imageProfile ? `${url}${imageProfile}` : `${url}/storage/uploads/bnb.png`" 
+              :alt="imageProfile"
+             >
+            
             <div class="card-body" v-if="$store.state.user">
                 <h5 class="card-title" >{{ $store.state.user.name }}</h5>
                 <p class="card-text" v-if="$store.state.user.vip">
@@ -29,18 +34,45 @@
   </div>
 </template>
 <script>
+import MainService from '@/services/MainService';
+
 export default {
   components: {
     ProfileIndex: () => import('@/components/profile/Index'),
     ProfileEdit:  () => import('@/components/profile/Edit'),
     Accounts:  () => import('@/components/profile/accounts/Accounts'),
   },
+  data () {
+    return {
+      imageProfile: null,
+      url: process.env.VUE_APP_API_BASE
+    }
+  },
   mounted() {
     this.$store.dispatch("getUser")
+    this.getImageProfile()
   },
   methods: {
     editProfile() {
       this.$refs['edit-profile'].getData()
+    },
+    getImageProfile() {
+      const data = {
+        route: 'user/profile',
+      }
+
+      MainService.get(data)
+        .then((response) => {
+          const res = response.data
+          if (res.statusCode == 0) {
+          
+            this.imageProfile = res.profile[0].profile_image
+              console.log(`${this.url}${this.imageProfile}`);
+          }
+        })
+        .catch((err) => {
+          console.log('error', err)
+        })
     }
   }
 }
@@ -54,6 +86,12 @@ export default {
   background-color: rgb(8, 8, 8);
 	font-size: 20px;
   color: #949494;
+}
+
+.card-profile .img-profile {
+  height: 110px;
+  width: 110px;
+  border-radius: 50%;
 }
 
 .card-profile .card-text span:first-child {
