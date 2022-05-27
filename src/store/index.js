@@ -38,11 +38,13 @@ export default new Vuex.Store({
       MainService.get(data)
         .then((response) => {
           const res = response.data
+            
           commit('SET_USER', res.user)
           commit("SET_AUTHENTICATED", true);
         })
         .catch((err) => {
           console.log('error', err);
+          window.location.reload()
           commit("SET_USER", {});
           commit("SET_AUTHENTICATED", false);
         })

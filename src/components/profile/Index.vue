@@ -1,6 +1,6 @@
 <template>
   <div class="card card-profile" >
-    <ul class="list-group list-group-flush">
+    <ul class="list-group list-group-flush" v-if="$store.state.user">
       <li class="list-group-item">
         <span class="ms-0 ms-sm-3">
           <b>Nombre completo.</b>
@@ -11,7 +11,7 @@
         <span class="ms-0 ms-sm-3">
         <b>Correo electronico.</b>
         </span>
-        <span class="float-end">{{ user.email }}</span>
+        <span class="float-end">{{ $store.state.user.email }}</span>
       </li>
       <li class="list-group-item">
         <span class="ms-0 ms-sm-3">
@@ -30,7 +30,7 @@
           <b>Fecha de registro.</b>
         </span>
         <span class="float-end">
-          {{ user.created_at | moment("DD/MM/YYYY") }} - {{ user.created_at | moment("HH:mm:ss a") }}
+          {{ $store.state.user.created_at | moment("DD/MM/YYYY") }} - {{ $store.state.user.created_at | moment("HH:mm:ss a") }}
         </span>
       </li>
     </ul>
@@ -42,16 +42,12 @@ import MainService from '@/services/MainService';
 export default {
   data() {
     return {
-      user: {},
       profile: {}
     }
   },
   mounted() {
     this.$store.dispatch("getUser");
-    setTimeout(() => {
-      this.user = this.$store.state.user
-      this.getProfile()
-    }, 500);
+    this.getProfile()
   },
   methods: {
     getProfile() {

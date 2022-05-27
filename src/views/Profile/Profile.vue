@@ -3,11 +3,11 @@
     <b-container class="py-5">
       <b-row >
         <b-col cols="12" lg="5" > 
-           <div class="card card-profile text-center">
-              <img src="https://picsum.photos/200/300" class="card-img-profile" alt="asas">
-              <div class="card-body">
-                <h5 class="card-title" >{{ user.name }}</h5>
-                <p class="card-text" v-if="user.vip">
+          <div class="card card-profile text-center mb-3">
+            <img src="https://picsum.photos/200/300" class="card-img-profile" alt="asas">
+            <div class="card-body" v-if="$store.state.user">
+                <h5 class="card-title" >{{ $store.state.user.name }}</h5>
+                <p class="card-text" v-if="$store.state.user.vip">
                   <img src="../../assets/images/card-vip.png" width="60" height="60" alt="usuario vip">
                 </p>
                 <p class="card-text" v-else>
@@ -15,20 +15,13 @@
                 </p>   
                 <a href="#" class="btn btn-vip me-0 me-sm-5 mb-3 mb-sm-0">usuario VIP</a>
                 <a @click="editProfile" class="btn btn-profile">Editar perfil</a> 
-                
-              </div>
             </div>
-          </b-col>
-          <b-col cols="12" lg="7">
-            <ProfileIndex />
-          </b-col>
-      </b-row>
-      <b-row class="my-3" >
-        <b-col cols="12" lg="5" > 
-           <Accounts />
+          </div>
+          <Accounts />
         </b-col>
         <b-col cols="12" lg="7">
-          Estadisticas del jugador
+          <ProfileIndex class="mb-3"/>
+           Cartones
         </b-col>
       </b-row>
     </b-container>
@@ -42,16 +35,8 @@ export default {
     ProfileEdit:  () => import('@/components/profile/Edit'),
     Accounts:  () => import('@/components/profile/accounts/Accounts'),
   },
-  data() {
-    return {
-      user: {},
-    }
-  },
   mounted() {
-    this.$store.dispatch("getUser");
-    setTimeout(() => {
-      this.user = this.$store.state.user;
-    }, 500);
+    this.$store.dispatch("getUser")
   },
   methods: {
     editProfile() {

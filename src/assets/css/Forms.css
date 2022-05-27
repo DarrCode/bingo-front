@@ -47,7 +47,7 @@ label {
 	border-bottom: 1.5px solid #66623f;
 }
 
-.btn-auth {
+.btn-bingo {
 	border-radius: 0;
 	letter-spacing: 2px;
 	color: #c62f3a;
@@ -55,8 +55,4 @@ label {
 	font-weight: 600;
 	border-top: 1.5px solid #66623f;
 	border-bottom: 1.5px solid #66623f;
-	-moz-border-image: -moz-linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
-  -webkit-border-image: -webkit-linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
-  border-image: linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
-  border-image-slice: 1;
 }

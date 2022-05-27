@@ -41,7 +41,7 @@
 		<div class="text-center">
 			<b-button 
 				type="submit" 
-				class="btn-auth"
+				class="btn-bingo"
 				:disabled="form.button.disabled"
 				v-html="form.button.innerText"
 			>
@@ -106,5 +106,5 @@ export default {
 </script>
 
 <style>
-	@import url('../../../assets/css/FormsAuth.css');
+	@import url('../../../assets/css/Forms.css');
 </style>

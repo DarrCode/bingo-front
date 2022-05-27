@@ -7,13 +7,16 @@
     size="lg"
     class="p-0"
   >
+    <template #modal-title>
+      Edita tus datos personales
+    </template>
     <b-container>
       <b-row>
-        <form>
+        <form @submit.prevent="formSubmit" enctype="multipart/form-data">
           <div class="row g-3 mb-2 justify-content-center">
             <div class="col-12 col-sm-4">
-              <div id="user-profile-img" class="shadow-sm">
-                <img :src="profile.profile_image ? user.profile_image : 'https://picsum.photos/200/300'" :alt="profile.name">
+              <div id="user-profile-img" class="shadow-sm" v-if="imagePreview">
+                <img :src="imagePreview ? imagePreview : 'https://picsum.photos/200/300'" :alt="profile.name">
               </div>
             </div>
             <div class="col-12 col-sm-8">
@@ -23,44 +26,48 @@
                 class="form-control"
                 id="customFile"
                 ref="file"
-                @change="onChange()"
-              >
+                v-on:change="onChange">
+              
             </div>
           </div>
           <div class="row g-3 mb-2 align-items-center">
             <div class="col-12 col-sm-6">
               <label>Nombre.</label>
-              <input type="text" class="form-control" :value="profile.name">
+              <input type="text" class="form-control" v-model="profile.name">
             </div>
             <div class="col-12 col-sm-6">
               <label>Apellido.</label>
-              <input type="text" class="form-control" :value="profile.last_name">
+              <input type="text" class="form-control"  v-model="profile.last_name">
             </div>
           </div>
           <div class="row g-3 align-items-center">
             <div class="col-12 col-sm-6">
               <label>Apodo.</label>
-              <input type="text" class="form-control" :value="profile.nick_name">
+              <input type="text" class="form-control"  v-model="profile.nick_name">
             </div>
             <div class="col-12 col-sm-6">
               <label>Pais.</label>
-              <input type="text" class="form-control" :value="profile.country">
+              <input type="text" class="form-control"  v-model="profile.country">
             </div>
           </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+          <div class="text-center">
+            <button type="submit" class=" mt-3 text-center btn btn-vip">Registrar datos</button>
+          </div>
+        </form>
       </b-row>
     </b-container>
   </b-modal>
 </template>
 <script>
-import MainService from '@/services/MainService';
+import axios from 'axios'
+import MainService from '@/services/MainService'
 
 export default {
   data () {
     return {
       profile: {},
-      file: '',
+      profile_image: '',
+      imagePreview: ''
     }
   },
   methods: {
@@ -76,7 +83,7 @@ export default {
           const res = response.data
           if (res.statusCode == 0) {
             this.profile = res.profile[0]
-            console.log(this.profile)
+            this.imagePreview = this.profile.profile_image
           }
         })
         .catch((err) => {
@@ -84,37 +91,38 @@ export default {
         })
     },
     onChange(e) {
-      this.file = e.target.files[0];
-    },
-    formSubmit(e) {
-      e.preventDefault();
+      this.profile_image = e.target.files[0]
 
+      let reader = new FileReader()
+      reader.readAsDataURL(this.profile_image)
+      reader.onload = e => {
+        this.imagePreview = e.target.result
+      }
+    },
+    formSubmit() {
       const axiosRequest = axios.create({
-          baseURL: `${process.env.VUE_APP_API_URL}/`,
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          responseType: 'arraybuffer'
+        baseURL: `${process.env.VUE_APP_API_URL}/`,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
       })
 
       axiosRequest.defaults.headers.common.Authorization = `${this.$session.get('token_type')} ${this.$session.get('access_token')}`
 
-
-      let formData = new FormData();
-      formData.append('file', this.file);
-
-      const params = {
-        data: formData
-      }
-
-      axiosRequest.post('/user/profile/edit', {params})
+      let data = new FormData()
+      data.append("name", this.profile.name)
+      data.append("last_name", this.profile.last_name)
+      data.append("nick_name", this.profile.nick_name)
+      data.append("country", this.profile.country)
+      data.append("profile_image", this.profile_image)
+      console.log(this.profile_image);
+      axiosRequest.post('/user/profile/store', data)
         .then(function (res) {
-          this.success = res.data.success;
+          console.log('res', res.data);
         })
         .catch(function (err) {
-          console.log(err);
-          this.output = err;
-        });
+          console.log('err', err)
+        })
     }
   }
 }
