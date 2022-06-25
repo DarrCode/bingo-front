@@ -37,8 +37,6 @@
   </div>
 </template>
 <script>
-import MainService from '@/services/MainService';
-
 export default {
   data() {
     return {
@@ -46,26 +44,10 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getUser");
-    this.getProfile()
+    this.$store.dispatch("getUser")
+    setTimeout(() => {
+      this.profile = this.$store.state.user.profile
+    }, 500);
   },
-  methods: {
-    getProfile() {
-      const data = {
-        route: 'user/profile',
-      }
-
-      MainService.get(data)
-        .then((response) => {
-          const res = response.data
-          if (res.statusCode == 0) {
-            this.profile = res.profile[0]
-          }
-        })
-        .catch((err) => {
-          console.log('error', err)
-        })
-    }
-  }
 }
 </script>

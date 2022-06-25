@@ -15,7 +15,7 @@
       <small>Solicitud enviada correctamente!</small>
     </div>
    
-    <div class="card account_active mt-3" v-if="account==null">
+    <div class="card account_active mt-3" v-if="account">
       {{ account.name }} - {{ account.type_account }}
     </div>
     <p class="text-danger text-center" v-else>
@@ -76,22 +76,22 @@ export default {
           console.log('error', err)
         })
     },
-    // sendRequestPayment () {
-    //   const data = {
-    //     route: 'user/wallet',
-    //   }
+    sendRequestPayment () {
+      const data = {
+        route: 'user/wallet',
+      }
 
-    //   MainService.get(data)
-    //     .then((response) => {
-    //       const res = response.data
-    //       if (res.statusCode == 0) {
-    //         this.wallet = res.wallet
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log('error', err)
-    //     })
-    // }
+      MainService.get(data)
+        .then((response) => {
+          const res = response.data
+          if (res.statusCode == 0) {
+            this.wallet = res.wallet
+          }
+        })
+        .catch((err) => {
+          console.log('error', err)
+        })
+    }
   }
 }
 </script>

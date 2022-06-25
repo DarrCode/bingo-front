@@ -70,6 +70,33 @@ const routes = [
     name: 'CartonesJugadas',
     component: () => import(/* webpackPrefetch: true */ '../views/CartonesJugadas/CartonesJugadas.vue')
   },
+  {
+    path: '/assitente-jugada',
+    name: 'AssitenteJugada',
+    component: () => import(/* webpackPrefetch: true */ '../views/Jugada//PlayAssistent.vue')
+  },
+  // ADMIN
+  {
+    path: '/admin-cartones',
+    name: 'admin-cardboards',
+    component: () => import(/* webpackPrefetch: true */ '../views/Admin/Cardboards/index.vue')
+  },
+  {
+    path: '/admin-jugadores',
+    name: 'admin-gamers',
+    component: () => import(/* webpackPrefetch: true */ '../views/Admin/Gamers/index.vue')
+  },
+  {
+    path: '/admin-cuentas',
+    name: 'admin-accounts',
+    component: () => import(/* webpackPrefetch: true */ '../views/Admin/Accounts/index.vue')
+  },
+   // PLAYASSISTANT
+   {
+    path: '/asistente-crear-sala',
+    name: 'asistente-crear-sala',
+    component: () => import(/* webpackPrefetch: true */ '../views/Playassistant/CreateRoom/Create.vue')
+  },
   { path: "*", component: () => import( /* webpackPrefetch: true */ '../views/404.vue') }
 ]
 

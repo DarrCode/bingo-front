@@ -4,12 +4,8 @@
       <div class="text-center" v-if="!form.error">
         <small>Envia saldo a tus amigos</small>
       </div>
-      <div class="alert alert-danger" v-else>
-        <ul v-for="(err, index) of form.error" :key="index">
-          <li>
-            <small> {{ err }}</small>
-          </li>
-        </ul>
+      <div class="alert alert-danger alert-dismissible fade show" v-else>
+        <small> {{ form.error }}</small>
       </div>
       <div class="alert alert-success" v-if="form.message">
         <small>Balance enviado correctamente!</small>
@@ -21,6 +17,7 @@
           type="email"
           class="mb-3"
           placeholder="bingo@royalty.com"
+          required
         >
         </b-form-input>
 
@@ -29,7 +26,7 @@
           <b-form-input
             type="number"
             v-model="form.balance"
-            placeholder="100.00"
+            placeholder="0.00"
             required
           >
           </b-form-input>
@@ -81,6 +78,7 @@ export default {
       MainService.put(data)
         .then((response) => {
           const res = response.data
+
           if (res.statusCode == 0) {
             this.form.error = null
             this.form.message = true
@@ -89,7 +87,10 @@ export default {
             this.$emit('refreshBalance', true)
           } else if (res.statusCode == 5) {
             this.form.message = false
-            this.form.error = res.detail
+            this.form.error = 'Datos invalidos verifique que el correo y el monto sean correctos'
+            setTimeout(() => {
+              this.form.error = ''
+            }, 6000);
           }
         })
         .catch((err) => {

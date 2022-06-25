@@ -21,9 +21,9 @@
 				</div>
 			</b-card-text>
 		</b-card-->
-		<b-card class="mb-5 card-jugar">
+		<b-card class="mb-5 card-jugar" v-if="roleId !== 5">
 		 	<b-card-text>
-				<b-row>
+				<b-row >
 					<b-col>1 of 3</b-col>
 					<b-col class="top-right">
 						<span class="text-white">Acumulado</span>
@@ -52,11 +52,25 @@
 				
 			</b-card-text>
 		</b-card>
-		<b-button to="/cartones-jugadas" block>
+		
+			<b-button 
+				v-if="roleId == 5"
+				@click="listRequest" 
+				block 
+			>
+				<span class="text-button_jugada color-royal">Solicitudes</span>
+				<img src="../../assets/images/jugadas.jpg" width="300" alt="">
+			</b-button>
+		
+		<b-button to="/asistente-crear-sala" block v-if="roleId== 4">
+			<span class="text-button_jugada color-royal">Crear Sala</span>
+			<img src="../../assets/images/jugadas.jpg" width="300" alt="">
+		</b-button>
+		<b-button to="/cartones-jugadas" block v-if="roleId== 3">
 			<span class="text-button_jugada color-royal">Cartones y Jugadas</span>
 			<img src="../../assets/images/jugadas.jpg" width="300" alt="">
 		</b-button>
-		<b-button to="/perfil" block>
+		<b-button to="/perfil" block v-if="roleId== 3">
 			<span class="text-button_jugada color-royal">Perfil y Seguridad</span>
 			<img src="../../assets/images/perfil.jpg" width="300" alt="">
 		</b-button>
@@ -64,7 +78,22 @@
 </template>
 <script>
 export default {
-	
+	data () {
+		return {
+			roleId: null
+		}
+	},
+	mounted (){
+		setTimeout(() => {
+			this.roleId = this.$store.state.user.role_id
+		}, 500);
+	},
+	methods: {
+		listRequest() {
+      this.$emit("listRequest", true);
+    }
+	}
+
 }
 </script>
 <style>
@@ -91,7 +120,7 @@ export default {
   right: 16px;
 }
 
-.top-right span:first-child, span:last-child{
+.top-right span:first-child{
 	font-size: 12px;
 }
 

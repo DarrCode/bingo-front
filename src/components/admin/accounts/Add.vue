@@ -89,41 +89,44 @@
           <div v-if="formPM">
             <div class="row mb-3">
               <div class="col-12 col-sm-6">
-                <label>Codigo banco.</label>
+                <label>Codigo de banco.</label>
                 <input 
-                  type="text" 
+                  type="number" 
                   class="form-control" 
                   v-model="account.detail.code_bank" 
-                  placeholder="0102"
+                  placeholder="Ej: 0102"
+                  onKeyPress="if(this.value.length==4) return false" 
                   required
                 >
               </div>
               <div class="col-12 col-sm-6">
                 <label>Cedula.</label>
                 <input 
-                  type="text" 
+                  type="number" 
                   class="form-control" 
                   v-model="account.detail.cedula" 
                   placeholder="Cedula de identidad"
+                  onKeyPress="if(this.value.length==8) return false" 
                   required
                 >
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <label>Numero de telefono.</label>
+                <label>Número de telefono.</label>
                 <input 
-                  type="text" 
+                  type="number" 
                   class="form-control" 
                   v-model="account.detail.phone" 
-                  placeholder="Numero de telefono"
+                  placeholder="Número de telefono"
+                  onKeyPress="if(this.value.length==11) return false" 
                   required
                 >
               </div>
             </div>
           </div>
           <div class="text-center">
-            <button type="submit" class="btn btn-primary mt-3">Registrar cuenta</button>
+            <button type="submit" class="btn btn-bingo-red text-white mt-3">Registrar cuenta</button>
           </div>
         </form>
       </b-row>
@@ -187,7 +190,7 @@ export default {
     addAccount (e) {
 
       const data = {
-        route: '/user/profile/accounts',
+        route: 'admin/account',
         params: {
           name: this.account.name,
           description: 'add account',
@@ -199,10 +202,10 @@ export default {
       this.$swal({
           title: 'Valida tus datos',
           html:
-            ` 
+            `
               <b class="float-start">Nombre de la cuenta:</b> <span class="float-end"> ${this.account.name}</span> <br/>
               <b class="float-start">Tipo de cuenta:</b> <span class="float-end"> ${e.target[1].value}</span> <br/>
-              <b class="float-start">Detalles:</b> <span class="float-end"> 
+              <b class="float-start">Detalles de la cuenta:</b> <span class="float-end"> 
                 ${this.account.detail.email ? this.account.detail.email : ''}
                 ${this.account.detail.email ? '<br/>' : ''}
                 

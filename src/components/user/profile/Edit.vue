@@ -14,40 +14,56 @@
       <b-row>
         <form @submit.prevent="formSubmit" enctype="multipart/form-data">
           <div class="row g-3 mb-2 justify-content-center">
-            <div class="col-12 col-sm-4">
-              <div id="user-profile-img" class="shadow-sm" v-if="imagePreview">
-                <img :src="imagePreview ? imagePreview : 'https://picsum.photos/200/300'" :alt="profile.name">
-              </div>
-            </div>
-            <div class="col-12 col-sm-8">
+            
+            <div class="col-12">
               <label for="formFile" class="form-label">Imagen de perfil.</label>
               <input 
                 type="file" 
                 class="form-control"
                 id="customFile"
                 ref="file"
-                v-on:change="onChange">
+                @change="onChange">
               
             </div>
           </div>
           <div class="row g-3 mb-2 align-items-center">
             <div class="col-12 col-sm-6">
               <label>Nombre.</label>
-              <input type="text" class="form-control" v-model="profile.name">
+              <input 
+                type="text" 
+                class="form-control" 
+                v-model="profile.name" 
+                required
+              >
             </div>
             <div class="col-12 col-sm-6">
               <label>Apellido.</label>
-              <input type="text" class="form-control"  v-model="profile.last_name">
+              <input 
+                type="text" 
+                class="form-control" 
+                v-model="profile.last_name" 
+                required
+              >
             </div>
           </div>
           <div class="row g-3 align-items-center">
             <div class="col-12 col-sm-6">
               <label>Apodo.</label>
-              <input type="text" class="form-control"  v-model="profile.nick_name">
+              <input 
+                type="text" 
+                class="form-control" 
+                v-model="profile.nick_name" 
+                required
+              >
             </div>
             <div class="col-12 col-sm-6">
               <label>Pais.</label>
-              <input type="text" class="form-control"  v-model="profile.country">
+              <input 
+                type="text" 
+                class="form-control"
+                v-model="profile.country" 
+                required
+              >
             </div>
           </div>
           <div class="text-center">
@@ -67,7 +83,8 @@ export default {
     return {
       profile: {},
       profile_image: '',
-      imagePreview: ''
+      imagePreview: '',
+      update: false
     }
   },
   methods: {
@@ -82,7 +99,7 @@ export default {
         .then((response) => {
           const res = response.data
           if (res.statusCode == 0) {
-            this.profile = res.profile[0]
+            this.profile = res.profile            
             this.imagePreview = this.profile.profile_image
           }
         })
@@ -92,7 +109,6 @@ export default {
     },
     onChange(e) {
       this.profile_image = e.target.files[0]
-
       let reader = new FileReader()
       reader.readAsDataURL(this.profile_image)
       reader.onload = e => {
@@ -115,14 +131,27 @@ export default {
       data.append("nick_name", this.profile.nick_name)
       data.append("country", this.profile.country)
       data.append("profile_image", this.profile_image)
-      console.log(this.profile_image);
+      
       axiosRequest.post('/user/profile/store', data)
-        .then(function (res) {
-          console.log('res', res.data);
+        .then((res) => {
+          if (res.data.statusCode == 0) {
+            this.update = true
+            this.$refs['detail'].toggle()
+          }
         })
-        .catch(function (err) {
+        .catch((err) => {
           console.log('err', err)
         })
+
+      if (this.update) {
+        this.$swal({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Perfil editado con exito',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     }
   }
 }
