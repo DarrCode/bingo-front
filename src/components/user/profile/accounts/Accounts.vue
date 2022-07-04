@@ -106,31 +106,31 @@ export default {
     },
     deleteAccount (id) {
       this.$swal({
-          title: 'Alto!',
-          text: 'No podras revertir esta acción',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: "#c62f3a",
-          confirmButtonText: 'Eliminar',
-          cancelButtonText: 'Cancelar',
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        }).then((result) => {
-          if(result.value) {
-            const data = {
-              route: `/user/profile/accounts/${id}`,
-            }
-            MainService.delete(data)
-            .then((res) => {
-              this.$swal('Eliminado', `${res.data.message}`, 'success')
-              this.index()
-            })
-            .catch((err) => {
-              console.log('error', err)
-            })
-           
+        title: 'Alto!',
+        text: 'No podras revertir esta acción',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: "#c62f3a",
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then((result) => {
+        if(result.value) {
+          const data = {
+            route: `/user/profile/accounts/${id}`,
           }
-        })
+          MainService.delete(data)
+          .then((res) => {
+            this.$swal('Eliminado', `${res.data.message}`, 'success')
+            this.index()
+          })
+          .catch((err) => {
+            console.log('error', err)
+          })
+          
+        }
+      })
     },
     eventAddAccount(ok) {
       if (ok) {

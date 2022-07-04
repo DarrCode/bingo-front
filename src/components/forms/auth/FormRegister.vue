@@ -52,6 +52,14 @@
 					required
 				></b-form-input>
 			</div>
+			<div class="mb-3">
+				<label class="form-label">Codigo de referido.</label>
+				<b-form-input
+					type="text"
+					v-model="form.referral_code"
+				></b-form-input>
+			</div>
+			
 			<div class="text-center">
 				<b-button 
 					type="submit" 
@@ -74,7 +82,7 @@ export default {
 				email: '',
 				password: '',
 				password_confirmation: '',
-
+				referral_code: '',
 				error: null,
 				success: null
 			},
@@ -90,7 +98,8 @@ export default {
 						name: this.form.name,
 						email: this.form.email,
           	password: this.form.password,
-						password_confirmation: this.form.password_confirmation
+						password_confirmation: this.form.password_confirmation,
+						referral_code: this.form.referral_code,
 					}
 				}
      		MainService.post(data)

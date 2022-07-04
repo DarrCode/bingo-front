@@ -26,6 +26,7 @@
               :columns="columns"
               :rows="rows"
               theme="nocturnal"
+              :fixed-header="true"
               :search-options="{
                 enabled: true
               }"

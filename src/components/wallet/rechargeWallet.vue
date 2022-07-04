@@ -65,25 +65,25 @@
       </b-form>
     </b-card>
     <b-modal
-    ref="showDataAccount"
-    centered
-    hide-footer
-    content-class="shadow"
-    class="p-0"
-    size="md"
-  >
-    <template #modal-title>
-      Datos de la cuenta - <span class="text-red">{{account.type_account}}</span>
-    </template>
-    <b-container>
-      <p></p>
-      <ul>
-        <li v-for="(attribute, index) of attributes" :key="index">
-          <span v-if="attribute.email"> {{attribute.email}}</span>
-        </li>
-      </ul>
-    </b-container>
-  </b-modal>
+      ref="showDataAccount"
+      centered
+      hide-footer
+      content-class="shadow"
+      class="p-0"
+      size="md"
+    >
+      <template #modal-title>
+        Datos de la cuenta - <span class="text-red">{{account.type_account}}</span>
+      </template>
+      <b-container>
+        <p></p>
+        <ul>
+          <li v-for="(attribute, index) of attributes" :key="index">
+            <span v-if="attribute.email"> {{attribute.email}}</span>
+          </li>
+        </ul>
+      </b-container>
+    </b-modal>
   </div>
 </template>
 <script>

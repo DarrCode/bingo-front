@@ -17,12 +17,34 @@
 </template>
 
 <script>
+import MainService from '@/services/MainService';
+
   export default {
     components: {
       FormLogin: () => import('@/components/forms/auth/FormLogin'),
     },
     mounted () {
       this.$session.destroy()
+
+      const referralCode = 'uwrxBKi'
+      const data = {
+        route: `/r/${referralCode}`,
+      }
+      MainService.get(data)
+      .then((response) => {
+        const res = response.data
+        console.log(res);
+        // if (res.statusCode == 0) {
+        //   if (res.notification) {
+        //     this.$swal('Ok', 'Notificaciones activas', 'success')
+        //   } else {
+        //     this.$swal('Ok', 'Notificaciones desactivadas', 'warning')
+        //   }
+        // }
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
     }
   }
 </script>

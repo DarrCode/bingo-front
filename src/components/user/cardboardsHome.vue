@@ -3,8 +3,8 @@
 		<b-container>
 			<b-row>
 				<b-col v-if="cardboards.length">
-					<hooper :itemsToShow="cantCards" :infiniteScroll="true">
-						<slide v-for="(matriz, index) of cardboards" :key="index">
+					<flickity ref="flickity" :options="flickityOptions">
+						<div class="carousel-cell" v-for="(matriz, index) of cardboards" :key="index">
 							<div
 								style="max-width: 20rem;"
 								class="card mb-2 mx-auto card-cartoons"
@@ -19,15 +19,14 @@
 										<tr :class="`o_area${index}`"></tr>
 									</span>
 								</table>
+								
 							</div>
-							<div 
-								:id="renderCardboard(matriz.cardboard, index)"
-								class="text-center text-white"
-							>
-								{{ matriz.serial }}
-							</div>
-						</slide>
-					</hooper>
+							<div :id="renderCardboard(matriz.cardboard, index)" class="text-white text-center">{{ matriz.serial }}</div>
+						</div>
+					</flickity>
+					<!-- if you don't want to use the buttons Flickity provides -->
+					<button @click="previous()">Custom Previous Button</button>
+					<button @click="next()">Custom Next Button</button>
 				</b-col>
 			</b-row>
 		</b-container>
@@ -35,19 +34,24 @@
 </template>
 <script>
 import MainService from '@/services/MainService'
-import { Hooper, Slide } from 'hooper';
-import 'hooper/dist/hooper.css';
-
+import Flickity from 'vue-flickity';
+ 
 export default {
 	components: {
-    Hooper,
-    Slide
+    Flickity
   },
 	data () {
 		return {
+			slide: 0,
 			cardboards: [],
 			cantCards: null,
-			lettersBingo: ['B', 'I', 'N', 'G', 'O']
+			lettersBingo: ['B', 'I', 'N', 'G', 'O'],
+			flickityOptions: {
+        initialIndex: 1,
+        prevNextButtons: true,
+        pageDots: false,
+        wrapAround: true
+      }
 		}
 	},
 	mounted () {
@@ -72,25 +76,27 @@ export default {
 		},
 		renderCardboard(param, index){
 			setTimeout(() => {
-				const json = [param]
+				const json = [JSON.parse(param)]
 
 				let cardboard = document.getElementById(`numbers_zone${index}`)
 				let headers = document.getElementById(`header_area${index}`)
-				
 				this.lettersBingo.forEach(lyrics => {
 					headers.insertAdjacentHTML('beforeend', `<th>${lyrics}</th>`)
 				})
-				this.$forceUpdate();
-				// json.forEach((element) => {
-				// 	this.lettersBingo.forEach(lyrics => {
-				// 	element[lyrics].forEach((item, i) => {
-				// 			let clase = `${lyrics.toLowerCase()}_area${index}`    
-				// 			let row = cardboard.querySelector(`tr.${clase}`)
-				// 						row.insertAdjacentHTML('beforeend', `<td class="${lyrics.toLowerCase()}${i + 1} number">${item}</td>`)
-				// 		})
-				// 	})  
-				// })
-			}, 50 );
+				json.forEach((element) => {
+					this.lettersBingo.forEach(lyrics => {
+					element[lyrics].forEach((item, i) => {
+							let clase = `${lyrics.toLowerCase()}_area${index}`    
+							let row = cardboard.querySelector(`tr.${clase}`)
+										row.insertAdjacentHTML('beforeend', `<td class="${lyrics.toLowerCase()}${i + 1} number">${item}</td>`)
+						})
+					})  
+				})
+				if (index+1 == 	this.cardboards.length) {
+					console.log("final");
+					
+				}
+			}, 1000 );
 			
 			return index
 		}
@@ -99,6 +105,7 @@ export default {
 </script>
 
 <style>
+
 .hooper {
   height: 100%;
 }

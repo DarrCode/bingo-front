@@ -53,7 +53,7 @@ const routes = [
   {
     path: '/perfil',
     name: 'Perfil',
-    component: () => import(/* webpackPrefetch: true */ '../views/Profile/Profile.vue')
+    component: () => import(/* webpackPrefetch: true */ '../views/User/Profile/Profile.vue')
   },
   {
     path: '/jugada',
@@ -63,7 +63,7 @@ const routes = [
   {
     path: '/wallet',
     name: 'wallet',
-    component: () => import(/* webpackPrefetch: true */ '../views/Wallet/wallet.vue')
+    component: () => import(/* webpackPrefetch: true */ '../views/User/Wallet/wallet.vue')
   },
   {
     path: '/cartones-jugadas',

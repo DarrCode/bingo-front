@@ -16,12 +16,17 @@
             <div class="card-body" v-if="$store.state.user">
               <h5 class="card-title" >{{ $store.state.user.name }}</h5>
               <p class="card-text" v-if="$store.state.user.vip">
-                <img src="../../assets/images/card-vip.png" width="60" height="60" alt="usuario vip">
+                <img src="@/assets/images/card-vip.png" width="60" height="60" alt="usuario vip">
               </p>
               <p class="card-text" v-else>
                 Conviertete en usuario <span class="text-vip">VIP</span> y disfruta de todos los beneficios que <span>BINGO ROYALTY</span> ofrece para ti
               </p>   
-              <a @click="userVip" class="btn btn-vip me-0 me-sm-5 mb-3 mb-sm-0">usuario VIP</a>
+              <a 
+                @click="userVip" 
+                class="btn btn-vip me-0 me-sm-5 mb-3 mb-sm-0"
+              >
+                usuario VIP
+              </a>
               <a @click="editProfile" class="btn btn-red">Editar perfil</a> 
             </div>
           </div>
@@ -42,6 +47,9 @@
       ref="edit-profile" 
       @savedProfile="savedProfile"
     />
+    <UserVip 
+      ref="user-vip" 
+    />
   </div>
 </template>
 <script>
@@ -49,6 +57,7 @@ export default {
   components: {
     ProfileIndex: () => import('@/components/user/profile/Index'),
     ProfileEdit: () => import('@/components/user/profile/Edit'),
+    UserVip: () => import('@/components/user/profile/UserVip'),
     Accounts: () => import('@/components/user/profile/accounts/Accounts'),
     MyRequests: () => import('@/components/user/profile/Requests'),
   },
@@ -65,14 +74,14 @@ export default {
     }, 500)
   },
   methods: {
-    savedProfile(data){
+    savedProfile (data) {
       this.refreshProfile = data
     },
-    editProfile() {
+    editProfile () {
       this.$refs['edit-profile'].getData()
     },
-    userVip() {
-      this.$refs['user-vip'].getData()
+    userVip () {
+      this.$refs['user-vip'].userVipInfo()
     }
   }
 }
@@ -89,8 +98,8 @@ export default {
 }
 
 .card-profile .img-profile {
-  height: 110px;
-  width: 110px;
+  height: 90px;
+  width: 90px;
   border-radius: 50%;
 }
 
@@ -105,14 +114,6 @@ export default {
 .list-group .list-group-item{
   background: transparent!important;
   color: #949494;
-}
-
-.card-img-profile {
-  width: 120px;
-  height: 120px;
-  border: 3px solid var(--gold);
-  border-radius: 50%;
-  margin: 0 auto;
 }
 
 .btn-red {

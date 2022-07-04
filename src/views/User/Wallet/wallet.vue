@@ -6,7 +6,7 @@
         <TransferBalance class="mb-4" @refreshBalance="refreshBalance" />
       </b-col>
        <b-col cols="12" md="5">
-        <RechargeWallet />
+        <RechargeWallet class="mb-4" />
       </b-col>
       <b-col cols="12" md="4">
         <PaymentRequest />

@@ -22,7 +22,7 @@
           </div>
         </b-card>
       </b-col>
-      <b-col cols="8" sm="12">
+      <b-col cols="12" sm="8">
         <CartonNormal v-if="cartonNormal"/>
       </b-col>
     </b-row>

@@ -3,56 +3,54 @@
     <b-container>
       <b-row class="mt-3">
         <b-col cols="12" xl="8">
-          <div>
-            <vue-good-table
-              :columns="columns"
-              :rows="rows"
-              theme="nocturnal"
-              
-              :search-options="{
-                enabled: true
-              }"
-              :pagination-options="{
-                enabled: true,
-                mode: 'pages',
-                perPage: 5,
-              }"
+          <vue-good-table
+            :columns="columns"
+            :rows="rows"
+            theme="nocturnal"
+            
+            :search-options="{
+              enabled: true
+            }"
+            :pagination-options="{
+              enabled: true,
+              mode: 'pages',
+              perPage: 5,
+            }"
+          >
+          <div slot="table-actions">
+            <button 
+              @click="modalAddAccount"
+              class="btn btn-primary mx-2"
             >
-            <div slot="table-actions">
-              <button 
-                @click="modalAddAccount"
-                class="btn btn-primary mx-2"
-              >
-                Agregar cuenta
-              </button> 
-            </div>
-            <template slot="table-row" slot-scope="props">
-                <span v-if="props.column.field == 'actions'">
-                  <button
-                    @click="modalEditAccount(props.row)"
-                    class="btn btn-small btn-warning text-white" 
-                    title="Editar"
-                  >
-                    <b-icon-pencil></b-icon-pencil>
-                  </button>
-                  <button 
-                    class="btn btn-small mx-2 my-2" 
-                    :class="props.row.is_active ? 'btn-success' : 'btn-outline-success'"
-                    @click="activeAccount(props.row.id)"
-                    :title="props.row.is_active ? 'Desactivar' : 'Activar'"
-                  >
-                    <b-icon-check2-square></b-icon-check2-square>
-                  </button>
-                   <button @click="deleteAccount(props.row.id)" class="btn btn-danger"> 
-                    <b-icon icon="trash-fill"></b-icon>
-                  </button>
-                </span>
-                <span v-else>
-                  {{props.formattedRow[props.column.field]}}
-                </span>
-              </template>
-            </vue-good-table>
+              Agregar cuenta
+            </button> 
           </div>
+          <template slot="table-row" slot-scope="props">
+              <span v-if="props.column.field == 'actions'">
+                <button
+                  @click="modalEditAccount(props.row)"
+                  class="btn btn-small btn-warning text-white" 
+                  title="Editar"
+                >
+                  <b-icon-pencil></b-icon-pencil>
+                </button>
+                <button 
+                  class="btn btn-small mx-2 my-2" 
+                  :class="props.row.is_active ? 'btn-success' : 'btn-outline-success'"
+                  @click="activeAccount(props.row.id)"
+                  :title="props.row.is_active ? 'Desactivar' : 'Activar'"
+                >
+                  <b-icon-check2-square></b-icon-check2-square>
+                </button>
+                  <button @click="deleteAccount(props.row.id)" class="btn btn-danger"> 
+                  <b-icon icon="trash-fill"></b-icon>
+                </button>
+              </span>
+              <span v-else>
+                {{props.formattedRow[props.column.field]}}
+              </span>
+            </template>
+          </vue-good-table>
         </b-col>
         <b-col cols="12" md="6"></b-col>
       </b-row>
