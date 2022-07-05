@@ -36,7 +36,7 @@
                   </button>
 
                   <button 
-                    class="btn btn-small mx-2" 
+                    class="btn btn-small mx-2 my-2" 
                     :class="props.row.is_active ? 'btn-success' : 'btn-outline-success'"
                     @click="deactiveUser(props.row.id)"
                     :title="props.row.is_active ? 'Desactivar' : 'Activar'"
@@ -57,7 +57,7 @@
         <b-col cols="12" md="6"></b-col>
       </b-row>
     </b-container>
-    <!--AddUser ref="add-user" @addUser="eventAddUser"/-->
+    <AddUser ref="add-user" @addUser="eventAddUser"/>
     <ShowUser ref="show-user" />
   </div>
 </template>
@@ -66,8 +66,8 @@ import MainService from '@/services/MainService';
 
 export default {
   components: {
-    AddUser:  () => import('@/components/admin/users/Add'),
-    ShowUser: () => import('@/components/admin/users/Show'),
+    AddUser:  () => import('@/components/admin/gamers/Add'),
+    ShowUser: () => import('@/components/admin/gamers/Show'),
   },
   data(){
     return {
@@ -134,15 +134,20 @@ export default {
         console.log('error', err)
       })
     },
+    eventAddUser(ok) {
+      if (ok) {
+        this.getGamers()
+      }
+    },
     addUser () {
-      console.log('add user');
+      this.$refs['add-user'].displayModal()
     },
     modalShowUser (id) {
       this.$refs['show-user'].show(id)
     },
     deactiveUser (id) {
       const data = {
-        route: `/user/profile/accounts/active/${id}`,
+        route: `/admin/deactive/gamer/${id}`,
         params: {
           is_active: false
         }

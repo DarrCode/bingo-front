@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<b-container>
-			<b-row>
-				<b-col v-if="cardboards.length">
+			<div class="row">
+				<div class="col col-12 dinamyc-col" v-if="cardboards.length">
 					<flickity ref="flickity" :options="flickityOptions">
 						<div class="carousel-cell" v-for="(matriz, index) of cardboards" :key="index">
 							<div
@@ -11,24 +11,20 @@
 							>
 								<table class="bingoBoard" cellspacing="10" cellpadding="5">
 									<span :id="`numbers_zone${index}`">
-										<tr :id="`header_area${index}`"></tr>
+										<tr :id="`header_area${index}`" ></tr>
 										<tr :class="`b_area${index}`"></tr>
 										<tr :class="`i_area${index}`"></tr>
 										<tr :class="`n_area${index}`"></tr>
 										<tr :class="`g_area${index}`"></tr>
 										<tr :class="`o_area${index}`"></tr>
-									</span>
-								</table>
-								
+									</span >
+								</table >
 							</div>
 							<div :id="renderCardboard(matriz.cardboard, index)" class="text-white text-center">{{ matriz.serial }}</div>
 						</div>
 					</flickity>
-					<!-- if you don't want to use the buttons Flickity provides -->
-					<button @click="previous()">Custom Previous Button</button>
-					<button @click="next()">Custom Next Button</button>
-				</b-col>
-			</b-row>
+				</div>
+			</div>
 		</b-container>
 	</div>
 </template>
@@ -42,6 +38,7 @@ export default {
   },
 	data () {
 		return {
+			loading: false,
 			slide: 0,
 			cardboards: [],
 			cantCards: null,
@@ -67,19 +64,28 @@ export default {
 				const res = response.data
 				if (res.statusCode == 0) {
 					this.cardboards = res.cardboards
-					this.cantCards = this.cardboards.length >= 3 ? 3 : this.cardboards.length	
+					this.cantCards = this.cardboards.length >= 3 ? 3 : this.cardboards.length
 				}
 			})
 			.catch((err) => {
 				console.log('error', err)
 			})
 		},
-		renderCardboard(param, index){
+		async renderCardboard(param, index){
+			return await this.cardboard(param, index)
+		},
+		async cardboard (param, index) {
+			const json = [JSON.parse(param)]
+			
+			// let col = document.getElementsByClassName('dinamyc-col')
+			// if (col) {
+				
+			// }
+			console.log(col);
 			setTimeout(() => {
-				const json = [JSON.parse(param)]
-
 				let cardboard = document.getElementById(`numbers_zone${index}`)
 				let headers = document.getElementById(`header_area${index}`)
+
 				this.lettersBingo.forEach(lyrics => {
 					headers.insertAdjacentHTML('beforeend', `<th>${lyrics}</th>`)
 				})
@@ -92,13 +98,8 @@ export default {
 						})
 					})  
 				})
-				if (index+1 == 	this.cardboards.length) {
-					console.log("final");
-					
-				}
-			}, 1000 );
-			
-			return index
+				return index
+			}, 1000);
 		}
 	}
 }

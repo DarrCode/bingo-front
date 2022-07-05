@@ -6,7 +6,7 @@
         <TransferBalance class="mb-4" @refreshBalance="refreshBalance" />
       </b-col>
        <b-col cols="12" md="5">
-        <RechargeWallet class="mb-4" />
+        <RechargeWallet class="mb-4"/>
       </b-col>
       <b-col cols="12" md="4">
         <PaymentRequest />
@@ -19,10 +19,10 @@
 
 export default {
   components: {
-    StateWallet:     () => import('@/components/wallet/stateWallet'),
-    RechargeWallet:  () => import('@/components/wallet/rechargeWallet'),
-    TransferBalance: () => import('@/components/wallet/transferBalance'),
-    PaymentRequest:  () => import('@/components/wallet/paymentRequest'),
+    StateWallet:     () => import('@/components/user/wallet/stateWallet'),
+    RechargeWallet:  () => import('@/components/user/wallet/rechargeWallet'),
+   TransferBalance: () => import('@/components/user/wallet/transferBalance'),
+    PaymentRequest:  () => import('@/components/user/wallet/paymentRequest')
   },
   data () {
     return {

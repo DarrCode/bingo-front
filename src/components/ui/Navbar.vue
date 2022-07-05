@@ -134,6 +134,10 @@ export default {
   color: #b09a7a;
 }
 
+.bi-plus-circle-fill {
+  color: #c62f3a!important;
+}
+
 .form-control:disabled {
   width: 50%;
   display: inline-block;

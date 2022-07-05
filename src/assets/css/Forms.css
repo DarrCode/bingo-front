@@ -52,3 +52,14 @@ label {
 	border-top: 1.5px solid #66623f;
 	border-bottom: 1.5px solid #66623f;
 }
+
+.btn-vip {
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 800;
+  border: 2px solid var(--gold);
+}
+
+.btn-vip:focus {
+  background-color: #141414;
+}

@@ -70,11 +70,11 @@ const routes = [
     name: 'CartonesJugadas',
     component: () => import(/* webpackPrefetch: true */ '../views/CartonesJugadas/CartonesJugadas.vue')
   },
-  {
-    path: '/assitente-jugada',
-    name: 'AssitenteJugada',
-    component: () => import(/* webpackPrefetch: true */ '../views/Jugada//PlayAssistent.vue')
-  },
+  // {
+  //   path: '/notificaciones',
+  //   name: 'notificaciones',
+  //   component: () => import(/* webpackPrefetch: true */ '../views/User/notificaciones.vue')
+  // },
   // ADMIN
   {
     path: '/admin-cartones',

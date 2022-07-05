@@ -30,17 +30,16 @@
             required
           >
           </b-form-input>
-
         </div>
         <div class="text-center">
-          <b-button 
+          <button 
             type="submit" 
-            class="btn-bingo"
+            class="btn btn-vip"
             :disabled="form.button.disabled"
             v-html="form.button.innerText"
           >
-            Enviar
-          </b-button>
+            Enviar Dinero
+          </button>
         </div>
 		  </b-form>
   </b-card>
@@ -58,7 +57,7 @@ export default {
         message: false,
         button: {
           disabled: false,
-          innerText: 'Enviar',
+          innerText: 'Enviar Dinero',
           original: 'Enviar',
           onEvent: 'Enviando dinero'
         }
@@ -101,6 +100,6 @@ export default {
 }
 </script>
 <style>
-	@import url('../../assets/css/Forms.css');
+@import url('../../../assets/css/Forms.css');
   
 </style>

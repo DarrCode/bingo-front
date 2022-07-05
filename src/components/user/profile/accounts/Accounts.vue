@@ -151,3 +151,20 @@ export default {
   }
 }
 </script>
+<style>
+.btn-outline-primary,
+.btn-primary{
+  color: #4f83d1!important;
+  border-color: #4f83d1!important;
+}
+
+.btn-outline-primary:hover,
+.btn-primary:hover{
+  color: #fff!important;
+  border-color: #0d6efd!important;
+}
+
+.btn-primary{
+  background-color: #4f83d1!important;
+}
+</style>

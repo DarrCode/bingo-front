@@ -245,6 +245,7 @@ export default {
 }
 </script>
 <style scoped>
+
 .btn-secondary {
   background: none;
 }

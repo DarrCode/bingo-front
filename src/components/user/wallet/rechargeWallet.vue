@@ -60,7 +60,7 @@
           >
         </div>
         <div class="text-center">
-          <b-button type="submit" class="btn-bingo">Enviar solicitud</b-button>
+          <button type="submit" class="btn btn-vip">Enviar solicitud</button>
         </div>
       </b-form>
     </b-card>
@@ -180,27 +180,12 @@ export default {
           console.log('err', err)
         })
     },
-    // sendRequestPayment () {
-    //   const data = {
-    //     route: 'user/wallet',
-    //   }
 
-    //   MainService.get(data)
-    //     .then((response) => {
-    //       const res = response.data
-    //       if (res.statusCode == 0) {
-    //         this.wallet = res.wallet
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log('error', err)
-    //     })
-    // }
   }
 }
 </script>
 <style scoped>
-@import url('../../assets/css/Forms.css');
+@import url('../../../assets/css/Forms.css');
 
 .card.account_active {
   background-color: rgb(35, 35, 35);

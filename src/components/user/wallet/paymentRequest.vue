@@ -37,7 +37,7 @@
       >
       </b-form-input>
       <div class="text-center">
-        <b-button type="submit" class="btn-bingo">Enviar solicitud</b-button>
+        <button type="submit" class="btn btn-vip">Enviar solicitud</button>
       </div>
     </b-form>
   </b-card>
@@ -69,7 +69,6 @@ export default {
           const res = response.data
           if (res.statusCode == 0) {
             this.account = res.account
-            console.log(this.account);
           }
         })
         .catch((err) => {
@@ -96,7 +95,7 @@ export default {
 }
 </script>
 <style scoped>
-@import url('../../assets/css/Forms.css');
+@import url('../../../assets/css/Forms.css');
 
 .card.account_active {
   background-color: rgb(35, 35, 35);
