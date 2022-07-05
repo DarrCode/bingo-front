@@ -1,7 +1,7 @@
 .card-auth{
   background-color: transparent;
   border: 2px solid #66623f;
-  border-radius: 0px;
+  border-radius: 5px;
   padding: 15px;
 }
 
@@ -16,13 +16,9 @@
 	letter-spacing: 4px;
 }
 
-.text-register {
+.link-auth {
   cursor: pointer;
-  color: #949494;
-}
-
-.text-register:hover {
-  text-decoration: underline;
+  color: #949494!important;
 }
 
 label {
@@ -32,7 +28,7 @@ label {
 
 .form-control {
 	background-color: #151515;
-	border-radius: 25px;
+	border-radius: 20px;
 	color: #817a61;
 	border: none;
 	padding: 0.6rem 1rem;
@@ -47,7 +43,7 @@ label {
 	border-bottom: 1.5px solid #66623f;
 }
 
-.btn-auth {
+.btn-bingo {
 	border-radius: 0;
 	letter-spacing: 2px;
 	color: #c62f3a;
@@ -55,8 +51,15 @@ label {
 	font-weight: 600;
 	border-top: 1.5px solid #66623f;
 	border-bottom: 1.5px solid #66623f;
-	-moz-border-image: -moz-linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
-  -webkit-border-image: -webkit-linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
-  border-image: linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
-  border-image-slice: 1;
+}
+
+.btn-vip {
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 800;
+  border: 2px solid var(--gold);
+}
+
+.btn-vip:focus {
+  background-color: #141414;
 }

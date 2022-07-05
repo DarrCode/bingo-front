@@ -2,14 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import MainService from '../services/MainService'
 
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   namespaced: true,
   state: {
     auth: false,
-    user: null
+    user: null,
+    url: process.env.VUE_APP_API_BASE
   },
   mutations: {
     SET_AUTHENTICATED(state, value) {
@@ -30,14 +30,15 @@ export default new Vuex.Store({
   },
   actions: {
 
-    getUser({ commit }) {
+    async getUser({ commit }) {
       const data = {
         route: '/user',
       }
 
-      MainService.get(data)
+      await MainService.get(data)
         .then((response) => {
           const res = response.data
+          console.log(res);
           commit('SET_USER', res.user)
           commit("SET_AUTHENTICATED", true);
         })
@@ -53,7 +54,7 @@ export default new Vuex.Store({
         route: '/logout',
       }
 
-      MainService.get(data)
+      MainService.get(data) 
         .then((response) => {
           
           commit("SET_USER", {});

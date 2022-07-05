@@ -7,18 +7,38 @@ import http from '../http-common'
 import MainService from './services/MainService'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
+import socketio from 'socket.io';
+import VueSocketIO from 'vue-socket.io';
+
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+import VueGoodTablePlugin from 'vue-good-table';
+import 'vue-good-table/dist/vue-good-table.css'
+
 import VueSession from "vue-session";
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+Vue.use(VueSweetalert2);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueSession);
+Vue.use(VueGoodTablePlugin);
+
 const moment = require('moment')
 Vue.use(require('vue-moment'), {
   moment
 })
+
+Vue.use(new VueSocketIO({
+  connection: socketio(process.env.MIX_OCULAR_URL_LISTEN),
+  vuex: {
+      store,
+      actionPrefix: 'SOCKET_'
+  }
+}))
 
 Vue.config.productionTip = false
 
@@ -32,9 +52,7 @@ new Vue({
     }
   },
   beforeCreate () {
-    if (!this.$session.exists()) {
-      console.log('.');
-    } else if (this.$session.exists()) {
+    if (this.$session.exists()) {
       http.defaults.headers.common.Authorization = `${this.$session.get('token_type')} ${this.$session.get('access_token')}`
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
     <Navbar v-if="$session.exists()" />
-    
     <router-view/>
   </div>
 </template>
@@ -20,7 +20,11 @@ export default {
 
 <style>
 :root {
-  --gold: #66623f;
+  --gold: rgb(102, 98, 63);
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 body, #app {
@@ -30,6 +34,14 @@ body, #app {
 .btn:focus {
   outline: none!important;
   box-shadow: none!important;
+}
+
+.text-red {
+  color: #c62f3a!important;
+}
+
+.btn-bingo-red {
+  background-color: #c62f3a!important;
 }
 
 .color-royal {
@@ -55,5 +67,55 @@ body, #app {
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(106, 102, 67, .5);
   opacity: 1;
+}
+.card-bingo {
+  border-radius: 0.5em;
+  border: 2px solid var(--gold);
+  background-color: rgb(8, 8, 8);
+  font-size: 20px;
+  color: #949494;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.modal-content {
+  background-color: #19191a!important;
+  color: #fff;
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--gold)!important;
+}
+
+.form-control:focus,
+.form-check-input:focus {   
+  border: var(--gold)!important;
+  box-shadow: inset 0 0.1px 0.1px rgba(255, 255, 255, 0.075), 1px 1px 10px rgba(102, 98, 63, 0.8)!important;
+  outline: 0 none!important;
+}
+
+.vgt-wrap.nocturnal .vgt-global-search__input .vgt-input, .vgt-wrap.nocturnal .vgt-global-search__input .vgt-select {
+  background-color: #151515!important;
+	border-radius: 25px!important;
+	color: #817a61!important;
+	border: none!important;
+	padding: 0.6rem 1rem!important;
+}
+
+.vgt-wrap.nocturnal .vgt-global-search,
+.vgt-table.nocturnal.bordered th,
+.vgt-table.nocturnal.bordered td,
+.vgt-wrap.nocturnal .vgt-wrap__footer,
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__row-count__select{
+  border: 1px solid #817a61!important;
+  background: #21201c!important;
+}
+
+.text-vip {
+  font-weight: bold;
+  color: var(--gold);
+  letter-spacing: 1.5px;
 }
 </style>
