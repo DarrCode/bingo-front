@@ -15,12 +15,13 @@
       <small>Solicitud enviada correctamente!</small>
     </div>
    
-    <div class="card account_active mt-3" v-if="account==null">
+    <div class="card account_active mt-3" v-if="account">
       {{ account.name }} - {{ account.type_account }}
     </div>
-    <small v-else>
-      No tienes una cuenta activa dirigite a tu <router-link to="perfil">perfil</router-link> y activala
-    </small>
+    <p class="text-danger text-center" v-else>
+      <small>No tienes una cuenta activa dirigite a tu <router-link to="perfil">perfil</router-link> y activala</small>
+    </p>
+    
     <b-form @submit.prevent="sendRequestPayment">
 
       <input type="hidden" v-model="account.type_account">
@@ -36,7 +37,7 @@
       >
       </b-form-input>
       <div class="text-center">
-        <b-button type="submit" class="btn-bingo">Enviar solicitud</b-button>
+        <button type="submit" class="btn btn-vip">Enviar solicitud</button>
       </div>
     </b-form>
   </b-card>
@@ -68,34 +69,33 @@ export default {
           const res = response.data
           if (res.statusCode == 0) {
             this.account = res.account
-            console.log(this.account);
           }
         })
         .catch((err) => {
           console.log('error', err)
         })
     },
-    // sendRequestPayment () {
-    //   const data = {
-    //     route: 'user/wallet',
-    //   }
+    sendRequestPayment () {
+      const data = {
+        route: 'user/wallet',
+      }
 
-    //   MainService.get(data)
-    //     .then((response) => {
-    //       const res = response.data
-    //       if (res.statusCode == 0) {
-    //         this.wallet = res.wallet
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log('error', err)
-    //     })
-    // }
+      MainService.get(data)
+        .then((response) => {
+          const res = response.data
+          if (res.statusCode == 0) {
+            this.wallet = res.wallet
+          }
+        })
+        .catch((err) => {
+          console.log('error', err)
+        })
+    }
   }
 }
 </script>
 <style scoped>
-@import url('../../assets/css/Forms.css');
+@import url('../../../assets/css/Forms.css');
 
 .card.account_active {
   background-color: rgb(35, 35, 35);

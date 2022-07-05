@@ -17,11 +17,15 @@
           <li class="list-group-item" v-for="(account, index) of accounts" :key="index">
             <span class="float-start">
               {{ account.name }}
-              &emsp; - &emsp;
+              &nbsp; - &nbsp;
               {{ account.type_account }}
             </span>
             <span class="float-end">
-              <button class="btn btn-small btn-outline-warning" title="Editar">
+              <button 
+                @click="modalEditAccount(account)"
+                class="btn btn-small btn-outline-warning" 
+                title="Editar"
+              >
                 <b-icon-pencil></b-icon-pencil>
               </button>
               <button 
@@ -47,7 +51,8 @@
         </div>
       </div>
     </div>
-    <AddAccount ref="add-account"  @addAccount="eventAddAccount"/>
+    <AddAccount ref="add-account" @addAccount="eventAddAccount"/>
+    <EditAccount ref="edit-account" @editAccount="eventEditAccount"/>
   </div>
 </template>
 <script>
@@ -55,7 +60,8 @@ import MainService from '@/services/MainService';
 
 export default {
   components: {
-    AddAccount:  () => import('@/components/profile/accounts/resources/Add'),
+    AddAccount:  () => import('@/components/user/profile/accounts/resources/Add'),
+    EditAccount:  () => import('@/components/user/profile/accounts/resources/Edit'),
   },
   data () {
     return {
@@ -90,8 +96,8 @@ export default {
         }
       }
       MainService.put(data)
-      .then((res) => {
-        this.$swal('Cuenta activa', `${res.data.message}`, 'success')
+      .then(() => {
+        this.$swal('Ok', 'Cuenta actualizada', 'success')
         this.index()
       })
       .catch((err) => {
@@ -99,33 +105,32 @@ export default {
       })
     },
     deleteAccount (id) {
-
       this.$swal({
-          title: 'Seguro?',
-          text: 'No podras revertir esta accion',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: "#c62f3a",
-          confirmButtonText: 'Eliminar',
-          cancelButtonText: 'Cancelar',
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        }).then((result) => {
-          if(result.value) {
-            const data = {
-              route: `/user/profile/accounts/${id}`,
-            }
-            MainService.delete(data)
-            .then((res) => {
-              this.$swal('Eliminado', `${res.data.message}`, 'success')
-              this.index()
-            })
-            .catch((err) => {
-              console.log('error', err)
-            })
-           
+        title: 'Alto!',
+        text: 'No podras revertir esta acción',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: "#c62f3a",
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then((result) => {
+        if(result.value) {
+          const data = {
+            route: `/user/profile/accounts/${id}`,
           }
-        })
+          MainService.delete(data)
+          .then((res) => {
+            this.$swal('Eliminado', `${res.data.message}`, 'success')
+            this.index()
+          })
+          .catch((err) => {
+            console.log('error', err)
+          })
+          
+        }
+      })
     },
     eventAddAccount(ok) {
       if (ok) {
@@ -134,7 +139,32 @@ export default {
     },
     modalAddAccount () {
       this.$refs['add-account'].displayModal()
+    },
+    eventEditAccount(ok) {
+      if (ok) {
+        this.index()
+      }
+    },
+    modalEditAccount (account) {
+      this.$refs['edit-account'].displayModal(account)
     }
   }
 }
 </script>
+<style>
+.btn-outline-primary,
+.btn-primary{
+  color: #4f83d1!important;
+  border-color: #4f83d1!important;
+}
+
+.btn-outline-primary:hover,
+.btn-primary:hover{
+  color: #fff!important;
+  border-color: #0d6efd!important;
+}
+
+.btn-primary{
+  background-color: #4f83d1!important;
+}
+</style>

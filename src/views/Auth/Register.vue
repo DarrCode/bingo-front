@@ -6,8 +6,8 @@
           <b-card-text>
             <h1 class="text-center mb-4 title-auth">BINGO - ROYALTY</h1>
             <FormRegister />
-            <div class="text-center mt-3 text-register">
-              <router-link to="/login">¿Ya tienes una cuenta? Inicia sesion</router-link>
+            <div class="text-center mt-3 link-auth">
+           ¿Ya tienes una cuenta? <router-link to="/login">Inicia sesion</router-link>
             </div>
 					</b-card-text>
 				</b-card>
