@@ -29,14 +29,14 @@
 				</div>
 			</div>
 			<div class="text-center">
-				<b-button 
+				<button 
 					type="submit" 
-					class="btn-bingo"
+					class="btn btn-bingo"
 					:disabled="form.button.disabled"
 					v-html="form.button.innerText"
 					>
 					BINGO
-				</b-button>
+				</button>
 			</div>
 		</b-form>
 	</div>
@@ -94,7 +94,6 @@ export default {
 							this.$session.set('expires_at', res.expiresAt)
 							this.$router.push('/home')
 						}
-						
 					})
 					.catch((e) => {
 						console.error('Server error', e)

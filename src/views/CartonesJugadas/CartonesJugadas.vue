@@ -16,7 +16,7 @@
             <h3 class="card-title">Cartones <span class="text-vip">VIP</span></h3>
             <h5>Al ser usuario <span class="text-vip">VIP</span> tienes el beneficio de crear tus propios cartones</h5>
 
-            <button class="mt-3 btn btn-vip">
+            <button class="mt-3 btn btn-bingo">
               Crear
             </button>
           </div>
@@ -66,14 +66,14 @@ export default {
   background-color: #823438;
 }
 
-.btn-vip {
+.btn-bingo {
   color: var(--gold);
   text-transform: uppercase;
   font-weight: 800;
   border: 2px solid var(--gold);
 }
 
-.btn-vip:focus {
+.btn-bingo:focus {
   background-color: #141414;
 }
 </style>

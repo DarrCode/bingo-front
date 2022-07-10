@@ -23,7 +23,7 @@
               </p>   
               <a 
                 @click="userVip" 
-                class="btn btn-vip me-0 me-sm-5 mb-3 mb-sm-0"
+                class="btn btn-bingo me-0 me-sm-5 mb-3 mb-sm-0"
               >
                 usuario VIP
               </a>
@@ -127,14 +127,14 @@ export default {
   background-color: #823438;
 }
 
-.btn-vip {
+.btn-bingo {
   color: var(--gold);
   text-transform: uppercase;
   font-weight: 800;
   border: 2px solid var(--gold);
 }
 
-.btn-vip:focus {
+.btn-bingo:focus {
   background-color: #141414;
 }
 </style>

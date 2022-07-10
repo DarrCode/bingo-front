@@ -34,7 +34,7 @@
         <div class="text-center">
           <button 
             type="submit" 
-            class="btn btn-vip"
+            class="btn btn-bingo"
             :disabled="form.button.disabled"
             v-html="form.button.innerText"
           >

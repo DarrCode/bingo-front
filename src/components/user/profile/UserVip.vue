@@ -25,7 +25,7 @@
           <center>
             <button
               :disabled="disableBtn"
-              class="btn btn-vip mt-2 w-50"
+              class="btn btn-bingo mt-2 w-50"
               @click="userVip"
             >
               USUARIO VIP
