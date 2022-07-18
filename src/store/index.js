@@ -29,7 +29,10 @@ export default new Vuex.Store({
     },
   },
   actions: {
-
+    "SOCKET_update_cardboard"(state, server) {
+      console.log('state', state)
+      console.log('server', server)
+    },
     async getUser({ commit }) {
       const data = {
         route: '/user',
