@@ -93,8 +93,8 @@ const routes = [
   },
    // PLAYASSISTANT
    {
-    path: '/asistente-crear-sala',
-    name: 'asistente-crear-sala',
+    path: '/crear-sala',
+    name: 'crear-sala',
     component: () => import(/* webpackPrefetch: true */ '../views/Playassistant/CreateRoom/Create.vue')
   },
   { path: "*", component: () => import( /* webpackPrefetch: true */ '../views/404.vue') }

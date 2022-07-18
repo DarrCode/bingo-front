@@ -8,7 +8,7 @@
         </b-col>
         <b-col cols="9">
           <Cardboards v-if="roleId == 3 && cardboards.length"/>
-          <Advertising v-else />
+          <Advertising v-if="roleId == 3 && ! cardboards.length" />
         </b-col>
       </b-row>
     </b-container>

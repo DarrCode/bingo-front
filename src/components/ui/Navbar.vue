@@ -16,7 +16,7 @@
             
           </template>
           <b-dropdown-item
-            v-if="$store.state.user.role_id == 3"
+            v-if="rol == 3"
             class="text-user" 
             to="/perfil"
           >
@@ -36,58 +36,63 @@
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ms-auto">
          
-            <div class="align-items-center mt-1" v-if="$store.state.user.role_id == 3">
+            <div class="align-items-center mt-1" v-if="rol == 3">
               <b-form-input size="sm" :value="$store.state.user.wallet.balance" disabled></b-form-input>
               <b-button  size="sm" to="/wallet">
                 <b-icon-plus-circle-fill width="30" height="30"></b-icon-plus-circle-fill>
               </b-button>
             </div>
+
             <div class="row align-items-center">
-              <div class="col-auto mt-2">
+              <div class="col-auto mt-2" v-if="rol == 3">
                 <b-link to="home" title="Home">
                   <b-icon-house-door-fill width="30" height="30"></b-icon-house-door-fill>
                 </b-link>
               </div>
-              <div class="col-auto mt-2" v-if="$store.state.user.role_id == 2">
-                <b-link class="nav-link" to="admin-cartones">
-                  CARTONES
-                </b-link>
-              </div>
-              <div class="col-auto mt-2" v-if="$store.state.user.role_id == 2">
-                <b-link class="nav-link" to="admin-jugadores">
-                  JUGADORES
-                </b-link>
-              </div>
-              <div class="col-auto mt-2" v-if="$store.state.user.role_id == 2">
-                <b-link class="nav-link" to="admin-cuentas">
-                  CUENTAS
-                </b-link>
-              </div>
-              <div class="col-auto mt-2" v-if="$store.state.user.role_id == 3">
+              <div class="col-auto mt-2" v-if="rol == 3">
                 <b-link to="wallet" title="Notificaciones">
                   <b-icon-bell-fill width="30" height="30"></b-icon-bell-fill>
                 </b-link>
               </div>
-              <div class="col-auto mt-2" v-if="$store.state.user.role_id == 3">
+              <div class="col-auto mt-2" v-if="rol == 3">
                 <b-link to="wallet" title="Wallet">
                   <b-icon-wallet-fill width="30" height="30"></b-icon-wallet-fill>
                 </b-link>
               </div>             
-              <div class="col-auto" v-if="$store.state.user.role_id == 3">
+              <div class="col-auto" v-if="rol == 3">
                 <b-link to="3">
                   <img src="../../assets/images/icon-statistics.png" width="40" height="40">
                 </b-link>
               </div>
-              <div class="col-auto" v-if="$store.state.user.role_id == 3">
+              <div class="col-auto" v-if="rol == 3">
                 <b-link to="3">
                   <img src="../../assets/images/icon-star.png" width="40" height="40">
                 </b-link>
               </div>
-              <div class="col-auto" v-if="$store.state.user.role_id == 3">
+              <div class="col-auto" v-if="rol == 3">
                 <b-link to="3">
                   <img src="../../assets/images/icon-clock.png" width="40" height="40">
                 </b-link>
               </div>
+              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2 || rol == 4 || rol == 5">
+                <b-link class="nav-link" to="/home">Inicio</b-link>
+              </div>
+              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2 || rol == 4 || rol == 5">
+                <b-link class="nav-link" to="precio-carton">Crear jugada</b-link>
+              </div>
+              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2 || rol == 4 || rol == 5">
+                <b-link class="nav-link" to="precio-carton">Precio por carton</b-link>
+              </div>
+              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2">
+                <b-link class="nav-link" to="admin-cartones">Cartones</b-link>
+              </div>
+              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2">
+                <b-link class="nav-link" to="admin-jugadores">Jugadores</b-link>
+              </div>
+              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2">
+                <b-link class="nav-link" to="admin-cuentas">Cuentas</b-link>
+              </div>
+
             </div>
           </b-navbar-nav>
         </b-collapse>
@@ -101,7 +106,8 @@ export default {
   name: 'Navbar',
   data () {
     return {
-      imgProfile: null
+      imgProfile: null,
+      rol: null,
     }
   },
   methods: {
@@ -113,6 +119,7 @@ export default {
   mounted() {
     this.$store.dispatch("getUser");
     setTimeout(() => {
+      this.rol = this.$store.state.user.role_id
       this.imgProfile = this.$store.state.url+''+this.$store.state.user.profile.profile_image
     }, 500);
   }

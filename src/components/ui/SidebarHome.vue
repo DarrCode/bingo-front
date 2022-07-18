@@ -1,30 +1,9 @@
 <template>
   <div>
-		<!--b-card class="mb-5 jugar">
-		 <img src="../../assets/images/jugar.jpg" alt="Snow" style="width:100%;">
-		 <b-card-text>
-				<div class="bottom-left">Bottom Left</div>
-				<div class="top-right">
-					<span class="text-white">Acumulado</span>
-					<span class="accumulated color-royal">3.500</span>
-					<span class="royalty text-end color-royal">Royalty</span>
-				</div>
-				<div class="bottom-right">
-					
-				</div>
-				<div class="centered">
-					<b-row>
-						<b-col>1 of 3</b-col>
-						<b-col>2 of 3</b-col>
-						<b-col>3 of 3</b-col>
-					</b-row>
-				</div>
-			</b-card-text>
-		</b-card-->
-		<b-card class="mb-5 card-jugar" v-if="roleId !== 5">
+		<b-card class="mb-5 card-jugar">
 		 	<b-card-text>
 				<b-row >
-					<b-col>1 of 3</b-col>
+					<b-col></b-col>
 					<b-col class="top-right">
 						<span class="text-white">Acumulado</span>
 						<span class="accumulated text-end color-royal">3.500</span>
@@ -53,19 +32,6 @@
 			</b-card-text>
 		</b-card>
 		
-			<b-button 
-				v-if="roleId == 5"
-				@click="listRequest" 
-				block 
-			>
-				<span class="text-button_jugada color-royal">Solicitudes</span>
-				<img src="../../assets/images/jugadas.jpg" width="300" alt="">
-			</b-button>
-		
-		<b-button to="/asistente-crear-sala" block v-if="roleId== 4">
-			<span class="text-button_jugada color-royal">Crear Sala</span>
-			<img src="../../assets/images/jugadas.jpg" width="300" alt="">
-		</b-button>
 		<b-button to="/cartones-jugadas" block v-if="roleId== 3">
 			<span class="text-button_jugada color-royal">Cartones y Jugadas</span>
 			<img src="../../assets/images/jugadas.jpg" width="300" alt="">
@@ -88,12 +54,6 @@ export default {
 			this.roleId = this.$store.state.user.role_id
 		}, 500);
 	},
-	methods: {
-		listRequest() {
-      this.$emit("listRequest", true);
-    }
-	}
-
 }
 </script>
 <style>

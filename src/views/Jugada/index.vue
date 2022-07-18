@@ -1,6 +1,6 @@
 <template>
-  <b-container>
-    <b-row>
+  <b-container fluid>
+    <b-row class="mt-5">
       <b-col cols="6" md="8">
         <Stream />
       </b-col>
@@ -8,7 +8,7 @@
         <Carousel  />
       </b-col>
        <b-col cols="6" md="4" v-if="$store.state.user.role_id == 4">
-        <MarcarNumero  />
+        <DialNumber  />
       </b-col>
     </b-row>  
   </b-container>
@@ -19,7 +19,7 @@ export default {
   components: {
     Stream:   () => import('@/components/jugada/stream'),
     Carousel: () => import('@/components/jugada/cartones'),
-    MarcarNumero: () => import('@/components/jugada/MarcarNumero'),
+    DialNumber: () => import('@/components/jugada/assistent/DialNumber'),
   }  
 }
 </script>

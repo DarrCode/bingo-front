@@ -67,7 +67,7 @@
             </div>
           </div>
           <div class="text-center">
-            <button type="submit" class=" mt-3 text-center btn btn-vip">Registrar datos</button>
+            <button type="submit" class=" mt-3 text-center btn btn-bingo">Registrar datos</button>
           </div>
         </form>
       </b-row>
@@ -119,7 +119,8 @@ export default {
       const axiosRequest = axios.create({
         baseURL: `${process.env.VUE_APP_API_URL}/`,
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          'X-Requested-With': 'XMLHttpRequest'
         },
       })
 
@@ -151,6 +152,7 @@ export default {
           showConfirmButton: false,
           timer: 1500
         })
+        location.reload()
       }
     }
   }

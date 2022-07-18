@@ -37,7 +37,7 @@
       >
       </b-form-input>
       <div class="text-center">
-        <button type="submit" class="btn btn-vip">Enviar solicitud</button>
+        <button type="submit" class="btn btn-bingo">Enviar solicitud</button>
       </div>
     </b-form>
   </b-card>

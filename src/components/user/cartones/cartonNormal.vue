@@ -26,7 +26,7 @@
                    <button 
                     class="btn btn-small btn-success ms-0 ms-md-2 mt-1 mt-xl-0" 
                     @click="buyCardboard(props.row.id)"
-                    :disabled="$store.state.user.wallet.balance == 0"
+                    
                     title="Comprar cartón"
                   >
                     Comprar

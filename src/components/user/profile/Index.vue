@@ -8,7 +8,7 @@
                 <b-button 
                   v-b-tooltip.bottom.click="{ variant: 'success' }" 
                   :title="link" 
-                  class="btn-vip"
+                  class="btn-bingo"
                   @click="copyLink()"
                 >
                   Codigo de referido

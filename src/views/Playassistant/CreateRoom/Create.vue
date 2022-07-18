@@ -2,20 +2,20 @@
   <div>
     <b-container>
       <b-row class="justify-content-center">
-        <b-col cols="12" md="10">
+        <b-col cols="12" md="8">
           <div class="card-bingo mx-auto mt-5">
             <div class="card-body">
               <h4 class="card-title text-center mb-4">
                 Ingresa los datos de la  jugada actual
               </h4>
-              <div class="alert alert-danger" v-if="room.error">
-                <ul v-for="(err, index) of room.error" :key="index">
+              <div class="alert alert-danger" v-if="form.error">
+                <ul v-for="(err, index) of form.error" :key="index">
                   <li>
                     <small> {{ err }}</small>
                   </li>
                 </ul>
               </div>
-              <div class="alert alert-success" v-if="room.message">
+              <div class="alert alert-success" v-if="form.message">
                 <small>Jugada creada correctamente!</small>
               </div>
               <form @submit.prevent="createRoom">
@@ -25,36 +25,16 @@
                     <input 
                       type="text" 
                       class="form-control" 
-                      v-model="room.name" 
+                      v-model="form.name" 
                       required
                     >
                   </div>
-                  <div class="col-12 col-sm-6">
-                    <label>Número de jugada.</label>
-                    <input 
-                      type="number" 
-                      class="form-control" 
-                      v-model="room.number" 
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="row g-3 mb-2 align-items-center">
                   <div class="col-12 col-sm-6">
                     <label>Cartones por jugador.</label>
                     <input 
                       type="number" 
                       class="form-control" 
-                      v-model="room.cardboards" 
-                      required
-                    >
-                  </div>
-                  <div class="col-12 col-sm-6">
-                    <label>Costo del cartón.</label>
-                    <input 
-                      type="number" 
-                      class="form-control" 
-                      v-model="room.amount" 
+                      v-model="form.cardboards" 
                       required
                     >
                   </div>
@@ -65,7 +45,7 @@
                     <input 
                       type="number" 
                       class="form-control" 
-                      v-model="room.line" 
+                      v-model="form.line_game" 
                       required
                     >
                   </div>
@@ -74,11 +54,32 @@
                     <input 
                       type="number" 
                       class="form-control" 
-                      v-model="room.full" 
+                      v-model="form.full_game" 
                       required
                     >
                   </div>
                 </div>
+                <div class="row g-3 mb-2 align-items-center">
+                  <div class="col-12 col-sm-6">
+                    <label>Valor bola 39.</label>
+                    <input 
+                      type="number" 
+                      class="form-control" 
+                      v-model="form.ballThirtyNine"
+                      required
+                    >
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label>Fecha de inicio.</label>
+                    <input 
+                      type="datetime-local" 
+                      class="form-control" 
+                      v-model="form.date_start"
+                      required
+                    >
+                  </div>
+                </div>
+
                 <center>
                   <button class="btn btn-danger mt-3">
                     <b>CREAR JUGADA</b>
@@ -95,19 +96,39 @@
 <script>
 import MainService from '@/services/MainService';
 
+// $totalcobrado= "suma de pago de cartones"
+
+// $acumulado=x % de $totalcobrado
+
+// $comision=x % de $totalcobrado
+
+// $referido= x% de $totalcobrado(carton referido)
+
+// porcentaje para la casa
 export default {
   data () {
     return {
-      room: {}
+      form: {
+
+      }
     }
   },
   methods: {
     createRoom () {
       const data = {
-        route: 'user/wallet/balance',
+        route: 'play-assistant/meeting',
         params: {
-          email: this.form.email,
-          balanceToSend: this.form.balance,
+          form: {
+            name: this.form.name,
+            cardboard_number: this.form.cardboard_number,
+            line_play: this.form.line_play,
+            full_cardboard: this.form.full_cardboard,
+            totalcollected: this.form.totalcollected,
+            accumulated: this.form.accumulated,
+            commission: this.form.commission,
+            referred: this.form.referred,
+            start: this.form.start
+          }
         }
       }
 
