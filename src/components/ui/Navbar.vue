@@ -113,7 +113,7 @@ export default {
   mounted() {
     this.$store.dispatch("getUser");
     setTimeout(() => {
-      this.imgProfile = this.$store.state.url+''+this.$store.state.user.profile.profile_image
+      this.imgProfile = this.$store.state.url+''+this.$store.state.user?.profile?.profile_image
     }, 500);
   }
 }
