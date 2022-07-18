@@ -7,8 +7,8 @@ import http from '../http-common'
 import MainService from './services/MainService'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
-import socketio from 'socket.io';
-import VueSocketIO from 'vue-socket.io';
+import VueSocketIO from 'vue-socket.io'
+import socketio from 'socket.io-client'
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -32,11 +32,14 @@ Vue.use(require('vue-moment'), {
   moment
 })
 
+window.Vue = require('vue')
+
 Vue.use(new VueSocketIO({
-  connection: socketio(process.env.MIX_OCULAR_URL_LISTEN),
+  debug: process.env.MIX_APP_DEBUG === 'develop',
+  connection: socketio(process.env.MIX_URL_LISTEN),
   vuex: {
-      store,
-      actionPrefix: 'SOCKET_'
+    store,
+    actionPrefix: 'SOCKET_'
   }
 }))
 
