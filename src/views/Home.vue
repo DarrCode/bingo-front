@@ -36,7 +36,7 @@ export default {
   },
   mounted(){
     setTimeout(() => {
-      this.roleId = this.$store.state.user.role_id
+      this.roleId = this.$store.state.user?.role_id
       this.getCarboards()
     }, 500);
   },
