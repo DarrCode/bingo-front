@@ -18,6 +18,7 @@
 
 <script>
 import MainService from '@/services/MainService'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
@@ -34,11 +35,16 @@ export default {
       cardboards: []
     }
   },
-  mounted(){
-    setTimeout(() => {
-      this.roleId = this.$store.state.user?.role_id
+  computed: {
+    ...mapGetters({
+      getRol: 'getRol',
+    })
+  },
+ async mounted(){
+    this.roleId = this.getRol
+    if (this.roleId === 3) {
       this.getCarboards()
-    }, 500);
+    }
   },
   methods: {
     getCarboards () {
@@ -50,7 +56,6 @@ export default {
 				const res = response.data
 				if (res.statusCode == 0) {
 					this.cardboards = res.cardboards
-          console.log(this.cardboards );
 				}
 			})
 			.catch((err) => {

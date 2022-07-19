@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     auth: false,
     user: null,
+    roleId: null,
     url: process.env.VUE_APP_API_BASE
   },
   mutations: {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     SET_USER(state, user) {
       state.user = user
       state.auth = Boolean(user)
+    },
+    SET_ROL(state, roleId) {
+      state.roleId = roleId
     }
   },
   getters: {
@@ -26,6 +30,9 @@ export default new Vuex.Store({
     },
     getUser(state) {
       return state.user;
+    },
+    getRol(state) {
+      return state.roleId;
     },
   },
   actions: {
@@ -43,6 +50,7 @@ export default new Vuex.Store({
           const res = response.data
           console.log(res);
           commit('SET_USER', res.user)
+          commit('SET_ROL', res.user.role_id)
           commit("SET_AUTHENTICATED", true);
         })
         .catch((err) => {

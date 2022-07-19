@@ -78,7 +78,7 @@
                 <b-link class="nav-link" to="/home">Inicio</b-link>
               </div>
               <div class="col-auto mt-2" v-if="rol == 1 || rol == 2 || rol == 4 || rol == 5">
-                <b-link class="nav-link" to="precio-carton">Crear jugada</b-link>
+                <b-link class="nav-link" to="crear-sala">Crear jugada</b-link>
               </div>
               <div class="col-auto mt-2" v-if="rol == 1 || rol == 2 || rol == 4 || rol == 5">
                 <b-link class="nav-link" to="precio-carton">Precio por carton</b-link>
@@ -102,6 +102,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Navbar',
   data () {
@@ -116,13 +118,18 @@ export default {
       this.$session.destroy()
     }
   },
-  mounted() {
-    this.$store.dispatch("getUser");
-    setTimeout(() => {
-      this.rol = this.$store.state.user.role_id
-      this.imgProfile = this.$store.state.url+''+this.$store.state.user.profile.profile_image
-    }, 500);
-  }
+  computed: {
+    ...mapGetters({
+      getRol: 'getRol',
+      getUser: 'getUser',
+    })
+  },
+ async mounted(){
+    this.rol = await this.getRol
+    this.imgProfile = this.$store.state.url+''+this.$store.state.user.profile.profile_image
+    
+  },
+  
 }
 
 </script>

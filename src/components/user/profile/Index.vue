@@ -1,10 +1,8 @@
 <template>
   <div>
     <div class="card card-profile" style="padding: 0.5em 0.5em 0.5em;">
-      <div>
-        <div class="d-flex">
-          <div class="me-auto">
-              <div class="input-group mt-1 ms-4">
+        <div class="d-flex flex-column flex-md-row justify-content-around">
+              <center class="mt-1">
                 <b-button 
                   v-b-tooltip.bottom.click="{ variant: 'success' }" 
                   :title="link" 
@@ -13,16 +11,17 @@
                 >
                   Codigo de referido
                 </b-button>
-                <input
+              </center> 
+          <div>
+             <input
                   v-on:focus="$event.target.select()" 
                   ref="clone" 
                   readonly 
                   :value="link"
                   style="opacity:0"
                 />
-              </div> 
           </div>
-          <div>
+          <center>
             <b-dropdown right variant="link" no-caret>
               <template #button-content>
                 <button class="btn btn-red">Configurar
@@ -41,8 +40,9 @@
                 Eliminar cuenta
               </b-dropdown-item>
             </b-dropdown>
-          </div>
+          </center>
         </div>
+
         <ul class="list-group list-group-flush" v-if="$store.state.user">
           <li class="list-group-item">
             <span class="ms-0 ms-sm-3">
@@ -71,7 +71,6 @@
             </span>
           </li>
         </ul>
-      </div>
     </div>
 
     <b-modal 
@@ -134,11 +133,8 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getUser")
-    setTimeout(() => {
       this.profile = this.$store.state.user.profile
       this.link = this.$store.state.user.referral_code
-    }, 500);
   },
   methods: {
     notifications () {

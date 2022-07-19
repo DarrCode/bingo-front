@@ -92,7 +92,8 @@ export default {
               this.$session.set('access_token', res.accessToken)
 							this.$session.set('token_type', res.tokenType)
 							this.$session.set('expires_at', res.expiresAt)
-							this.$router.push('/home')
+							
+							window.location.href = '/home'
 						}
 						
 					})

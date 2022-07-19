@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
-    <Navbar v-if="$session.exists()" />
-    <router-view/>
+      <Navbar v-if="$session.exists()" />
+      <router-view/>
   </div>
 </template>
 <script>
@@ -10,9 +10,11 @@ export default {
   components: {
     Navbar: () => import('@/components/ui/Navbar'),
   },
-  beforeCreate: function () {
+  async beforeCreate() {
     if (!this.$session.exists()) {
       this.$router.push('/login')
+    } else {
+      await this.$store.dispatch("getUser")
     }
   },
 }
