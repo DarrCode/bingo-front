@@ -136,24 +136,25 @@ export default {
       axiosRequest.post('/user/profile/store', data)
         .then((res) => {
           if (res.data.statusCode == 0) {
-            this.update = true
             this.$refs['detail'].toggle()
+            this.$swal({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Perfil editado con exito',
+              showConfirmButton: false,
+              timer: 2000
+            })
+            setTimeout(() => {
+              location.reload()
+            }, 1000);
+            
           }
         })
         .catch((err) => {
           console.log('err', err)
         })
 
-      if (this.update) {
-        this.$swal({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Perfil editado con exito',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        location.reload()
-      }
+      
     }
   }
 }
