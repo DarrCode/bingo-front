@@ -127,7 +127,6 @@ export default {
         const res = response.data
         if (res.statusCode == 0) {
           this.rows = res.gamers
-          console.log( res.gamers);
         }
       })
       .catch((err) => {

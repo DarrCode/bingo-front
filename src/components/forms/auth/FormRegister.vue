@@ -114,7 +114,6 @@ export default {
         		const res = response.data
 
 						if (res.success) {
-								console.log(res);
 								this.form.success = res.message
 								setTimeout(() => {
 									window.location.replace('/')

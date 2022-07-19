@@ -124,10 +124,9 @@ export default {
       getUser: 'getUser',
     })
   },
- async mounted(){
+ async mounted () {
     this.rol = await this.getRol
     this.imgProfile = this.$store.state.url+''+this.$store.state.user.profile.profile_image
-    
   },
   
 }

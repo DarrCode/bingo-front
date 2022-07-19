@@ -15,7 +15,7 @@
       <small>Solicitud enviada correctamente!</small>
     </div>
    
-    <div class="card account_active mt-3" v-if="account">
+    <div class="card account_active mt-3" v-if="account.length">
       {{ account.name }} - {{ account.type_account }}
     </div>
     <p class="text-danger text-center" v-else>

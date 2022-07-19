@@ -84,7 +84,6 @@ export default {
       .then((response) => {
         const res = response.data
         if (res.statusCode == 0) {
-          console.log('show user', res);
           this.gamer = res.gamer
           this.imgProfile = this.$store.state.url+''+res.gamer.profile.profile_image
         }

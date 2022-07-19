@@ -75,7 +75,6 @@ export default {
           const res = response.data
           if (res.statusCode == 0) {
             this.rows = res.requestUser
-            console.log(res);
           }
         })
         .catch((err) => {

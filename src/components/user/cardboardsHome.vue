@@ -81,7 +81,6 @@ export default {
 			// if (col) {
 				
 			// }
-			console.log(col);
 			setTimeout(() => {
 				let cardboard = document.getElementById(`numbers_zone${index}`)
 				let headers = document.getElementById(`header_area${index}`)

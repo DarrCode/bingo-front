@@ -17,9 +17,9 @@
 <script>
 export default {
   components: {
-    Stream:   () => import('@/components/jugada/stream'),
-    Carousel: () => import('@/components/jugada/cartones'),
-    DialNumber: () => import('@/components/jugada/assistent/DialNumber'),
+    Stream:   () => import('@/components/plays/stream'),
+    Carousel: () => import('@/components/plays/cartones'),
+    DialNumber: () => import('@/components/plays/assistent/DialNumber'),
   }  
 }
 </script>

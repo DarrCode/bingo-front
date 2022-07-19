@@ -6,9 +6,13 @@
         <b-col cols="3">
           <SideHome/>
         </b-col>
-        <b-col cols="9">
+        <b-col cols="9" v-if="roleId == 5 || roleId == 4 || roleId == 2 || roleId == 1">
+          <Plays />
+          <Requests v-if="roleId == 5 || roleId == 2 || roleId == 1" />
+        </b-col>
+        <b-col cols="9" v-if="roleId == 3">
           <Cardboards v-if="roleId == 3 && cardboards.length"/>
-          <Advertising v-if="roleId == 3 && ! cardboards.length" />
+          <Advertising v-if="roleId == 3 && !cardboards.length" />
         </b-col>
       </b-row>
     </b-container>
@@ -26,7 +30,8 @@ export default {
     SideHome: () => import('@/components/ui/SidebarHome'),
     Cardboards: () => import('@/components/user/cardboardsHome'),
     Advertising: () => import('@/components/user/advertising'),
-  //  ListRequest: () => import('@/components/supervisor/listRequest')
+    Plays: () => import('@/components/plays/index'),
+    Requests: () => import('@/components/requests/index')
   },
   data () {
     return {
