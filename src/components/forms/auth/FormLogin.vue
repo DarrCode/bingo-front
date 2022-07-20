@@ -35,7 +35,6 @@
 					:disabled="form.button.disabled"
 					v-html="form.button.innerText"
 					>
-					BINGO
 				</button>
 			</div>
 		</b-form>

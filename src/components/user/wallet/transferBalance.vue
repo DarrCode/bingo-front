@@ -38,7 +38,6 @@
             :disabled="form.button.disabled"
             v-html="form.button.innerText"
           >
-            Enviar Dinero
           </button>
         </div>
 		  </b-form>
