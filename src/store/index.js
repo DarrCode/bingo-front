@@ -37,8 +37,7 @@ export default new Vuex.Store({
   },
   actions: {
     "SOCKET_update_cardboard"(state, server) {
-      console.log('state', state)
-      console.log('server', server)
+      console.log('server', server.numbers)
     },
     async getUser({ commit }) {
       const data = {

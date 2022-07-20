@@ -1,17 +1,17 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" >
-      <div class="container" v-if="$store.state.user">
+    <b-navbar toggleable="lg" type="dark">
+      <div class="container" v-if="user != null">
         <b-nav-item-dropdown style="list-style: none" no-caret>
           <template #button-content>
             <b-avatar 
               :src="imgProfile"  
-              :alt="$store.state.user.name"
+              :alt="user.name"
               class="mr-3"
             >
               </b-avatar>
             <span class="text-uppercase text-user">
-              {{ $store.state.user.name }}
+              {{ user.name }}
             </span>
             
           </template>
@@ -30,14 +30,14 @@
 
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item class="ms-5 mb-1 text-user">ID: {{ $store.state.user.id }}</b-nav-item>
+            <b-nav-item class="ms-5 mb-1 text-user">ID: {{ user.id }}</b-nav-item>
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ms-auto">
          
             <div class="align-items-center mt-1" v-if="rol == 3">
-              <b-form-input size="sm" :value="$store.state.user.wallet.balance" disabled></b-form-input>
+              <b-form-input size="sm" :value="user.wallet.balance" disabled></b-form-input>
               <b-button  size="sm" to="/wallet">
                 <b-icon-plus-circle-fill width="30" height="30"></b-icon-plus-circle-fill>
               </b-button>
@@ -92,7 +92,6 @@
               <div class="col-auto mt-2" v-if="rol == 1 || rol == 2">
                 <b-link class="nav-link" to="admin-cuentas">Cuentas</b-link>
               </div>
-
             </div>
           </b-navbar-nav>
         </b-collapse>
@@ -102,7 +101,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import MainService from '../../services/MainService'
 
 export default {
   name: 'Navbar',
@@ -110,25 +109,37 @@ export default {
     return {
       imgProfile: null,
       rol: null,
+      user: null
     }
   },
+  async created() {
+    await this.getUser()
+  },
   methods: {
+    async getUser() {
+      const data = {
+        route: '/user',
+      }
+
+      await MainService.get(data)
+        .then((response) => {
+          const res = response.data
+          this.user = res.user
+          if (this.user) {
+            console.log(this.user)
+            this.rol = this.user.rol_id
+            this.imgProfile = `${this.$store.state.url}${this.user?.profile?.profile_image}`
+          }
+        })
+        .catch((err) => {
+          console.log('error', err);
+        })
+    },
     logout() {
       this.$store.dispatch("logout");
       this.$session.destroy()
     }
-  },
-  computed: {
-    ...mapGetters({
-      getRol: 'getRol',
-      getUser: 'getUser',
-    })
-  },
- async mounted () {
-    this.rol = await this.getRol
-    this.imgProfile = this.$store.state.url+''+this.$store.state.user.profile.profile_image
-  },
-  
+  }
 }
 
 </script>
