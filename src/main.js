@@ -35,8 +35,8 @@ Vue.use(require('vue-moment'), {
 window.Vue = require('vue')
 
 Vue.use(new VueSocketIO({
-  debug: process.env.MIX_APP_DEBUG === 'develop',
-  connection: socketio(process.env.MIX_URL_LISTEN),
+  debug: true, // process.env.MIX_APP_DEBUG === 'develop',
+  connection: socketio('localhost:4000'/*process.env.MIX_URL_LISTEN*/),
   vuex: {
     store,
     actionPrefix: 'SOCKET_'
