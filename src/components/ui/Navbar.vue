@@ -101,6 +101,7 @@
 
 <script>
 import MainService from '@/services/MainService'
+import { mapGetters } from "vuex";
 
 export default {
   name: 'Navbar',
@@ -111,15 +112,15 @@ export default {
       user: null,
     }
   },
+  computed: {
+    ...mapGetters(["role"])
+  },
   created () {
     this.user = this.$store.getters['user']
     this.getImgProfile()
   },
-   beforeCreate () {
-    setTimeout(() => {
-      this.roleId = this.$session.get('user').role_id
-      this.loader = false
-    }, 5000);
+  mounted () {
+    this.roleId = this.role ? this.role : this.$session.get('user').role_id
   },
   methods: {
     getImgProfile () {

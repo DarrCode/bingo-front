@@ -20,7 +20,9 @@ export default new Vuex.Store({
   },
   getters: {
     user: state => state.user,
-    role: state => state.user.role_id ? state.user.role_id : state.user.user.role_id,
+    role(state) {
+      return state.user ? state.user.role_id : state.user.user.role_id
+    },
     authenticated: state => state.user !== null,
   },
   actions: {
