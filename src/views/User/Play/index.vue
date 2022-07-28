@@ -4,10 +4,10 @@
       <b-col cols="6" md="8">
         <Stream />
       </b-col>
-      <b-col cols="6" md="4" v-if="rol == 3">
+      <b-col cols="6" md="4" v-if="roleId == 3">
         <Carousel  />
       </b-col>
-       <b-col cols="6" md="4" v-if="rol == 4">
+       <b-col cols="6" md="4" v-if="roleId == 4">
         <DialNumber  />
       </b-col>
     </b-row>  
@@ -27,9 +27,7 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
-      this.roleId = this.$store.getters['role']
-    }, 1000);
+    this.roleId = this.$store.getters['role']
   }
 }
 </script>

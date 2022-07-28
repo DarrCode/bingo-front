@@ -28,7 +28,6 @@
 
 <script>
 import MainService from '@/services/MainService'
-import { mapGetters } from "vuex";
 
 export default {
   name: 'Home',
@@ -39,9 +38,7 @@ export default {
     Plays: () => import('@/components/plays/index'),
     Requests: () => import('@/components/requests/index')
   },
-  computed: {
-    ...mapGetters(["role"])
-  },
+
   data () {
     return {
       roleId: null,
@@ -52,11 +49,10 @@ export default {
     }
   },
   mounted () {
-    console.log(this.role);
     setTimeout(() => {
-      this.roleId = this.role ? this.role : this.$session.get('user').role_id
+      this.roleId = this.$store.getters['role'] ? this.$store.getters['role'] : this.$session.get('user').role_id
       this.loader = false
-    }, 5000);
+    }, 4000);
   },
   methods: {
     getCarboards () {
