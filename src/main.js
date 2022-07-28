@@ -23,6 +23,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import loader from "vue-ui-preloader";
 
+import VueCarousel from 'vue-carousel';
+
+Vue.use(VueCarousel);
 Vue.use(loader);
 Vue.use(VueSweetalert2);
 Vue.use(BootstrapVue)

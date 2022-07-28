@@ -11,13 +11,13 @@
 							>
 								<table class="bingoBoard" cellspacing="10" cellpadding="5">
 									<span :id="`numbers_zone${index}`">
-										<tr :id="`header_area${index}`" ></tr>
+										<tr :id="`header_area${index}`"></tr>
 										<tr :class="`b_area${index}`"></tr>
 										<tr :class="`i_area${index}`"></tr>
 										<tr :class="`n_area${index}`"></tr>
 										<tr :class="`g_area${index}`"></tr>
 										<tr :class="`o_area${index}`"></tr>
-									</span >
+									</span>
 								</table >
 							</div>
 							<div :id="renderCardboard(matriz.cardboard, index)" class="text-white text-center">{{ matriz.serial }}</div>
@@ -44,10 +44,10 @@ export default {
 			cantCards: null,
 			lettersBingo: ['B', 'I', 'N', 'G', 'O'],
 			flickityOptions: {
-        initialIndex: 1,
-        prevNextButtons: true,
-        pageDots: false,
-        wrapAround: true
+			initialIndex: 1,
+			prevNextButtons: true,
+			pageDots: false,
+			wrapAround: true
       }
 		}
 	},

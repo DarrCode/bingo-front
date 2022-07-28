@@ -50,10 +50,10 @@ export default {
 
         json.forEach((element) => {
           letters.forEach(lyrics => {
-          element[lyrics].forEach((item, index) => {
+            element[lyrics].forEach((item, index) => {
               let clase = `${lyrics.toLowerCase()}_area`    
               let row = cardboard.querySelector(`tr.${clase}`)
-                    row.insertAdjacentHTML('beforeend', `<td class="${lyrics.toLowerCase()}${index + 1} number">${item}</td>`)
+              row.insertAdjacentHTML('beforeend', `<td class="${lyrics.toLowerCase()}${index + 1} number">${item}</td>`)
             })
           })  
         })
