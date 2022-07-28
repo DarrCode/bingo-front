@@ -1,28 +1,33 @@
 <template>
-<div>
   <div class="home">
-    <b-container class="bv-example-row">
-      <b-row>
+    <div class="loader" v-if="loader">
+      <loader object="#66623f" color1="#ffffff" color2="#21201c" size="7" speed="2" bg="#343a40" objectbg="#999793" opacity="80" name="circular"></loader>
+      <h1 class="text-center text-vip mt-5">Bingo Royalty</h1>
+    </div>
+    <b-container v-else>
+      <b-row v-if="roleId == 3">
         <b-col cols="3">
-          <SideHome/>
+          <SideHome />
         </b-col>
-        <b-col cols="9" v-if="roleId == 5 || roleId == 4 || roleId == 2 || roleId == 1">
+        <b-col cols="9">
+          <Cardboards v-if="cardboards.length" />
+          <Advertising v-else />
+        </b-col>
+      </b-row>
+      <b-row v-else>
+        <b-col cols="3">
+          <!--SideHome :nextPlayData="dataPlay" /-->
+        </b-col>
+        <b-col cols="12" xl="9">
           <Plays />
-          <Requests v-if="roleId == 5 || roleId == 2 || roleId == 1" />
-        </b-col>
-        <b-col cols="9" v-if="roleId == 3">
-          <Cardboards v-if="roleId == 3 && cardboards.length"/>
-          <Advertising v-if="roleId == 3 && !cardboards.length" />
         </b-col>
       </b-row>
     </b-container>
   </div>
-</div>
 </template>
 
 <script>
 import MainService from '@/services/MainService'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
@@ -37,25 +42,23 @@ export default {
     return {
       roleId: null,
       propsListRequest: null,
-      cardboards: []
+      cardboards: [],
+      dataPlay: {},
+      loader: true
     }
   },
-  computed: {
-    ...mapGetters({
-      getRol: 'getRol',
-    })
-  },
- async mounted(){
-    this.roleId = this.getRol
-    if (this.roleId === 3) {
-      this.getCarboards()
-    }
+  beforeCreate () {
+    setTimeout(() => {
+      this.roleId = this.$session.get('user').role_id
+      this.loader = false
+    }, 5000);
   },
   methods: {
     getCarboards () {
 			const data = {
 				route: 'user/cardboards',
 			}
+
 			MainService.get(data)
 			.then((response) => {
 				const res = response.data

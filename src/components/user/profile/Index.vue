@@ -48,7 +48,7 @@
             <span class="ms-0 ms-sm-3">
               <b>Nombre completo.</b>
             </span>
-            <span class="float-end text-capitalize">{{ profile.name }} {{ profile.last_name }}</span>
+            <span class="float-end text-capitalize">{{ $store.state.user.name }} {{ profile.last_name }}</span>
           </li>
           <li class="list-group-item">
             <span class="ms-0 ms-sm-3">
@@ -132,7 +132,7 @@ export default {
       form: {}
     }
   },
-  mounted() {
+  mounted () {
       this.profile = this.$store.state.user.profile
       this.link = this.$store.state.user.referral_code
   },

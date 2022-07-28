@@ -1,62 +1,31 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import MainService from '../services/MainService'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  namespaced: true,
   state: {
-    auth: false,
-    user: null,
-    roleId: null,
-    url: process.env.VUE_APP_API_BASE
+    user: sessionStorage.user ? JSON.parse(sessionStorage.getItem('user')) : null,
+    url: process.env.VUE_APP_API_BASE,
+    loader: true
   },
   mutations: {
     SET_AUTHENTICATED(state, value) {
       state.authenticated = value;
     },
-    SET_USER(state, user) {
-      state.user = user
-      state.auth = Boolean(user)
-    },
+
     SET_ROL(state, roleId) {
       state.roleId = roleId
     }
   },
   getters: {
-    getAuthenticated(state) {
-      return state.authenticated;
-    },
-    getUser(state) {
-      return state.user;
-    },
-    getRol(state) {
-      return state.roleId;
-    },
+    user: state => state.user,
+    role: state => state.user.role_id ? state.user.role_id : state.user.user.role_id,
+    authenticated: state => state.user !== null,
   },
   actions: {
     "SOCKET_update_cardboard"(state, server) {
       console.log('server', server.numbers)
-    },
-    async getUser({ commit }) {
-      const data = {
-        route: '/user',
-      }
-
-      await MainService.get(data)
-        .then((response) => {
-          const res = response.data
-          console.log(res);
-          commit('SET_USER', res.user)
-          commit('SET_ROL', res.user.role_id)
-          commit("SET_AUTHENTICATED", true);
-        })
-        .catch((err) => {
-          console.log('error', err);
-          commit("SET_USER", {});
-          commit("SET_AUTHENTICATED", false);
-        })
     },
     logout({ commit }) {
 
@@ -66,13 +35,10 @@ export default new Vuex.Store({
 
       MainService.get(data) 
         .then((response) => {
-          
-          commit("SET_USER", {});
-          commit("SET_AUTHENTICATED", false);
+          commit('SET_USER', null);
+          sessionStorage.removeItem('user');
           location.href = '/login'
         })
     },
   },
-  modules: {
-  }
 })

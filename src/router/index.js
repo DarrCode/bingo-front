@@ -1,101 +1,103 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-import VueSession from "vue-session";
+import middleware from './middleware'
 
 Vue.use(VueRouter)
-Vue.use(VueSession);
+
 const routes = [
   {
     path: '/',
     redirect: '/login',
     component: () => import(/* webpackPrefetch: true */ '../views/Auth/Login.vue'),
-    meta: { requiresAuth: false }
   },
   {
     path: '/',
     redirect: '/home',
-    component: () => import(/* webpackPrefetch: true */ '../views/Home.vue'),
-    meta: { requiresAuth: true }
+    beforeEnter: middleware.guest,
+    component: () => import(/* webpackPrefetch: true */ '../views/Home.vue')
   },
   {
     path: '/home',
     name: 'home',
-    component: () => import(/* webpackPrefetch: true */ '../views/Home.vue'),
-    meta: { requiresAuth: true }
+    component: () => import(/* webpackPrefetch: true */ '../views/Home.vue')
   },
   {
     path: '/login',
     name: 'login',
+    beforeEnter: middleware.guest,
     component: () => import(/* webpackPrefetch: true */ '../views/Auth/Login.vue')
   },
   {
     path: '/register',
     name: 'register',
+    beforeEnter: middleware.guest,
     component: () => import(/* webpackPrefetch: true */ '../views/Auth/Register.vue')
   },
   { 
     path: '/forgot-password', 
     name: 'reset-password', 
-    component: () => import(/* webpackPrefetch: true */ '../views/Auth/ForgotPass.vue'),
-    meta: { 
-      requiresAuth: false 
-    } 
+    beforeEnter: middleware.guest,
+    component: () => import(/* webpackPrefetch: true */ '../views/Auth/ForgotPass.vue')
   },
   { 
     path: '/reset-password/:token', 
     name: 'reset-password-form', 
-    component: () => import(/* webpackPrefetch: true */ '../views/Auth/ResetPass.vue')  , 
-    meta: { 
-      requiresAuth: false 
-    } 
+    beforeEnter: middleware.guest,
+    component: () => import(/* webpackPrefetch: true */ '../views/Auth/ResetPass.vue')
   },
   {
     path: '/perfil',
     name: 'Perfil',
-    component: () => import(/* webpackPrefetch: true */ '../views/User/Profile/Profile.vue')
+    beforeEnter: middleware.user,
+    component: () => import(/* webpackPrefetch: true */ '../views/User/Profile/index.vue')
   },
   {
     path: '/jugada',
     name: 'Jugada',
-    component: () => import(/* webpackPrefetch: true */ '../views/Jugada/index.vue')
+    beforeEnter: middleware.user,
+    component: () => import(/* webpackPrefetch: true */ '../views/User/Play/index.vue')
   },
   {
     path: '/wallet',
     name: 'wallet',
-    component: () => import(/* webpackPrefetch: true */ '../views/User/Wallet/wallet.vue')
+    beforeEnter: middleware.user,
+    component: () => import(/* webpackPrefetch: true */ '../views/User/Wallet/index.vue')
   },
   {
     path: '/cartones-jugadas',
     name: 'CartonesJugadas',
-    component: () => import(/* webpackPrefetch: true */ '../views/CartonesJugadas/CartonesJugadas.vue')
-  },
-  // {
-  //   path: '/notificaciones',
-  //   name: 'notificaciones',
-  //   component: () => import(/* webpackPrefetch: true */ '../views/User/notificaciones.vue')
-  // },
-  // ADMIN
-  {
-    path: '/admin-cartones',
-    name: 'admin-cardboards',
-    component: () => import(/* webpackPrefetch: true */ '../views/Admin/Cardboards/index.vue')
+    beforeEnter: middleware.user,
+    component: () => import(/* webpackPrefetch: true */ '../views/User/CardboardsPlays/index.vue')
   },
   {
-    path: '/admin-jugadores',
+    path: '/notificaciones',
+    name: 'notificaciones',
+    beforeEnter: middleware.user,
+    component: () => import(/* webpackPrefetch: true */ '../views/User/Notifications/index.vue')
+  },
+  {
+    path: '/crear-sala',
+    name: 'crear-sala',
+    beforeEnter: middleware.playAssistant,
+    component: () => import(/* webpackPrefetch: true */ '../views/Playassistant/CreateRoom/Create.vue')
+  },
+  {
+    path: '/jugadores',
     name: 'admin-gamers',
+    beforeEnter: middleware.supervisor,
     component: () => import(/* webpackPrefetch: true */ '../views/Admin/Gamers/index.vue')
   },
   {
-    path: '/admin-cuentas',
-    name: 'admin-accounts',
-    component: () => import(/* webpackPrefetch: true */ '../views/Admin/Accounts/index.vue')
+    path: '/cartones',
+    name: 'admin-cardboards',
+    beforeEnter: middleware.admin,
+    component: () => import(/* webpackPrefetch: true */ '../views/Admin/Cardboards/index.vue')
   },
-   // PLAYASSISTANT
-   {
-    path: '/crear-sala',
-    name: 'crear-sala',
-    component: () => import(/* webpackPrefetch: true */ '../views/Playassistant/CreateRoom/Create.vue')
+  {
+    path: '/cuentas',
+    name: 'admin-accounts',
+    beforeEnter: middleware.admin,
+    component: () => import(/* webpackPrefetch: true */ '../views/Admin/Accounts/index.vue')
   },
   { path: "*", component: () => import( /* webpackPrefetch: true */ '../views/404.vue') }
 ]

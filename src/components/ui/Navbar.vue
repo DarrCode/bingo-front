@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark">
-      <div class="container" v-if="user != null">
+      <div class="container">
         <b-nav-item-dropdown style="list-style: none" no-caret>
           <template #button-content>
             <b-avatar 
@@ -16,7 +16,7 @@
             
           </template>
           <b-dropdown-item
-            v-if="rol == 3"
+            v-if="roleId == 3"
             class="text-user" 
             to="/perfil"
           >
@@ -33,10 +33,9 @@
             <b-nav-item class="ms-5 mb-1 text-user">ID: {{ user.id }}</b-nav-item>
           </b-navbar-nav>
 
-          <!-- Right aligned nav items -->
           <b-navbar-nav class="ms-auto">
          
-            <div class="align-items-center mt-1" v-if="rol == 3">
+            <div class="align-items-center mt-1" v-if="roleId == 3">
               <b-form-input size="sm" :value="user.wallet.balance" disabled></b-form-input>
               <b-button  size="sm" to="/wallet">
                 <b-icon-plus-circle-fill width="30" height="30"></b-icon-plus-circle-fill>
@@ -44,53 +43,53 @@
             </div>
 
             <div class="row align-items-center">
-              <div class="col-auto mt-2" v-if="rol == 3">
+              <div class="col-auto mt-2" v-if="roleId == 3">
                 <b-link to="home" title="Home">
                   <b-icon-house-door-fill width="30" height="30"></b-icon-house-door-fill>
                 </b-link>
               </div>
-              <div class="col-auto mt-2" v-if="rol == 3">
+              <div class="col-auto mt-2" v-if="roleId == 3">
                 <b-link to="wallet" title="Notificaciones">
                   <b-icon-bell-fill width="30" height="30"></b-icon-bell-fill>
                 </b-link>
               </div>
-              <div class="col-auto mt-2" v-if="rol == 3">
+              <div class="col-auto mt-2" v-if="roleId == 3">
                 <b-link to="wallet" title="Wallet">
                   <b-icon-wallet-fill width="30" height="30"></b-icon-wallet-fill>
                 </b-link>
               </div>             
-              <div class="col-auto" v-if="rol == 3">
+              <div class="col-auto" v-if="roleId == 3">
                 <b-link to="3">
-                  <img src="../../assets/images/icon-statistics.png" width="40" height="40">
+                  <img src="@/assets/images/icon-statistics.png" width="40" height="40">
                 </b-link>
               </div>
-              <div class="col-auto" v-if="rol == 3">
+              <div class="col-auto" v-if="roleId == 3">
                 <b-link to="3">
-                  <img src="../../assets/images/icon-star.png" width="40" height="40">
+                  <img src="@/assets/images/icon-star.png" width="40" height="40">
                 </b-link>
               </div>
-              <div class="col-auto" v-if="rol == 3">
+              <div class="col-auto" v-if="roleId == 3">
                 <b-link to="3">
-                  <img src="../../assets/images/icon-clock.png" width="40" height="40">
+                  <img src="@/assets/images/icon-clock.png" width="40" height="40">
                 </b-link>
               </div>
-              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2 || rol == 4 || rol == 5">
+              <div class="col-auto mt-2" v-if="roleId == 1 || roleId == 2 || roleId == 4 || roleId == 5">
                 <b-link class="nav-link" to="/home">Inicio</b-link>
               </div>
-              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2 || rol == 4 || rol == 5">
-                <b-link class="nav-link" to="crear-sala">Crear jugada</b-link>
+              <div class="col-auto mt-2" v-if="roleId == 1 || roleId == 2 || roleId == 4 || roleId == 5">
+                <b-link class="nav-link" to="crear-sala">Crear sala</b-link>
               </div>
-              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2 || rol == 4 || rol == 5">
+              <div class="col-auto mt-2" v-if="roleId == 1 || roleId == 2 || roleId == 4 || roleId == 5">
                 <b-link class="nav-link" to="precio-carton">Precio por carton</b-link>
               </div>
-              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2">
-                <b-link class="nav-link" to="admin-cartones">Cartones</b-link>
+              <div class="col-auto mt-2" v-if="roleId == 1 || roleId == 2">
+                <b-link class="nav-link" to="cartones">Cartones</b-link>
               </div>
-              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2">
-                <b-link class="nav-link" to="admin-jugadores">Jugadores</b-link>
+              <div class="col-auto mt-2" v-if="roleId == 1 || roleId == 2">
+                <b-link class="nav-link" to="jugadores">Jugadores</b-link>
               </div>
-              <div class="col-auto mt-2" v-if="rol == 1 || rol == 2">
-                <b-link class="nav-link" to="admin-cuentas">Cuentas</b-link>
+              <div class="col-auto mt-2" v-if="roleId == 1 || roleId == 2">
+                <b-link class="nav-link" to="cuentas">Cuentas</b-link>
               </div>
             </div>
           </b-navbar-nav>
@@ -101,42 +100,46 @@
 </template>
 
 <script>
-import MainService from '../../services/MainService'
+import MainService from '@/services/MainService'
 
 export default {
   name: 'Navbar',
   data () {
     return {
       imgProfile: null,
-      rol: null,
-      user: null
+      roleId: null,
+      user: null,
     }
   },
-  async created() {
-    await this.getUser()
+  created () {
+    this.user = this.$store.getters['user']
+    this.getImgProfile()
+  },
+   beforeCreate () {
+    setTimeout(() => {
+      this.roleId = this.$session.get('user').role_id
+      this.loader = false
+    }, 5000);
   },
   methods: {
-    async getUser() {
+    getImgProfile () {
       const data = {
-        route: '/user',
-      }
+				route: 'user',
+			}
 
-      await MainService.get(data)
-        .then((response) => {
-          const res = response.data
-          this.user = res.user
-          if (this.user) {
-            console.log(this.user)
-            this.rol = this.user.rol_id
-            this.imgProfile = `${this.$store.state.url}${this.user?.profile?.profile_image}`
-          }
-        })
-        .catch((err) => {
-          console.log('error', err);
-        })
+			MainService.get(data)
+			.then((response) => {
+				const res = response.data
+				if (res.statusCode == 0) {
+					this.imgProfile = this.$store.state.url+''+res.imgProfile
+				}
+			})
+			.catch((err) => {
+				console.log('error', err)
+			})
     },
     logout() {
-      this.$store.dispatch("logout");
+      this.$store.dispatch("logout")
       this.$session.destroy()
     }
   }
@@ -162,7 +165,7 @@ export default {
   color: #c62f3a!important;
 }
 
-.form-control:disabled {
+.form-controleId:disabled {
   width: 50%;
   display: inline-block;
   background-color: #151515;

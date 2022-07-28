@@ -1,59 +1,82 @@
 <template>
   <div>
 		<b-card class="mb-5 card-jugar">
-		 	<b-card-text>
+		 	<b-card-text v-if="nextPlay">
 				<b-row >
-					<b-col></b-col>
+					<b-col>
+						<h5 
+							
+							class="text-uppercase text-vip mt-3" 
+							v-html="nextPlay.name"
+						></h5>
+					</b-col>
 					<b-col class="top-right">
-						<span class="text-white">Acumulado</span>
-						<span class="accumulated text-end color-royal">3.500</span>
+						<span class="text-white text-end">Acumulado</span>
+						<span class="accumulated text-end color-royal">{{nextPlay.accumulated}}</span>
 						<span class="royalty text-end color-royal">Royalty</span>
 					</b-col>
 				</b-row>
 				<b-row class="my-3">
 					<b-col>
-						<label class="text-center">Precio del cartón</label>
-						<b-form-input size="sm" value="1 Royalty" disabled></b-form-input>
+						<label class="text-center">Cartones</label>
+						<b-form-input size="sm" :value="nextPlay.cardboard_number" disabled></b-form-input>
 					</b-col>
 					<b-col>
 						<label class="text-center">Línea</label>
-						<b-form-input size="sm" value="120 Royalty" disabled></b-form-input>
+						<b-form-input size="sm" :value="`${nextPlay.line_play} Royalty`" disabled></b-form-input>
 					</b-col>
 					<b-col>
 						<label class="text-center">Cartón lleno</label>
-						<b-form-input size="sm" value="2300 Royalty" disabled></b-form-input>
+						<b-form-input size="sm" :value="`${nextPlay.full_cardboard} Royalty`" disabled></b-form-input>
 					</b-col>
 				</b-row>
 
-				<b-button to="/jugada" block class="btn-jugar w-100">
+				<b-button to="/jugada" :disabled="!nextPlay" block class="btn-jugar w-100">
 					JUGAR
 				</b-button>
-				
 			</b-card-text>
 		</b-card>
 		
-		<b-button to="/cartones-jugadas" block v-if="roleId== 3">
+		<b-button to="/cartones-jugadas" block>
 			<span class="text-button_jugada color-royal">Cartones y Jugadas</span>
-			<img src="../../assets/images/jugadas.jpg" width="300" alt="">
+			<img src="@/assets/images/jugadas.jpg" width="300" alt="">
 		</b-button>
-		<b-button to="/perfil" block v-if="roleId== 3">
+		<b-button to="/perfil" block>
 			<span class="text-button_jugada color-royal">Perfil y Seguridad</span>
-			<img src="../../assets/images/perfil.jpg" width="300" alt="">
+			<img src="@/assets/images/perfil.jpg" width="300" alt="">
 		</b-button>
   </div>    
 </template>
 <script>
+import MainService from '@/services/MainService';
+
 export default {
 	data () {
 		return {
-			roleId: null
+			nextPlay: null
 		}
 	},
-	mounted (){
-		setTimeout(() => {
-			this.roleId = this.$store.state.user?.role_id
-		}, 500);
+	created () {
+		this.getNextPlay()
 	},
+	methods: {
+		getNextPlay () {
+			const data = {
+				route: 'user/meeting',
+			}
+
+			MainService.get(data)
+			.then((response) => {
+				const res = response.data
+				if (res.statusCode == 0) {
+					this.nextPlay = res.meeting
+				}
+			})
+			.catch((err) => {
+				console.log('error', err)
+			})
+    },
+	}
 }
 </script>
 <style>
@@ -130,9 +153,9 @@ export default {
 	border-top: 1px solid #66623f;
 	border-bottom: 1px solid #66623f;
 	transition: all ease-in-out 50ms;
-	letter-spacing: 4px;
+	letter-spacing: 2px;
 	color: #c62f3a;
-	font-size: 20px;
+	font-size: 24px;
 	font-weight: 600;
 
 }

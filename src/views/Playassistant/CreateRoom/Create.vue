@@ -4,7 +4,7 @@
       <b-row class="justify-content-center">
         <b-col cols="12" md="8">
           <div class="card-bingo mx-auto mt-5">
-            <div class="card-body">
+            <div class="card-body p-3">
               <h4 class="card-title text-center mb-4">
                 Ingresa los datos de la  jugada actual
               </h4>
@@ -168,6 +168,7 @@ export default {
               showConfirmButton: false,
               timer: 2000
             })
+            this.$router.push('home') 
           } 
         })
         .catch((err) => {

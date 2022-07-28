@@ -45,13 +45,13 @@
               <b-link class="nav-link" to="precio-carton">Precio por carton</b-link>
             </div>
             <div class="col-auto mt-2" v-if="rol == 1 || rol == 2">
-              <b-link class="nav-link" to="admin-cartones">Cartones</b-link>
+              <b-link class="nav-link" to="cartones">Cartones</b-link>
             </div>
             <div class="col-auto mt-2" v-if="rol == 1 || rol == 2">
-              <b-link class="nav-link" to="admin-jugadores">Jugadores</b-link>
+              <b-link class="nav-link" to="jugadores">Jugadores</b-link>
             </div>
             <div class="col-auto mt-2" v-if="rol == 1 || rol == 2">
-              <b-link class="nav-link" to="admin-cuentas">Cuentas</b-link>
+              <b-link class="nav-link" to="cuentas">Cuentas</b-link>
             </div>
 
           </div>

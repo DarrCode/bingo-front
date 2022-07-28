@@ -53,6 +53,8 @@
   </div>
 </template>
 <script>
+import MainService from '@/services/MainService'
+
 export default {
   components: {
     ProfileIndex: () => import('@/components/user/profile/Index'),
@@ -68,9 +70,25 @@ export default {
     }
   },
   mounted() {
-      this.imgProfile = this.$store.state.url+''+this.$store.state.user.profile.profile_image
+    this.getImgProfile()
   },
   methods: {
+    getImgProfile () {
+      const data = {
+				route: 'user',
+			}
+
+			MainService.get(data)
+			.then((response) => {
+				const res = response.data
+				if (res.statusCode == 0) {
+					this.imgProfile = this.$store.state.url+''+res.imgProfile
+				}
+			})
+			.catch((err) => {
+				console.log('error', err)
+			})
+    },
     savedProfile (data) {
       this.refreshProfile = data
     },

@@ -4,10 +4,10 @@
       <b-col cols="6" md="8">
         <Stream />
       </b-col>
-      <b-col cols="6" md="4" v-if="$store.state.user.role_id == 3">
+      <b-col cols="6" md="4" v-if="rol == 3">
         <Carousel  />
       </b-col>
-       <b-col cols="6" md="4" v-if="$store.state.user.role_id == 4">
+       <b-col cols="6" md="4" v-if="rol == 4">
         <DialNumber  />
       </b-col>
     </b-row>  
@@ -20,7 +20,17 @@ export default {
     Stream:   () => import('@/components/plays/stream'),
     Carousel: () => import('@/components/plays/cartones'),
     DialNumber: () => import('@/components/plays/assistent/DialNumber'),
-  }  
+  },
+  data () {
+    return {
+      roleId: null
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.roleId = this.$store.getters['role']
+    }, 1000);
+  }
 }
 </script>
 <style scoped>

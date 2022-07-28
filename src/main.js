@@ -21,6 +21,9 @@ import VueSession from "vue-session";
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import loader from "vue-ui-preloader";
+
+Vue.use(loader);
 Vue.use(VueSweetalert2);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)

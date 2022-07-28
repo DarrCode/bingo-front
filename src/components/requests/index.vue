@@ -97,7 +97,6 @@ export default {
         .catch((err) => {
           console.log('error', err)
         })
-      
     },
     showRequest(){
       console.log(12345978);

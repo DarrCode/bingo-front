@@ -88,11 +88,13 @@ export default {
 							this.form.button.innerText = this.form.button.original
 						} else if (res.statusCode === 0) {
 							this.$session.start()
+							sessionStorage.user = JSON.stringify(res.user);
+							this.$session.set('user', res.user)
               this.$session.set('access_token', res.accessToken)
 							this.$session.set('token_type', res.tokenType)
 							this.$session.set('expires_at', res.expiresAt)
 							
-							window.location.href = '/home'
+							this.$router.push(this.$route.query.redirect || '/home');
 						}
 						
 					})

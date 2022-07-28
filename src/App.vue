@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
-      <Navbar v-if="$session.exists()" />
-      <router-view/>
+    <Navbar v-if="$session.exists()" />
+    <router-view/>
   </div>
 </template>
 <script>
@@ -10,11 +10,9 @@ export default {
   components: {
     Navbar: () => import('@/components/ui/Navbar'),
   },
-  async beforeCreate() {
+  beforeCreate() {
     if (!this.$session.exists()) {
       this.$router.push('/login')
-    } else {
-      await this.$store.dispatch("getUser")
     }
   },
 }
@@ -22,7 +20,7 @@ export default {
 
 <style>
 :root {
-  --gold: rgb(102, 98, 63);
+  --gold: #66623f;
 }
 
 input[type=number]::-webkit-inner-spin-button {
@@ -30,7 +28,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 body, #app {
-  background-color: #000!important;
+  background-color: rgb(4, 4, 4)!important;
 }
 
 .btn:focus {
