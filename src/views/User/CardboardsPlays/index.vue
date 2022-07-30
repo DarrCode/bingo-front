@@ -1,49 +1,35 @@
 <template>
   <b-container>
-    <b-row class="mt-5">
-      <b-col cols="12" sm="4">
-        <b-card class="card-cartones mb-4">
-          <div class="card-body text-center">
-            <h3 class="card-title">Cartones</h3>
-            <h5>Listado de cartones disponibles</h5>
-              <button class="mt-3 btn btn-red " @click="cartonNormal = true">
-                Ver
-              </button>
-          </div>
+    <b-row class="mt-3">
+      <b-col cols="12" md="6">
+        <b-card class="card-cartones text-center">
+          <h3 class="card-title">Cartones</h3>
+          <h5>Listado de cartones disponibles</h5>
         </b-card>
-        <b-card class="card-cartones">
-          <div class="card-body text-center">
-            <h3 class="card-title">Cartones <span class="text-vip">VIP</span></h3>
-            <h5>Al ser usuario <span class="text-vip">VIP</span> tienes el beneficio de crear tus propios cartones</h5>
-
-            <button class="mt-3 btn btn-bingo">
-              Crear
-            </button>
-          </div>
-        </b-card>
+        <CardboardsIndex />
       </b-col>
-      <b-col cols="12" sm="8">
-        <CartonNormal v-if="cartonNormal"/>
+      <b-col cols="12" sm="6">
+        <b-card class="card-cartones text-center">
+          <h3 class="card-title">Jugadas del dia </h3>
+          <span class="text-danger"> {{ dateNow }} </span>
+        </b-card>
+        <PlaysDay />
       </b-col>
     </b-row>
-    
   </b-container>
 </template>
 <script>
-
+import moment from 'moment'
 export default {
   components: {
-    CartonNormal:   () => import('@/components/user/cartones/cartonNormal'),
-    Cartonvip: () => import('@/components/user/cartones/cartonVip')
+    CardboardsIndex: () => import('@/components/user/cardboards/index'),
+    CardboardVip:    () => import('@/components/user/cardboards/cardboardVip'),
+    PlaysDay:        () => import('@/components/user/cardboards/index')
   },
   data () {
     return {
-      cartonNormal: false,
-      //cartonVip: false
+      dateNow: moment().format('DD/MM/YYYY')
     }
-  },
-  methods: {
-    
   }
 }
 </script>

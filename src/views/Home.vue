@@ -10,8 +10,7 @@
           <SideHome />
         </b-col>
         <b-col cols="9">
-          <Cardboards v-if="cardboards.length" />
-          <Advertising v-else />
+          <Cardboards />
         </b-col>
       </b-row>
       <b-row v-else>
@@ -27,7 +26,6 @@
 </template>
 
 <script>
-import MainService from '@/services/MainService'
 import { mapGetters } from "vuex";
 
 export default {
@@ -46,35 +44,17 @@ export default {
     return {
       roleId: null,
       propsListRequest: null,
-      cardboards: [],
       dataPlay: {},
       loader: true
     }
   },
   mounted () {
-    console.log(this.role);
     setTimeout(() => {
       this.roleId = this.role ? this.role : this.$session.get('user').role_id
       this.loader = false
     }, 5000);
   },
   methods: {
-    getCarboards () {
-			const data = {
-				route: 'user/cardboards',
-			}
-
-			MainService.get(data)
-			.then((response) => {
-				const res = response.data
-				if (res.statusCode == 0) {
-					this.cardboards = res.cardboards
-				}
-			})
-			.catch((err) => {
-				console.log('error', err)
-			})
-		},
     listenRequest(info) {
       this.propsListRequest = info
     }

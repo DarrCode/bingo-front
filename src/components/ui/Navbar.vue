@@ -162,7 +162,7 @@ export default {
   color: #c62f3a!important;
 }
 
-.form-controleId:disabled {
+.form-control:disabled {
   width: 50%;
   display: inline-block;
   background-color: #151515;

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h5 class="title">MIS SOLICITUDES</h5>
     <vue-good-table
       :columns="columns"
       :rows="rows"
@@ -84,7 +85,12 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+
+.title{
+  color: var(--gold);
+}
+
 .text-pending td{
   color: #ffc106!important;
 }

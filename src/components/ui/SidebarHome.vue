@@ -31,8 +31,8 @@
 					</b-col>
 				</b-row>
 
-				<b-button to="/jugada" :disabled="!nextPlay" block class="btn-jugar w-100">
-					JUGAR
+				<b-button to="/jugada" :disabled="dateNow < nextPlay.start" block class="btn-jugar w-100">
+					JUGAR 
 				</b-button>
 			</b-card-text>
 		</b-card>
@@ -49,11 +49,12 @@
 </template>
 <script>
 import MainService from '@/services/MainService';
-
+import moment from 'moment'
 export default {
 	data () {
 		return {
-			nextPlay: null
+			nextPlay: null,
+			dateNow: moment().format('YYYY-MM-DD hh:mm:ss')
 		}
 	},
 	created () {
@@ -70,6 +71,9 @@ export default {
 				const res = response.data
 				if (res.statusCode == 0) {
 					this.nextPlay = res.meeting
+						
+					console.log('aqui',this.nextPlay.start);
+					console.log('aqui 2', this.dateNow);
 				}
 			})
 			.catch((err) => {

@@ -3,7 +3,7 @@
     <b-container>
       <b-row class="mt-3">
         <b-col cols="12">
-          <div>
+          <div v-if="rows.length">
             <vue-good-table
               :columns="columns"
               :rows="rows"
@@ -38,6 +38,9 @@
               </template>
             </vue-good-table>
           </div>
+          <div v-else>
+           <h2 class="text-danger text-center">No hay cartones creados</h2>
+          </div>
         </b-col>
         <b-col cols="12" md="6"></b-col>
       </b-row>
@@ -49,8 +52,9 @@
 import MainService from '@/services/MainService';
 
 export default {
+  name: 'CardboardsIndex',
   components: {
-    ShowCardboard: () => import('@/components/user/cartones/showCardboard'),
+    ShowCardboard: () => import('@/components/user/cardboards/showCardboard'),
   },
   data(){
     return {
