@@ -31,7 +31,7 @@
 					</b-col>
 				</b-row>
 
-				<b-button to="/jugada" :disabled="dateNow < nextPlay.start" block class="btn-jugar w-100">
+				<b-button @click="play()" :disabled="dateNow < nextPlay.start" block class="btn-jugar w-100">
 					JUGAR 
 				</b-button>
 			</b-card-text>
@@ -54,7 +54,8 @@ export default {
 	data () {
 		return {
 			nextPlay: null,
-			dateNow: moment().format('YYYY-MM-DD hh:mm:ss')
+			dateNow: moment().format('YYYY-MM-DD hh:mm:ss'),
+			cardboardIdsSelected: []
 		}
 	},
 	created () {
@@ -71,15 +72,68 @@ export default {
 				const res = response.data
 				if (res.statusCode == 0) {
 					this.nextPlay = res.meeting
-						
-					console.log('aqui',this.nextPlay.start);
-					console.log('aqui 2', this.dateNow);
 				}
 			})
 			.catch((err) => {
 				console.log('error', err)
 			})
-    },
+    	},
+		async play () {
+			if (this.cardboardIdsSelected) {
+				console.log('tienen datos')
+			}
+
+			this.connectMeeting()
+				.then((response) => {
+					const res = response.data
+					if (res.statusCode === 0) {
+						this.$swal({
+							icon: 'success',
+							position: 'top-end',
+							title: 'Conectado con exito!',
+							showConfirmButton: false,
+							timer: 2000
+						})
+						setTimeout(() => this.$router.push('jugada'), 5000)
+					} else {
+						const message = this.messageHandler(res.detail)
+
+						this.$swal({
+							icon: 'error',
+							position: 'top-end',
+							title: `${res.message}`,
+							text: `${res.detail.Estatus ? message : 'Mensaje no disponible'}`,
+							showConfirmButton: false,
+							timer: 2000
+						})
+
+						if (message === 'El usuario esta jugando actualmente') {
+							setTimeout(() => this.$router.push('jugada'), 2000)
+						}
+						console.log(res)
+					}
+				}).catch((err) => {
+					console.log('error', err)
+				})
+		},
+		async connectMeeting () {
+			const data = {
+				route: 'user/meeting',
+				params: {}
+			}
+
+			return MainService.post(data)
+		},
+		messageHandler (err) {
+			if (err) {
+				const object = Object.entries(err)
+				const messageDetail = object[0][1][0] ? object[0][1][0] : 'Mensaje no disponible'
+				const message = messageDetail.split(`${object[0][0]}`)[1]
+				return message.trim()
+			}
+
+			return 'Mensaje no disponible'
+		}
 	}
 }
 </script>
