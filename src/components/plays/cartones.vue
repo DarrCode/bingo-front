@@ -6,7 +6,11 @@
           <div class="card-body text-center">
             <h5>Mis cartones</h5>
             <div class="p-5 " v-if="cardboards.length">
-              <Carousel :navigationEnabled="true" :perPage="1">
+              <Carousel
+                :navigationEnabled="true"
+                :perPage="1"
+						    :paginationActiveColor="'#ffbb0f'"
+              >
                 <Slide v-for="(matriz, index) in cardboards" :key="index">
                   <div class="card mb-2 mx-auto card-cartoons">
                     <table class="bingoBoard" cellspacing="10" cellpadding="5">
@@ -100,6 +104,8 @@ export default {
 </script>
 
 <style>
+/* Carousel style */
+
 .VueCarousel-wrapper {
   height: 40vh;
 }
@@ -114,11 +120,22 @@ export default {
   width: 100px;
 }
 
+.VueCarousel-navigation-button {
+	color: #ffbb0f !important;
+}
+
+/* End Carousel style*/
+
 .card-cartoons {
 	background-color: #000;
 	border: 4px solid #66623f;
 	border-radius: 5px;
 	margin: 3px;
+}
+
+.card {
+  background: #21201c;
+  color: #fff;
 }
 
 .bingoBoard {
