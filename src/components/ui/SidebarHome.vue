@@ -5,7 +5,6 @@
 				<b-row >
 					<b-col>
 						<h5 
-							
 							class="text-uppercase text-vip mt-3" 
 							v-html="nextPlay.name"
 						></h5>
@@ -70,10 +69,7 @@ export default {
 			.then((response) => {
 				const res = response.data
 				if (res.statusCode == 0) {
-					this.nextPlay = res.meeting
-						
-					console.log('aqui',this.nextPlay.start);
-					console.log('aqui 2', this.dateNow);
+					this.nextPlay = res.meeting[0]
 				}
 			})
 			.catch((err) => {

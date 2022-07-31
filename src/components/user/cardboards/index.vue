@@ -7,6 +7,7 @@
             <vue-good-table
               :columns="columns"
               :rows="rows"
+              styleClass="vgt-table striped"
               theme="nocturnal"
               :pagination-options="{
                 enabled: true,
@@ -14,20 +15,20 @@
                 perPage: 5,
               }"
             >
-            <template slot="table-row" slot-scope="props">
+              <template slot="table-row" slot-scope="props">
                 <span v-if="props.column.field == 'actions'">
                   <button 
-                    class="btn btn-small btn-primary" 
+                    class="btn btn-small btn-white" 
                     @click="modalShowCardboard(props.row.cardboard)"
                     title="Mas detalles"
                   >
                     Ver cartón
                   </button>
                    <button 
-                    class="btn btn-small btn-success ms-0 ms-md-2 mt-1 mt-xl-0" 
+                    class="btn btn-small btn-bingo ms-0 ms-md-2 mt-1 mt-xl-0" 
                     @click="buyCardboard(props.row.id)"
-                    
                     title="Comprar cartón"
+                    :disabled="btnDisable"
                   >
                     Comprar
                   </button>
@@ -80,10 +81,14 @@ export default {
         },
       ],
       rows: [],
-    };
+      btnDisable: false
+    }
   },
   mounted () {
     this.getCardboards();
+    if (this.$store.getters.user.wallet.balance ) {
+      
+    }
   },
   methods: {
     nameCardboard() {
@@ -140,5 +145,16 @@ export default {
       this.$refs['show-cardboard'].displayModal(cardboard)
     },
   }
-};
+}
 </script>
+<style>
+.btn-white {
+  color: #fff;
+  font-weight: 800;
+  border: 1.5px solid #fff;
+}
+
+.btn-bingo:hover {
+  border: 2px solid rgb(130, 130, 130)!important;
+}
+</style>

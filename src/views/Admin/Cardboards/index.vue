@@ -26,6 +26,7 @@
               :columns="columns"
               :rows="rows"
               theme="nocturnal"
+              styleClass="vgt-table striped"
               :fixed-header="true"
               :search-options="{
                 enabled: true

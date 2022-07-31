@@ -24,7 +24,7 @@ export default {
   components: {
     CardboardsIndex: () => import('@/components/user/cardboards/index'),
     CardboardVip:    () => import('@/components/user/cardboards/cardboardVip'),
-    PlaysDay:        () => import('@/components/user/cardboards/index')
+    PlaysDay:        () => import('@/components/user/plays/index')
   },
   data () {
     return {

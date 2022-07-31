@@ -7,7 +7,7 @@
             :columns="columns"
             :rows="rows"
             theme="nocturnal"
-            
+            styleClass="vgt-table striped"
             :search-options="{
               enabled: true
             }"

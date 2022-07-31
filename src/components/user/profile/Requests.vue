@@ -5,6 +5,7 @@
       :columns="columns"
       :rows="rows"
       theme="nocturnal"
+      styleClass="vgt-table striped"
       :row-style-class="rowStyleClassFn"
       :search-options="{
         enabled: true

@@ -4,8 +4,8 @@
 			<div class="row">
 				<div class="col col-12 dinamyc-col" v-if="cardboards.length">
 					 <div class="p-5 " v-if="cardboards.length">
-              <Carousel :navigationEnabled="true" :perPage="1">
-                <Slide v-for="(matriz, index) in cardboards" :key="index">
+              <Carousel :navigationEnabled="true" :perPage="3">
+                <Slide class="mx-2" v-for="(matriz, index) in cardboards" :key="index">
                   <div class="card mb-2 mx-auto card-cartoons">
                     <table class="bingoBoard" cellspacing="10" cellpadding="5">
                       <span :id="`numbers_zone${index}`">
@@ -155,9 +155,8 @@ export default {
   -webkit-transition: all 1s;
 }
 
-
 .VueCarousel-wrapper {
-  height: 40vh;
+    height: 62vh;
 }
 
 .VueCarousel-slide {
