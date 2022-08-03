@@ -102,15 +102,14 @@ export default {
 							icon: 'error',
 							position: 'top-end',
 							title: `${res.message}`,
-							text: `${res.detail.Estatus ? message : 'Mensaje no disponible'}`,
+							text: `${res.detail ? message : 'Mensaje no disponible'}`,
 							showConfirmButton: false,
 							timer: 2000
 						})
 
-						if (message === 'El usuario esta jugando actualmente') {
+						if (message === 'El usuario esta jugando actualmente o los cartones seleccionados no estan disponibles') {
 							setTimeout(() => this.$router.push('jugada'), 2000)
 						}
-						console.log(res)
 					}
 				}).catch((err) => {
 					console.log('error', err)
@@ -119,16 +118,18 @@ export default {
 		async connectMeeting () {
 			const data = {
 				route: 'user/meeting',
-				params: {}
+				params: {
+					cardboardIdsSelected: [1, 2]
+				}
 			}
 
 			return MainService.post(data)
 		},
 		messageHandler (err) {
 			if (err) {
-				const object = Object.entries(err)
+				const object 		= Object.entries(err)
 				const messageDetail = object[0][1][0] ? object[0][1][0] : 'Mensaje no disponible'
-				const message = messageDetail.split(`${object[0][0]}`)[1]
+				const message 		= messageDetail.split(`${object[0][0]}`)[1] ? messageDetail.split(`${object[0][0]}`)[1] : messageDetail
 				return message.trim()
 			}
 
