@@ -30,7 +30,12 @@
 					</b-col>
 				</b-row>
 
-				<b-button to="/jugada" :disabled="dateNow < nextPlay.start" block class="btn-jugar w-100">
+				<b-button 
+					@click="play()" 
+					:disabled="dateNow < nextPlay.start && nextPlay.status !== 'en progreso'" 
+					block 
+					class="btn-jugar w-100"
+				>
 					JUGAR 
 				</b-button>
 			</b-card-text>
@@ -53,7 +58,8 @@ export default {
 	data () {
 		return {
 			nextPlay: null,
-			dateNow: moment().format('YYYY-MM-DD hh:mm:ss')
+			dateNow: moment().format('YYYY-MM-DD hh:mm:ss'),
+			cardboardIdsSelected: []
 		}
 	},
 	created () {
@@ -70,12 +76,74 @@ export default {
 				const res = response.data
 				if (res.statusCode == 0) {
 					this.nextPlay = res.meeting[0]
+		
 				}
 			})
 			.catch((err) => {
 				console.log('error', err)
 			})
-    },
+    	},
+		async play () {
+			if (!this.cardboardIdsSelected.length) {
+				this.$swal({
+					icon: 'error',
+					title: `Debes seleccionar al menos 1 carton, maximo ${4}`,
+					showConfirmButton: true,
+				})
+
+				return false
+			}
+
+			this.connectMeeting()
+				.then((response) => {
+					const res = response.data
+					if (res.statusCode === 0) {
+						this.$swal({
+							icon: 'success',
+							position: 'top-end',
+							title: 'Conectado con exito!',
+							showConfirmButton: false,
+							timer: 2000
+						})
+						setTimeout(() => this.$router.push('jugada'), 5000)
+					} else {
+						const message = this.messageHandler(res.detail)
+
+						this.$swal({
+							icon: 'error',
+							position: 'top-end',
+							title: `${res.message}`,
+							text: `${res.detail.Estatus ? message : 'Mensaje no disponible'}`,
+							showConfirmButton: false,
+							timer: 2000
+						})
+
+						if (message === 'El usuario esta jugando actualmente') {
+							setTimeout(() => this.$router.push('jugada'), 2000)
+						}
+					}
+				}).catch((err) => {
+					console.log('error', err)
+				})
+		},
+		async connectMeeting () {
+			const data = {
+				route: 'user/meeting',
+				params: {}
+			}
+
+			return MainService.post(data)
+		},
+		messageHandler (err) {
+			if (err) {
+				const object = Object.entries(err)
+				const messageDetail = object[0][1][0] ? object[0][1][0] : 'Mensaje no disponible'
+				const message = messageDetail.split(`${object[0][0]}`)[1]
+				return message.trim()
+			}
+
+			return 'Mensaje no disponible'
+		}
 	}
 }
 </script>
@@ -149,21 +217,17 @@ export default {
 }
 
 .btn-jugar {
-	border-radius: 0;
 	border-top: 1px solid #66623f;
 	border-bottom: 1px solid #66623f;
-	transition: all ease-in-out 50ms;
 	letter-spacing: 2px;
 	color: #c62f3a;
 	font-size: 24px;
-	font-weight: 600;
 
 }
 
 .btn-jugar:hover {
-	border-radius: 0;
-	border-top: 2px solid #66623f;
-	border-bottom: 2px solid #66623f;
-	color: #c62f3a;
+	border-top: 1px solid #66623f;
+	border-bottom: 1px solid #66623f;
+	color: #5d292c;
 }
 </style>

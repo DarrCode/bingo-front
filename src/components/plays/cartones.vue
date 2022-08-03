@@ -6,7 +6,11 @@
           <div class="card-body text-center">
             <h5>Mis cartones</h5>
             <div class="p-5 " v-if="cardboards.length">
-              <Carousel :navigationEnabled="true" :perPage="1">
+              <Carousel
+                :navigationEnabled="true"
+                :perPage="1"
+						    :paginationActiveColor="'#ffbb0f'"
+              >
                 <Slide v-for="(matriz, index) in cardboards" :key="index">
                   <div class="card mb-2 mx-auto card-cartoons">
                     <table class="bingoBoard" cellspacing="10" cellpadding="5">
@@ -100,6 +104,9 @@ export default {
 </script>
 
 <style>
+@import url('../../assets/css/cardboards.css');
+/* Carousel style */
+
 .VueCarousel-wrapper {
   height: 40vh;
 }
@@ -114,56 +121,9 @@ export default {
   width: 100px;
 }
 
-.card-cartoons {
-	background-color: #000;
-	border: 4px solid #66623f;
-	border-radius: 5px;
-	margin: 3px;
+.VueCarousel-navigation-button {
+	color: #ffbb0f !important;
 }
 
-.bingoBoard {
-  font-size: 20px;
-  background-color: transparent;
-	font-family: "Arial", "sans-serif";
-}
-
-.bingoBoard tr td, .bingoBoard tr th {
-	background-size: 2px 2px;
-	padding: 16px;
-	border: 1px solid #66623f;
-	color: #cdcdcb;
-}
-
-.bingoBoard tr th {
-	border: none;
-	text-align: center;
-}
-
-.bingoBoard tr.first_line td {
- 	border-top: none;
-}
-
-.bingoBoard tr td:nth-child(1) {
- 	border-left: none;
-}
-
-.bingoBoard tr td:nth-child(5) {
- 	border-right: none;
-}
-
-.bingoBoard tr td:nth-last-child(n){
-	border-bottom: none;
-}
-
-.bingoBoard tr th {
-  font-weight: 900;
-  font-size: 35px;
-  color: #949494;
-}
-
-.bingoBoard tr td {
-  font-weight: bold;
-  cursor: pointer;
-  -webkit-transition: all 1s;
-}
+/* End Carousel style*/
 </style>

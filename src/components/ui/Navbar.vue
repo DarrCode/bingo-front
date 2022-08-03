@@ -79,9 +79,6 @@
               <div class="col-auto mt-2" v-if="roleId == 1 || roleId == 2 || roleId == 4 || roleId == 5">
                 <b-link class="nav-link" to="crear-sala">Crear sala</b-link>
               </div>
-              <div class="col-auto mt-2" v-if="roleId == 1 || roleId == 2 || roleId == 4 || roleId == 5">
-                <b-link class="nav-link" to="precio-carton">Precio por carton</b-link>
-              </div>
               <div class="col-auto mt-2" v-if="roleId == 1 || roleId == 2">
                 <b-link class="nav-link" to="cartones">Cartones</b-link>
               </div>

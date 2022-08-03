@@ -25,7 +25,7 @@
                     Ver cartón
                   </button>
                    <button 
-                    class="btn btn-small btn-bingo ms-0 ms-md-2 mt-1 mt-xl-0" 
+                    class="btn btn-small btn-bingo ms-2" 
                     @click="buyCardboard(props.row.id)"
                     title="Comprar cartón"
                     :disabled="btnDisable"
@@ -132,6 +132,13 @@ export default {
           .then((response) => {
             const res = response.data
             if (res.statusCode == 0) {
+              this.$swal({
+                title: 'Ey!',
+                text: 'Tu compra ha sido exitosa',
+                type: 'success',
+                confirmButtonColor: "#c62f3a",
+                confirmButtonText: 'Confirmar',
+              })
               this.getCardboards()
             }
           })

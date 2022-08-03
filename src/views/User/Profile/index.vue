@@ -23,7 +23,7 @@
               </p>   
               <a 
                 @click="userVip" 
-                class="btn btn-bingo me-0 me-sm-5 mb-3 mb-sm-0"
+                class="btn btn-bingo me-2 me-sm-5 "
               >
                 usuario VIP
               </a>

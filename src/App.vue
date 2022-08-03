@@ -15,6 +15,30 @@ export default {
       this.$router.push('/login')
     }
   },
+  beforeMount () {
+    this.detectedDevice()
+  },
+  methods: {
+    detectedDevice () {
+      const ua = navigator.userAgent;
+      if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+        this.$swal({
+          icon: 'warning',
+          title: "Consejo",
+          text: "Para tener una mejor experiencia gira tu dispositivo",
+          showConfirmButton: true,
+        })
+      }
+      else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+        this.$swal({
+          icon: 'warning',
+          title: "Consejo",
+          text: "Para tener una mejor experiencia gira tu dispositivo",
+          showConfirmButton: true,
+        })
+      }
+    }
+  }
 }
 </script>
 
@@ -96,7 +120,8 @@ input[type=number]::-webkit-inner-spin-button {
   outline: 0 none!important;
 }
 
-.vgt-table.nocturnal .vgt-global-search__input .vgt-input, .vgt-wrap.nocturnal .vgt-global-search__input .vgt-select {
+.vgt-wrap.nocturnal .vgt-global-search__input .vgt-input,
+ .vgt-wrap.nocturnal .vgt-global-search__input .vgt-select {
   background-color: #151515!important;
 	border-radius: 25px!important;
 	color: #817a61!important;
@@ -117,9 +142,10 @@ input[type=number]::-webkit-inner-spin-button {
   background: #21201c!important;
 }
 
-.vgt-wrap.nocturnal .vgt-wrap__footer {
-    border: 1px solid #817a61;
-     background: #21201c!important;
+.vgt-wrap.nocturnal .vgt-wrap__footer,
+.vgt-wrap.nocturnal .vgt-global-search{
+  border: 1px solid #817a61!important;
+  background: #21201c!important;
 }
 
 .text-vip {

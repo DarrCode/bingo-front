@@ -24,9 +24,14 @@
             <template slot="table-row" slot-scope="props">
                 <span v-if="props.column.field == 'actions'">
                   <button
-                    class="btn btn-sm btn-success"
-                    title="Iniciar"
+                    class="btn btn-sm btn-bingo"
+                    :title="props.row.status === 'creada' ? 'Iniciar' : ''"
+                    @click="starPlay(props.row.id)"
+                    :disabled="props.row.status === 'en progreso' || props.row.status === 'finalizada'"
                   >
+                    <span v-if="props.row.status === 'en progreso'">En progreso </span>
+                    <span v-else-if="props.row.status === 'creada'">Iniciar </span>
+                    <span v-else-if="props.row.status === 'finalizada'">Finalizada </span>
                     <b-icon-play-btn></b-icon-play-btn>
                   </button>
                   <button 
@@ -36,7 +41,12 @@
                     <b-icon-eye></b-icon-eye>
                   </button>
 
-                  <button class="btn btn-small btn-warning text-white" title="Editar" v-if="$store.state.user.role_id == 1 || $store.state.user.role_id == 2 || $store.state.user.role_id == 5">
+                  <button 
+                    class="btn btn-sm btn-warning text-white" 
+                    title="Editar" 
+                    :disabled="props.row.status === 'en progreso' || props.row.status === 'finalizada'"
+                    v-if="$store.state.user.role_id == 1 || $store.state.user.role_id == 2 || $store.state.user.role_id == 5"
+                  >
                     <b-icon-pencil></b-icon-pencil>
                   </button>
                 </span>
@@ -100,16 +110,27 @@ export default {
     this.showNextPlay()
   },
   methods: {
-    showNextPlay (id) {
+    starPlay (id) {
       const data = {
-        route: `/play-assistant/meeting/${id}`,
+        route: `/play-assistant/meeting/${id}/game`,
       }
 
-      MainService.get(data)
+      MainService.put(data)
       .then((response) => {
         const res = response.data
+         console.log(res);
         if (res.statusCode == 0) {
-          this.$emit("showNextPlay", res.meeting);
+          this.$swal({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Jugada iniciada con exito!',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setTimeout(() => {
+            this.$router.push('/jugada')
+          }, 3000);
+          
         }
       })
       .catch((err) => {
@@ -126,14 +147,6 @@ export default {
         const res = response.data
         if (res.statusCode == 0) {
           this.rows = res.meetings
-
-          this.rows.forEach(element => {
-            let nextPlay = element
-            if (nextPlay.status !== 'finalizada' && nextPlay.status !== 'en progreso') {
-              this.showNextPlay(nextPlay.id)
-            }
-          });
-
         }
       })
       .catch((err) => {
@@ -170,3 +183,19 @@ export default {
   }
 };
 </script>
+<style>
+.btn-bingo {
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 800;
+  border: 2px solid var(--gold);
+}
+
+.btn-bingo:hover {
+  border: 2px solid rgb(130, 130, 130)!important;
+}
+
+.btn-bingo:focus {
+  background-color: #141414;
+}
+</style>
