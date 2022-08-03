@@ -5,13 +5,14 @@
         <div class="card">
           <div class="card-body text-center">
             <h5>Mis cartones</h5>
-            <div class="p-5 " v-if="cardboards.length">
+            <div class="p-5" v-if="!$store.state.numbersOfPlay.loading">
               <Carousel
                 :navigationEnabled="true"
                 :perPage="1"
 						    :paginationActiveColor="'#ffbb0f'"
+                v-if="!$store.state.cardboards.loading">
               >
-                <Slide v-for="(matriz, index) in cardboards" :key="index">
+                <Slide v-for="(matriz, index) in $store.state.cardboards.data" :key="index">
                   <div class="card mb-2 mx-auto card-cartoons">
                     <table class="bingoBoard" cellspacing="10" cellpadding="5">
                       <span :id="`numbers_zone${index}`">
@@ -27,6 +28,10 @@
                   <div class="text-white text-center" :id="renderCardboard(matriz.cardboard, index)">{{ matriz.serial }}</div>
                 </Slide>
               </Carousel>
+            <div class="text-center mt-4">
+              <button class="btn btn-small btn-success text-white mx-2">Cantar linea</button>
+              <button class="btn btn-small btn-success text-white mx-2">Cantar Carton lleno</button>
+            </div>
             </div>
             <div class="p-5 " v-else>
               <span>
@@ -41,39 +46,47 @@
 </template>
 <script>
 import { Carousel, Slide } from 'vue-carousel';
-
-import MainService from '@/services/MainService';
+import { mapState } from 'vuex'
 
 export default {
   data() {
     return {
-      cardboards: [],
       lettersBingo: ['B', 'I', 'N', 'G', 'O']
+    }
+  },
+  computed: {
+    ...mapState({
+      numbersOfPlay: state => state.numbersOfPlay
+    })
+  },
+  watch: {
+    '$store.state.numbersOfPlay.numbers': async function (state) { 
+      this.cardboards = []
+      // await this.getCardboardInPlay()
+      // state.loading = false
     }
   },
   components: {
     Carousel,
     Slide
   },
-  created() {
-    this.getCardboardInPlay()
-  },
   methods: {
-    getCardboardInPlay() {
-      const data = {
-        route: '/user/game',
+    checkNumber(lyrics, number) {
+      const cells   = this.numbersOfPlay.numbers
+      let classCell = ''
+
+      if (cells.length > 0) {
+        for (let i = 0; i < cells.length; i++) {
+          if (cells[i].lyrics === lyrics) {
+            if (cells[i].number === number) {
+              classCell = 'number-active'
+              break
+            }
+          }
+        }
       }
 
-      MainService.get(data)
-      .then((response) => {
-        const res = response.data
-        if (res.statusCode == 0) {
-          this.cardboards = res.cardboard
-        }
-      })
-      .catch((err) => {
-        console.log('error', err)
-      })
+      return classCell
     },
 		async renderCardboard (param, index) {
 			const json = [JSON.parse(param)]
@@ -88,10 +101,10 @@ export default {
 
 				json.forEach((element) => {
 					this.lettersBingo.forEach(lyrics => {
-					  element[lyrics].forEach((item, i) => {
+					  element[lyrics].forEach((number, i) => {
 							let clase = `${lyrics.toLowerCase()}_area${index}`    
 							let row = cardboard.querySelector(`tr.${clase}`)
-              row.insertAdjacentHTML('beforeend', `<td class="${lyrics.toLowerCase()}${i + 1} number">${item}</td>`)
+              row.insertAdjacentHTML('beforeend', `<td class="${lyrics.toLowerCase()}${i + 1} ${this.checkNumber(lyrics, number)}">${number}</td>`)
 						})
 					})
 				})
@@ -99,6 +112,10 @@ export default {
 				return index
 			}, 1000);
 		}
+  },
+  async created() {
+    await this.$store.dispatch('getMeetingsInPlay')
+    await this.$store.dispatch('getCardboardInPlay')
   }
 }
 </script>
@@ -123,6 +140,10 @@ export default {
 
 .VueCarousel-navigation-button {
 	color: #ffbb0f !important;
+}
+
+.number-active {
+  background: darkred;
 }
 
 /* End Carousel style*/
