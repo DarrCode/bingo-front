@@ -41,7 +41,9 @@ export default {
   methods: {
     transpose(a) {
 			return Object.keys(a[0]).map(function(c) {
-				return a.map(function(r) { return r[c]; });
+				return a.map(function(r) { 
+          return r[c]
+        })
 			})
 		},
 		defragArray(matriz) {
@@ -77,7 +79,7 @@ export default {
 						row.insertAdjacentHTML('beforeend', `<td class="">${number}</td>`)
 					})
 				})
-      }, 1000);
+      }, 500);
     },
   }
 }
