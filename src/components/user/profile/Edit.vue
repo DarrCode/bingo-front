@@ -148,15 +148,14 @@ export default {
 
             let dataUser = sessionStorage.user
              
-            dataUser = dataUser ? JSON.parse(dataUser) : {};
+            dataUser = dataUser ? JSON.parse(dataUser) : {}
             
-            dataUser['name'] = this.profile.name
+            dataUser.name = this.profile.name
             dataUser.profile.last_name = this.profile.last_name
             dataUser.profile.nick_name = this.profile.nick_name
             dataUser.profile.country = this.profile.country
 
             sessionStorage.user = JSON.stringify(dataUser);
-            console.log(' dataUser',  dataUser);
             
             setTimeout(() => {
               location.reload()

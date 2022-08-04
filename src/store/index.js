@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import MainService from '../services/MainService'
-import CardboardComponent from '../components/plays/cartones'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     user: sessionStorage.user ? JSON.parse(sessionStorage.getItem('user')) : null,
+    balance: null,
     url: process.env.VUE_APP_API_BASE,
     loader: true,
     numbersOfPlay: {
@@ -28,6 +28,10 @@ export default new Vuex.Store({
       state.roleId = roleId
     },
 
+    SET_BALANCE(state, balance) {
+      state.balance = balance
+    },
+
     SET_NUMBERS_OF_PLAY(state, numbersOfPlay) {
       state.numbersOfPlay.numbers = numbersOfPlay
     },
@@ -37,6 +41,9 @@ export default new Vuex.Store({
   },
   getters: {
     user: state => state.user,
+    balance(state) {
+      return state.balance
+    },
     role(state) {
       return state.user ? state.user.role_id : state.user.user.role_id
     },
@@ -48,8 +55,23 @@ export default new Vuex.Store({
       vuex.dispatch('getCardboardInPlay')
       vuex.commit('SET_NUMBERS_OF_PLAY', numbersOfPlay);
     },
-    logout({ commit }) {
+    balanceWallet ({ commit }) {
+      const data = {
+				route: 'user/wallet',
+			}
 
+			MainService.get(data)
+			.then((response) => {
+				const res = response.data
+				if (res.statusCode == 0) {
+          commit('SET_BALANCE', res.wallet.balance)
+				}
+			})
+			.catch((err) => {
+				console.log('error', err)
+			})
+    },
+    logout({ commit }) {
       const data = {
         route: '/logout',
       }

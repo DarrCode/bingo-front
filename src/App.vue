@@ -137,9 +137,14 @@ input[type=number]::-webkit-inner-spin-button {
 .vgt-wrap.nocturnal .vgt-global-search,
 .vgt-table.nocturnal th,
 .vgt-table.nocturnal td,
-.vgt-wrap.nocturnal .vgt-wrap__footer .footer__row-count__select{
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__row-count__select,
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__row-count__label,
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__navigation__info, 
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__navigation__page-info,
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__navigation__page-btn{
   border-bottom: 1px solid #817a61!important;
   background: #21201c!important;
+  color: #fff!important;
 }
 
 .vgt-wrap.nocturnal .vgt-wrap__footer,

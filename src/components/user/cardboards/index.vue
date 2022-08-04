@@ -4,6 +4,7 @@
       <b-row class="mt-3">
         <b-col cols="12">
           <div v-if="rows.length">
+            <div class="alert alert-warning" v-if="goWallet">as</div>
             <vue-good-table
               :columns="columns"
               :rows="rows"
@@ -17,15 +18,16 @@
             >
               <template slot="table-row" slot-scope="props">
                 <span v-if="props.column.field == 'actions'">
+                  <span class="badge rounded-pill bg-light text-dark me-1">{{priceCardboard}}</span>
                   <button 
-                    class="btn btn-small btn-white" 
+                    class="btn btn-small btn-white m-2" 
                     @click="modalShowCardboard(props.row.cardboard)"
                     title="Mas detalles"
                   >
                     Ver cartón
                   </button>
-                   <button 
-                    class="btn btn-small btn-bingo ms-2" 
+                  <button 
+                    class="btn btn-small btn-bingo" 
                     @click="buyCardboard(props.row.id)"
                     title="Comprar cartón"
                     :disabled="btnDisable"
@@ -43,10 +45,12 @@
            <h2 class="text-danger text-center">No hay cartones creados</h2>
           </div>
         </b-col>
-        <b-col cols="12" md="6"></b-col>
       </b-row>
     </b-container>
-    <ShowCardboard ref="show-cardboard" />
+    <ShowCardboard 
+      ref="show-cardboard" 
+      :price="priceCardboard"
+    />
   </div>
 </template>
 <script>
@@ -81,14 +85,14 @@ export default {
         },
       ],
       rows: [],
-      btnDisable: false
+      btnDisable: false,
+      priceCardboard: null,
+      goWallet: false
     }
   },
   mounted () {
     this.getCardboards();
-    if (this.$store.getters.user.wallet.balance ) {
-      
-    }
+    this.getPriceCardboard()
   },
   methods: {
     nameCardboard() {
@@ -104,6 +108,25 @@ export default {
         const res = response.data
         if (res.statusCode == 0) {
           this.rows = res.listCardboards
+        }
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+    },
+    getPriceCardboard () {
+      const data = {
+        route: 'prices',
+      }
+
+      MainService.get(data)
+      .then((response) => {
+        const res = response.data
+        if (res.statusCode == 0) {
+          this.priceCardboard = res.listPrice[0].amount
+          if (this.$store.getters.balance < this.priceCardboard) {
+            this.btnDisable = true
+          }
         }
       })
       .catch((err) => {
@@ -133,13 +156,12 @@ export default {
             const res = response.data
             if (res.statusCode == 0) {
               this.$swal({
+                icon: 'success',
                 title: 'Ey!',
                 text: 'Tu compra ha sido exitosa',
-                type: 'success',
-                confirmButtonColor: "#c62f3a",
-                confirmButtonText: 'Confirmar',
               })
-              this.getCardboards()
+
+              this.$store.state.balance = this.$store.state.balance - this.priceCardboard
             }
           })
           .catch((err) => {

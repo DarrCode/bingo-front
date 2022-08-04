@@ -3,17 +3,17 @@
     <b-row class="mt-3">
       <b-col cols="12" md="6">
         <b-card class="card-cartones text-center">
-          <h3 class="card-title">Cartones</h3>
-          <h5>Listado de cartones disponibles</h5>
-        </b-card>
-        <CardboardsIndex />
-      </b-col>
-      <b-col cols="12" sm="6">
-        <b-card class="card-cartones text-center">
           <h3 class="card-title">Jugadas del dia </h3>
           <span class="text-danger"> {{ dateNow }} </span>
         </b-card>
         <PlaysDay />
+      </b-col>
+      <b-col cols="12" md="6">
+        <b-card class="card-cartones text-center">
+          <h3 class="card-title">Cartones</h3>
+          <h5>Listado de cartones disponibles</h5>
+        </b-card>
+        <CardboardsIndex />
       </b-col>
     </b-row>
   </b-container>

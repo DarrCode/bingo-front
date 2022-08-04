@@ -1,11 +1,29 @@
 <template>
-  <div class="mt-3">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item" v-for="(play, index) of plays" :key="index">
-        {{ play.name }} - {{ play.accumulated }}
-      </li>
-    </ul>
-  </div>
+    <b-row class="my-3">
+      <b-col cols="12">
+        <vue-good-table
+              :columns="columns"
+              :rows="rows"
+              styleClass="vgt-table striped"
+              theme="nocturnal"
+            >
+              <template slot="table-row" slot-scope="props">
+                <span v-if="props.column.field == 'actions'">
+                  <button 
+                    class="btn btn-small btn-white" 
+                    @click="modalShowPlay(props.row.id, props.row)"
+                    title="Mas detalles"
+                  >
+                    Mas info
+                  </button>
+                </span>
+                <span v-else>
+                  {{props.formattedRow[props.column.field]}}
+                </span>
+              </template>
+            </vue-good-table>
+      </b-col>
+    </b-row>
 </template>
 <script>
 import moment from 'moment'
@@ -15,7 +33,35 @@ import MainService from '@/services/MainService'
 export default {
   data () {
     return {
-      plays: []
+       columns: [
+        {
+          label: 'Nombre',
+          field: 'name',
+          formatFn: this.nameCardboard
+        },
+        {
+          label: 'Premio',
+          field: 'accumulated',
+        },
+        {
+          label: 'Cartones x jugador',
+          field: 'cardboard_number',
+        },
+        {
+          label: 'Linea',
+          field: 'line_play',
+        },
+        {
+          label: 'Carton lleno',
+          field: 'full_cardboard',
+        },
+        {
+          label: 'Accion',
+          field: 'actions',
+          tdClass: 'text-center'
+        },
+      ],
+      rows: []
     }
   },
   mounted () {
@@ -36,8 +82,8 @@ export default {
 			.then((response) => {
 				const res = response.data
 				if (res.statusCode == 0) {
-					this.plays = res.meeting
-          console.log(this.plays);
+					this.rows = res.meeting
+          console.log(this.rows);
 				}
 			})
 			.catch((err) => {
@@ -47,3 +93,9 @@ export default {
   }
 }
 </script>
+<style>
+.list-group-item {
+  background-color: #21201c;
+  color: #fff;
+}
+</style>

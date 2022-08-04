@@ -25,7 +25,7 @@
           <label class="form-label">Monto.</label>
           <b-form-input
             type="number"
-            v-model="form.balance"
+            v-model="form.amount"
             placeholder="0.00"
             required
           >
@@ -51,7 +51,7 @@ export default {
     return {
       form: {
         email: '',
-        balance: '',
+        amount: '',
         error: null,
         message: false,
         button: {
@@ -69,7 +69,7 @@ export default {
         route: 'user/wallet/balance',
         params: {
           email: this.form.email,
-          balanceToSend: this.form.balance,
+          balanceToSend: this.form.amount,
         }
       }
 
@@ -81,14 +81,14 @@ export default {
             this.form.error = null
             this.form.message = true
             this.form.email = ''
-            this.form.balance = ''
-            this.$emit('refreshBalance', true)
+            this.form.amount = ''
+            this.$store.state.balance = this.$store.state.balance - this.form.amount
           } else if (res.statusCode == 5) {
             this.form.message = false
-            this.form.error = 'Datos invalidos verifique que el correo y el monto sean correctos'
+            this.form.error = 'Verifica que el correo y el monto sean correctos'
             setTimeout(() => {
               this.form.error = ''
-            }, 6000);
+            }, 10000);
           }
         })
         .catch((err) => {

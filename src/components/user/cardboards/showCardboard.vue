@@ -8,7 +8,7 @@
     size="md"
   >
     <template #modal-title>
-      Carton seleccionado
+      <h4 class="text-white">Carton seleccionado. Precio {{price}}</h4>
     </template>
     <b-container>
       <b-row>
@@ -33,6 +33,12 @@
 </template>
 <script>
 export default {
+  props: {
+    price: {
+      type: String,
+      default: ''
+    }
+  },
   methods: {
     displayModal (param) {
       this.$refs['showCardboard'].toggle()

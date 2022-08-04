@@ -36,7 +36,7 @@
           <b-navbar-nav class="ms-auto">
          
             <div class="align-items-center mt-1" v-if="roleId == 3">
-              <b-form-input size="sm" :value="user.wallet.balance" disabled></b-form-input>
+              <b-form-input size="sm" :value="$store.getters.balance" disabled></b-form-input>
               <b-button  size="sm" to="/wallet">
                 <b-icon-plus-circle-fill width="30" height="30"></b-icon-plus-circle-fill>
               </b-button>
@@ -106,6 +106,7 @@ export default {
       imgProfile: null,
       roleId: null,
       user: null,
+      balance: null
     }
   },
   created () {
@@ -114,6 +115,17 @@ export default {
   },
   mounted () {
     this.roleId = this.$store.getters['role'] ? this.$store.getters['role'] : this.$session.get('user').role_id
+    this.$store.dispatch('balanceWallet')
+  },
+  computed: {
+    count () {
+      return this.$store.getters.balance
+    }
+  },
+  watch: {
+    count (balance) {
+      console.log(`Update balance ${balance}`)
+    }
   },
   methods: {
     getImgProfile () {
