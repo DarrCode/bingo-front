@@ -19,11 +19,11 @@
           <table class="bingoBoard" cellspacing="10" cellpadding="5">
             <span id="numbers_zone">
               <tr id="header_area"></tr>
-              <tr class="b_area"></tr>
-              <tr class="i_area"></tr>
-              <tr class="n_area"></tr>
-              <tr class="g_area"></tr>
-              <tr class="o_area"></tr>
+              <tr class="b_row"></tr>
+              <tr class="i_row"></tr>
+              <tr class="n_row"></tr>
+              <tr class="g_row"></tr>
+              <tr class="o_row"></tr>
             </span>
           </table>
         </div>
@@ -33,31 +33,51 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      lettersBingo: ['B', 'I', 'N', 'G', 'O']
+    }
+  },
   methods: {
+    transpose(a) {
+			return Object.keys(a[0]).map(function(c) {
+				return a.map(function(r) { return r[c]; });
+			})
+		},
+		defragArray(matriz) {
+			let newMatrix       = []
+			let onlyNumbers     = Object.values(matriz)
+			let NewOnlyNumbers  = this.transpose(onlyNumbers)
+
+			this.lettersBingo.forEach((lyrics, index) => {
+				newMatrix[`${lyrics}`] = NewOnlyNumbers[index]
+			})
+
+			return newMatrix
+		},
     displayModal (param) {
       this.$refs['showCardboard'].toggle()
 
       setTimeout(() => {
-        const json = [param]
-        const letters = ['B', 'I', 'N', 'G', 'O']
+        const json = param
 
         let cardboard = document.getElementById('numbers_zone')
-        let headers = document.getElementById('header_area')
+        let headers   = document.getElementById('header_area')
 
-        letters.forEach(lyrics => {
+        this.lettersBingo.forEach(lyrics => {
           headers.insertAdjacentHTML('beforeend', `<th>${lyrics}</th>`)
         })
 
-        json.forEach((element) => {
-          letters.forEach(lyrics => {
-            element[lyrics].forEach((item, index) => {
-              let clase = `${lyrics.toLowerCase()}_area`    
-              let row = cardboard.querySelector(`tr.${clase}`)
-              row.insertAdjacentHTML('beforeend', `<td class="${lyrics.toLowerCase()}${index + 1} number">${item}</td>`)
-            })
-          })  
-        })
-      }, 500);
+        let matriz = this.defragArray(json)
+
+				Object.entries(matriz).forEach((item) => {
+					item[1].forEach((number) => {
+						let clase = `${item[0].toLowerCase()}_row`
+						let row   = cardboard.querySelector(`tr.${clase}`)
+						row.insertAdjacentHTML('beforeend', `<td class="">${number}</td>`)
+					})
+				})
+      }, 1000);
     },
   }
 }
