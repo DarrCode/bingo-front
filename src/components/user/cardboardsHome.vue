@@ -73,7 +73,9 @@ export default {
 		},
 		transpose(a) {
 			return Object.keys(a[0]).map(function(c) {
-				return a.map(function(r) { return r[c]; });
+				return a.map(function(r) { 
+					return r[c]
+				})
 			})
 		},
 		defragArray(matriz) {
@@ -109,7 +111,7 @@ export default {
 				})
 
 				return index
-			}, 1000);
+			}, 500);
 		}
   }
 }
