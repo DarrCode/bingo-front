@@ -16,12 +16,12 @@
                   <div class="card mb-2 mx-auto card-cartoons">
                     <table class="bingoBoard" cellspacing="10" cellpadding="5">
                       <span :id="`numbers_zone${index}`">
-                        <tr :id="`header_area${index}`" ></tr>
-                        <tr :class="`b_area${index}`"></tr>
-                        <tr :class="`i_area${index}`"></tr>
-                        <tr :class="`n_area${index}`"></tr>
-                        <tr :class="`g_area${index}`"></tr>
-                        <tr :class="`o_area${index}`"></tr>
+                        <tr :id="`header_area${index}`"></tr>
+                        <tr :class="`b_row_${index}`"></tr>
+                        <tr :class="`i_row_${index}`"></tr>
+                        <tr :class="`n_row_${index}`"></tr>
+                        <tr :class="`g_row_${index}`"></tr>
+                        <tr :class="`o_row_${index}`"></tr>
                       </span>
                     </table>
                   </div>
@@ -46,24 +46,11 @@
 </template>
 <script>
 import { Carousel, Slide } from 'vue-carousel';
-import { mapState } from 'vuex'
 
 export default {
   data() {
     return {
       lettersBingo: ['B', 'I', 'N', 'G', 'O']
-    }
-  },
-  computed: {
-    ...mapState({
-      numbersOfPlay: state => state.numbersOfPlay
-    })
-  },
-  watch: {
-    '$store.state.numbersOfPlay.numbers': async function (state) { 
-      this.cardboards = []
-      // await this.getCardboardInPlay()
-      // state.loading = false
     }
   },
   components: {
@@ -72,45 +59,63 @@ export default {
   },
   methods: {
     checkNumber(lyrics, number) {
-      const cells   = this.numbersOfPlay.numbers
+      const cells   = this.$store.state.numbersOfPlay.numbers
       let classCell = ''
 
       if (cells.length > 0) {
         for (let i = 0; i < cells.length; i++) {
-          if (cells[i].lyrics === lyrics) {
+          // if (cells[i].lyrics === lyrics) {
             if (cells[i].number === number) {
               classCell = 'number-active'
               break
             }
-          }
+          // }
         }
       }
 
       return classCell
     },
+    transpose(a) {
+      return Object.keys(a[0]).map(function(c) {
+        return a.map(function(r) {
+          return r[c]
+        })
+      })
+    },
+    defragArray(matriz) {
+      let newMatrix       = []
+      let onlyNumbers     = Object.values(matriz)
+      let NewOnlyNumbers  = this.transpose(onlyNumbers)
+
+      this.lettersBingo.forEach((lyrics, index) => {
+        newMatrix[`${lyrics}`] = NewOnlyNumbers[index]
+      })
+
+      return newMatrix
+    },
 		async renderCardboard (param, index) {
-			const json = [JSON.parse(param)]
+			const json = JSON.parse(param)
 
 			setTimeout(() => {
 				let cardboard = document.getElementById(`numbers_zone${index}`)
-				let headers = document.getElementById(`header_area${index}`)
+				let headers   = document.getElementById(`header_area${index}`)
 
 				this.lettersBingo.forEach(lyrics => {
 					headers.insertAdjacentHTML('beforeend', `<th>${lyrics}</th>`)
 				})
 
-				json.forEach((element) => {
-					this.lettersBingo.forEach(lyrics => {
-					  element[lyrics].forEach((number, i) => {
-							let clase = `${lyrics.toLowerCase()}_area${index}`    
-							let row = cardboard.querySelector(`tr.${clase}`)
-              row.insertAdjacentHTML('beforeend', `<td class="${lyrics.toLowerCase()}${i + 1} ${this.checkNumber(lyrics, number)}">${number}</td>`)
-						})
-					})
-				})
+        let matriz = this.defragArray(json)
+
+        Object.entries(matriz).forEach((item) => {
+          item[1].forEach((number) => {
+            let clase = `${item[0].toLowerCase()}_row_${index}`
+            let row   = cardboard.querySelector(`tr.${clase}`)
+            row.insertAdjacentHTML('beforeend', `<td class="${this.checkNumber(item[0], number)}">${number}</td>`)
+          })
+        })
 
 				return index
-			}, 1000);
+			}, 500);
 		}
   },
   async created() {
