@@ -68,6 +68,10 @@ body, #app {
   background-color: #c62f3a!important;
 }
 
+.modal-content {
+  color: #fff!important;
+}
+
 .color-royal {
   color: #817a61;
 }

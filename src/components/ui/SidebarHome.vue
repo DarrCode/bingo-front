@@ -65,6 +65,13 @@ export default {
 	created () {
 		this.getNextPlay()
 	},
+	// watch: {
+	// 	totalCardboards(){
+	// 		if (cardboardsSelected > this.totalCardboards) {
+	// 			alert('No puede ser mayor')
+	// 		}
+	// 	}
+	// },
 	methods: {
 		getNextPlay () {
 			const data = {
@@ -76,7 +83,7 @@ export default {
 				const res = response.data
 				if (res.statusCode == 0) {
 					this.nextPlay = res.meeting[0]
-		
+					// this.totalCardboards = 5
 				}
 			})
 			.catch((err) => {

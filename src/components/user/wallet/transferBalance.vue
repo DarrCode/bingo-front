@@ -79,10 +79,14 @@ export default {
 
           if (res.statusCode == 0) {
             this.form.error = null
-            this.form.message = true
-            this.form.email = ''
-            this.form.amount = ''
             this.$store.state.balance = this.$store.state.balance - this.form.amount
+            this.form.message = true
+
+            setTimeout(() => {
+              this.form.email = ''
+              this.form.amount = ''
+              this.form.message = false
+            }, 5000);            
           } else if (res.statusCode == 5) {
             this.form.message = false
             this.form.error = 'Verifica que el correo y el monto sean correctos'

@@ -9,7 +9,7 @@
 						:paginationActiveColor="'#66623f'"
 					>
 						<Slide class="mx-2" v-for="(matriz, index) in cardboards" :key="index">
-							<label><input type="checkbox"><span class="label"></span></label>
+							<label><input type="checkbox" @change="setCardboardId($event, matriz)" ><span class="label"></span></label>
 							<div class="card mb-2 mx-auto card-cartoons">
 								<table class="bingoBoard" cellspacing="10" cellpadding="5">
 									<span :id="`numbers_zone${index}`">
@@ -41,7 +41,8 @@ export default {
   data() {
     return {
       cardboards: [],
-      lettersBingo: ['B', 'I', 'N', 'G', 'O']
+      lettersBingo: ['B', 'I', 'N', 'G', 'O'],
+			cardboardIdsSelected: []
     }
   },
   components: {
@@ -52,6 +53,10 @@ export default {
 		this.getCarboards()
 	},
   methods: {
+		setCardboardId(e, id){
+			//let countCardboards = this.cardboards.length
+			console.log(e.target.checked, id);
+		},
 		getCarboards () {
 			const data = {
 				route: 'user/cardboards',
