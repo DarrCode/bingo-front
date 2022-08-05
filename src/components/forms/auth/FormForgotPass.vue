@@ -10,7 +10,12 @@
 			></b-form-input>
   	</div>
 		<div class="text-center">
-			<b-button type="submit" class="btn-bingo">BINGO</b-button>
+			<button 
+				type="submit" 
+				class="btn btn-bingo"
+			>
+				Buscar cuenta
+			</button>
 		</div>
   </b-form>
 </template>

@@ -15,7 +15,7 @@
       <b-form @submit.prevent="sendRequestRecharge">
 
         <label class="my-2">Selecciona una cuenta.</label>		
-        <select class="form-control mb-3" @change="selectAccount(accountSelected)" v-model="accountSelected">
+        <select class="form-control mb-3" v-if="accountsAdmin" @change="selectAccount(accountSelected)" v-model="accountSelected">
           <option value="">Seleccione una cuenta</option>
           <option
             v-for="(account, index) of accountsAdmin" 

@@ -125,9 +125,6 @@ export default {
           this.displayModal()
           this.$emit("addAccount", true)
           this.form = {}
-          console.log(res);
-
-          
         }
       })
       .catch((err) => {

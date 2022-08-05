@@ -23,7 +23,7 @@
               </p>   
               <a 
                 @click="userVip" 
-                class="btn btn-bingo me-0 me-sm-5 mb-3 mb-sm-0"
+                class="btn btn-bingo me-2 me-sm-5 "
               >
                 usuario VIP
               </a>
@@ -53,6 +53,8 @@
   </div>
 </template>
 <script>
+import MainService from '@/services/MainService'
+
 export default {
   components: {
     ProfileIndex: () => import('@/components/user/profile/Index'),
@@ -68,12 +70,25 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getUser")
-    setTimeout(() => {
-      this.imgProfile = this.$store.state.url+''+this.$store.state.user.profile.profile_image
-    }, 500)
+    this.getImgProfile()
   },
   methods: {
+    getImgProfile () {
+      const data = {
+				route: 'user',
+			}
+
+			MainService.get(data)
+			.then((response) => {
+				const res = response.data
+				if (res.statusCode == 0) {
+					this.imgProfile = this.$store.state.url+''+res.imgProfile
+				}
+			})
+			.catch((err) => {
+				console.log('error', err)
+			})
+    },
     savedProfile (data) {
       this.refreshProfile = data
     },

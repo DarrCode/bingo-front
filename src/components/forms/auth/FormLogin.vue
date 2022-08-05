@@ -35,7 +35,10 @@
 					:disabled="form.button.disabled"
 					v-html="form.button.innerText"
 					>
+<<<<<<< HEAD
 					BINGO
+=======
+>>>>>>> 2e40b69bb81c6803700fff86c60888e498e0a183
 				</button>
 			</div>
 		</b-form>
@@ -88,11 +91,15 @@ export default {
 							this.form.button.disabled = false
 							this.form.button.innerText = this.form.button.original
 						} else if (res.statusCode === 0) {
+							
+							sessionStorage.user = JSON.stringify(res.user)
+
 							this.$session.start()
               this.$session.set('access_token', res.accessToken)
 							this.$session.set('token_type', res.tokenType)
 							this.$session.set('expires_at', res.expiresAt)
-							this.$router.push('/home')
+							
+							window.location.replace('/home')
 						}
 					})
 					.catch((e) => {

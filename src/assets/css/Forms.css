@@ -7,13 +7,7 @@
 
 .title-auth {
   color: #c62f3a;
-  border-top: 1.5px solid #66623f;
-	border-bottom: 1.5px solid #66623f;
-  -moz-border-image: -moz-linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
-  -webkit-border-image: -webkit-linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
-  border-image: linear-gradient(to right, #000000, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #66623F, #000000);
-  border-image-slice: 1;
-	letter-spacing: 4px;
+	letter-spacing: 2px;
 }
 
 .link-auth {
@@ -48,6 +42,10 @@ label {
   text-transform: uppercase;
   font-weight: 800;
   border: 2px solid var(--gold);
+}
+
+.btn-bingo:hover {
+  border: 2px solid rgb(130, 130, 130)!important;
 }
 
 .btn-bingo:focus {

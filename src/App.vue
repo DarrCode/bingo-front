@@ -10,17 +10,41 @@ export default {
   components: {
     Navbar: () => import('@/components/ui/Navbar'),
   },
-  beforeCreate: function () {
+  beforeCreate() {
     if (!this.$session.exists()) {
       this.$router.push('/login')
     }
   },
+  beforeMount () {
+    this.detectedDevice()
+  },
+  methods: {
+    detectedDevice () {
+      const ua = navigator.userAgent;
+      if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+        this.$swal({
+          icon: 'warning',
+          title: "Consejo",
+          text: "Para tener una mejor experiencia gira tu dispositivo",
+          showConfirmButton: true,
+        })
+      }
+      else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+        this.$swal({
+          icon: 'warning',
+          title: "Consejo",
+          text: "Para tener una mejor experiencia gira tu dispositivo",
+          showConfirmButton: true,
+        })
+      }
+    }
+  }
 }
 </script>
 
 <style>
 :root {
-  --gold: rgb(102, 98, 63);
+  --gold: #66623f;
 }
 
 input[type=number]::-webkit-inner-spin-button {
@@ -28,7 +52,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 body, #app {
-  background-color: #000!important;
+  background-color: rgb(4, 4, 4)!important;
 }
 
 .btn:focus {
@@ -58,6 +82,10 @@ body, #app {
 
 .btn-bingo-red {
   background-color: #c62f3a!important;
+}
+
+.modal-content {
+  color: #fff!important;
 }
 
 .color-royal {
@@ -112,7 +140,8 @@ input[type=number]::-webkit-inner-spin-button {
   outline: 0 none!important;
 }
 
-.vgt-wrap.nocturnal .vgt-global-search__input .vgt-input, .vgt-wrap.nocturnal .vgt-global-search__input .vgt-select {
+.vgt-wrap.nocturnal .vgt-global-search__input .vgt-input,
+ .vgt-wrap.nocturnal .vgt-global-search__input .vgt-select {
   background-color: #151515!important;
 	border-radius: 25px!important;
 	color: #817a61!important;
@@ -120,11 +149,26 @@ input[type=number]::-webkit-inner-spin-button {
 	padding: 0.6rem 1rem!important;
 }
 
+.vgt-table.nocturnal {
+  border-radius: 25px!important;
+  border: 1px solid #817a61!important;
+}
+
 .vgt-wrap.nocturnal .vgt-global-search,
-.vgt-table.nocturnal.bordered th,
-.vgt-table.nocturnal.bordered td,
+.vgt-table.nocturnal th,
+.vgt-table.nocturnal td,
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__row-count__select,
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__row-count__label,
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__navigation__info, 
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__navigation__page-info,
+.vgt-wrap.nocturnal .vgt-wrap__footer .footer__navigation__page-btn{
+  border-bottom: 1px solid #817a61!important;
+  background: #21201c!important;
+  color: #fff!important;
+}
+
 .vgt-wrap.nocturnal .vgt-wrap__footer,
-.vgt-wrap.nocturnal .vgt-wrap__footer .footer__row-count__select{
+.vgt-wrap.nocturnal .vgt-global-search{
   border: 1px solid #817a61!important;
   background: #21201c!important;
 }

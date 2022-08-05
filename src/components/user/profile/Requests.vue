@@ -1,9 +1,11 @@
 <template>
   <div>
+    <h5 class="title">MIS SOLICITUDES</h5>
     <vue-good-table
       :columns="columns"
       :rows="rows"
       theme="nocturnal"
+      styleClass="vgt-table striped"
       :row-style-class="rowStyleClassFn"
       :search-options="{
         enabled: true
@@ -75,7 +77,6 @@ export default {
           const res = response.data
           if (res.statusCode == 0) {
             this.rows = res.requestUser
-            console.log(res);
           }
         })
         .catch((err) => {
@@ -85,7 +86,12 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+
+.title{
+  color: var(--gold);
+}
+
 .text-pending td{
   color: #ffc106!important;
 }

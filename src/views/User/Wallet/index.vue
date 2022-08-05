@@ -21,7 +21,7 @@ export default {
   components: {
     StateWallet:     () => import('@/components/user/wallet/stateWallet'),
     RechargeWallet:  () => import('@/components/user/wallet/rechargeWallet'),
-   TransferBalance: () => import('@/components/user/wallet/transferBalance'),
+    TransferBalance: () => import('@/components/user/wallet/transferBalance'),
     PaymentRequest:  () => import('@/components/user/wallet/paymentRequest')
   },
   data () {

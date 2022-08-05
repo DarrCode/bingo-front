@@ -8,6 +8,7 @@
               :columns="columns"
               :rows="rows"
               theme="nocturnal"
+              styleClass="vgt-table striped"
               :fixed-header="true"
               :search-options="{
                 enabled: true
@@ -127,7 +128,6 @@ export default {
         const res = response.data
         if (res.statusCode == 0) {
           this.rows = res.gamers
-          console.log( res.gamers);
         }
       })
       .catch((err) => {

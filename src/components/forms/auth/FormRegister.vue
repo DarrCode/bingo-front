@@ -14,7 +14,7 @@
       {{ form.success }}
     </div>
 
-		<b-form @submit.prevent="submitHandler">
+		<b-form @submit.prevent="register">
 			<div class="mb-3">
 				<label class="form-label">Nombre.</label>
 				<b-form-input
@@ -52,7 +52,7 @@
 					required
 				></b-form-input>
 			</div>
-			<div class="mb-3">
+			<div class="mb-3" v-if="code">
 				<label class="form-label">Codigo de referido.</label>
 				<b-form-input
 					type="text"
@@ -61,12 +61,15 @@
 			</div>
 			
 			<div class="text-center">
-				<b-button 
+				<button @click="toggleCode" class="btn my-3">
+					Tienes codigo de referido?
+				</button>
+				<button 
 					type="submit" 
-					class="btn-bingo"
+					class="btn btn-bingo"
 				>
 					Registrar cuenta
-				</b-button>
+				</button>
 			</div>
 		</b-form>
 	</div>
@@ -77,6 +80,7 @@ import MainService from '@/services/MainService';
 export default {
 	data() {
 		return {
+			code: false,
 			form: {
 				name: '',
 				email: '',
@@ -89,7 +93,10 @@ export default {
 		}
 	},
 	methods: {
-		 submitHandler() {
+		toggleCode () {
+			this.code = !this.code
+		},
+		register() {
 				this.form.error = null
 
         const data = {
@@ -107,7 +114,6 @@ export default {
         		const res = response.data
 
 						if (res.success) {
-								console.log(res);
 								this.form.success = res.message
 								setTimeout(() => {
 									window.location.replace('/')

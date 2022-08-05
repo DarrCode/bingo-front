@@ -1,6 +1,6 @@
 <template>
-  <div>
   <b-modal
+<<<<<<< HEAD
       ref="user-vip"
       centered
       hide-footer
@@ -86,28 +86,57 @@
         </b-container>
     </!--b-modal-->
   </div>
+=======
+    ref="user-vip"
+    centered
+    hide-footer
+    content-class="shadow"
+    size="lg"
+    class="p-0"
+  >
+    <template #modal-title>
+      Conviertete en usuario <span class="text-vip">VIP</span>
+    </template>
+    <b-container>
+      <b-row>
+        <div class="alert alert-warning" v-html="message"></div>
+        <h4 class="text-center">Beneficios <span class="text-vip">VIP</span></h4>
+        <ul class="list-group list-group-flush">
+          <li 
+            v-for="(benefit, index) of benefits"
+            :key="index"
+            class="list-group-item"
+          >
+            {{ benefit.text }}
+          </li>
+        </ul>
+        <center>
+          <button
+            :disabled="disableBtn"
+            class="btn btn-bingo mt-2 w-50"
+            @click="userVip"
+          >
+            USUARIO VIP
+          </button>
+        </center>
+      </b-row>
+    </b-container>
+  </b-modal>
+>>>>>>> 2e40b69bb81c6803700fff86c60888e498e0a183
 </template>
 
 <script>
 import MainService from '@/services/MainService'
-import axios from 'axios'
 
 export default {
   data () {
     return {
-      // accountSelected: null,
-      // accountsAdmin: null,
-      // account: {},
-      // attributes: [],
-      // form: {
-      //   amount: '',
-      //   reason: '',
-      //   description: '',
-      //   image: '',
-      //   error: null
-      // },
-      // message: false,
-      // imagePreview: '',
+      benefits: [
+        { text: 'Generar Cartones manual' },
+        { text: 'Listar cantidad de jugadas (ganadas, perdidas)' },
+        { text: 'Cartones ganadores' },
+        { text: 'Contacto a soporte' },
+      ],
       balanceWallet: null,
       message: '',
       valueUserVip: null,
@@ -116,16 +145,30 @@ export default {
   },
 
   methods: {
-    userVipInfo () {
+    userVipInfo () { 
       this.$refs['user-vip'].toggle()
-      this.balanceWallet = this.$store.state.user.wallet.balance
-      this.valueUserVip = 50
 
-      if (this.balanceWallet < this.valueUserVip) {
-        this.disableBtn = true
+      const data = {
+        route: '/prices',
       }
-
-      this.message = 'Para convertirte en usuario <b>VIP</b> tu balance debe ser de <b>50 Royalty</b>'
+      
+      MainService.get(data)
+        .then((response) => {
+          const res = response.data
+          if (res.statusCode == 0) {
+            this.valueUserVip = res.listPrice[2].amount
+            
+            this.message = `Para convertirte en usuario <b>VIP</b> tu balance debe ser de <b>${this.valueUserVip} Royalty</b>`
+            this.balanceWallet = this.$store.state.user.wallet.balance
+     
+            if (this.balanceWallet < this.valueUserVip) {
+              this.disableBtn = true
+            }
+          }
+        })
+        .catch((err) => {
+          console.log('error', err)
+        })
     },
     userVip () {
       const data = {
@@ -148,79 +191,6 @@ export default {
           console.log('error', err)
         })
     }
-    // onChange(e) {
-    //   this.form.image = e.target.files[0]
-    //   let reader = new FileReader()
-    //   reader.readAsDataURL(this.form.image)
-    //   reader.onload = e => {
-    //     this.imagePreview = e.target.result
-    //   }
-    // },
-    // getAccountActive () {
-    //   this.$refs['request-user-vip'].toggle()
-      
-    //   const data = {
-    //     route: 'user/accounts/admin',
-    //   }
-      
-    //   MainService.get(data)
-    //     .then((response) => {
-    //       const res = response.data
-    //       if (res.statusCode == 0) {
-    //         this.accountsAdmin = res.accounts
-    //         console.log(this.accountsAdmin);
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log('error', err)
-    //     })
-    // },
-    // selectAccount (data) {
-    //   this.$refs['showDataAccount'].toggle()
-    //   this.account = data
-    //   this.account.attributes = JSON.parse(data.attributes)
-    //   this.attributes = [this.account.attributes]
-    // },
-    // sendRequestUserVip () {
-    
-    //   const axiosRequest = axios.create({
-    //     baseURL: `${process.env.VUE_APP_API_URL}/`,
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //       'X-Requested-With': 'XMLHttpRequest'
-    //     },
-    //   })
-
-    //   axiosRequest.defaults.headers.common.Authorization = `${this.$session.get('token_type')} ${this.$session.get('access_token')}`
-
-    //   this.form.description = `ID del usuario: ${this.$store.state.user.id}, Monto: ${this.form.amount}`
-
-    //   this.amount = 100
-
-    //   let data = new FormData()
-    //   data.append("reason", this.form.reason)
-    //   data.append("description", this.form.description)
-    //   data.append("amount", this.form.amount)
-    //   data.append("image", this.form.image)
-      
-    //   axiosRequest.post('user/request', data)
-    //     .then((res) => {
-           
-    //       if (res.data.statusCode == 0) {
-    //         if (!this.message) {
-    //           this.$swal({
-    //             icon: 'success',
-    //             title: 'Solicitud enviada con exito!',
-    //             text: 'Le llegara una notificacion al momento de ser aporbada',
-    //           })
-    //           this.form = {}
-    //         }
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log('err', err)
-    //     })
-    // },
   }
 }
 </script>

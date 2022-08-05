@@ -24,8 +24,9 @@
             </h5>
             <vue-good-table
               :columns="columns"
-              :rows="rows"
+              :rows="JSON.parse(group.matrices[0].cardboards)"
               theme="nocturnal"
+              styleClass="vgt-table striped"
               :fixed-header="true"
               :search-options="{
                 enabled: true
@@ -157,17 +158,8 @@ export default {
           field: 'id'
         },
         {
-          label: 'Nombre',
-          field: 'name',
-        },
-        {
-          label: 'tipo de cuenta',
-          field: 'type_account',
-        },
-        {
-          label: 'Estado',
-          field: 'is_active',
-          formatFn: this.formatBoolean,
+          label: 'Serial',
+          field: 'serial',
         },
         {
           label: 'registro',

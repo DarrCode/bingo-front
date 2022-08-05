@@ -132,27 +132,40 @@ export default {
       data.append("nick_name", this.profile.nick_name)
       data.append("country", this.profile.country)
       data.append("profile_image", this.profile_image)
-      
+
       axiosRequest.post('/user/profile/store', data)
-        .then((res) => {
-          if (res.data.statusCode == 0) {
-            this.update = true
+        .then((response) => {
+          const res = response.data
+          if (res.statusCode == 0) {
             this.$refs['detail'].toggle()
+            this.$swal({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Perfil editado con exito',
+              showConfirmButton: false,
+              timer: 2000
+            })
+
+            let dataUser = sessionStorage.user
+             
+            dataUser = dataUser ? JSON.parse(dataUser) : {}
+            
+            dataUser.name = this.profile.name
+            dataUser.profile.last_name = this.profile.last_name
+            dataUser.profile.nick_name = this.profile.nick_name
+            dataUser.profile.country = this.profile.country
+
+            sessionStorage.user = JSON.stringify(dataUser);
+            
+            setTimeout(() => {
+              location.reload()
+            }, 1000);
           }
         })
         .catch((err) => {
           console.log('err', err)
         })
-
-      if (this.update) {
-        this.$swal({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Perfil editado con exito',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
+      
     }
   }
 }

@@ -23,10 +23,10 @@
     </p>
     
     <b-form @submit.prevent="sendRequestPayment">
-
-      <input type="hidden" v-model="account.type_account">
-      <input type="hidden" v-model="account.attributes">
-
+      <div v-if="account">
+        <input type="hidden" v-model="account.type_account">
+        <input type="hidden" v-model="account.attributes">
+      </div>
       <label class="mb-1">Monto.</label>		
       <b-form-input
         v-model="form.amount"

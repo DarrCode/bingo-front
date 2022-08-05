@@ -3,10 +3,12 @@
     <b-container>
       <b-row class="mt-3">
         <b-col cols="12">
-          <div>
+          <div v-if="rows.length">
+            <div class="alert alert-warning" v-if="goWallet">as</div>
             <vue-good-table
               :columns="columns"
               :rows="rows"
+              styleClass="vgt-table striped"
               theme="nocturnal"
               :pagination-options="{
                 enabled: true,
@@ -14,20 +16,21 @@
                 perPage: 5,
               }"
             >
-            <template slot="table-row" slot-scope="props">
+              <template slot="table-row" slot-scope="props">
                 <span v-if="props.column.field == 'actions'">
+                  <span class="badge rounded-pill bg-light text-dark me-1">{{priceCardboard}}</span>
                   <button 
-                    class="btn btn-small btn-primary" 
+                    class="btn btn-small btn-white m-2" 
                     @click="modalShowCardboard(props.row.cardboard)"
                     title="Mas detalles"
                   >
                     Ver cartón
                   </button>
-                   <button 
-                    class="btn btn-small btn-success ms-0 ms-md-2 mt-1 mt-xl-0" 
+                  <button 
+                    class="btn btn-small btn-bingo" 
                     @click="buyCardboard(props.row.id)"
-                    :disabled="$store.state.user.wallet.balance == 0"
                     title="Comprar cartón"
+                    :disabled="btnDisable"
                   >
                     Comprar
                   </button>
@@ -38,19 +41,25 @@
               </template>
             </vue-good-table>
           </div>
+          <div v-else>
+           <h2 class="text-danger text-center">No hay cartones creados</h2>
+          </div>
         </b-col>
-        <b-col cols="12" md="6"></b-col>
       </b-row>
     </b-container>
-    <ShowCardboard ref="show-cardboard" />
+    <ShowCardboard 
+      ref="show-cardboard" 
+      :price="priceCardboard"
+    />
   </div>
 </template>
 <script>
 import MainService from '@/services/MainService';
 
 export default {
+  name: 'CardboardsIndex',
   components: {
-    ShowCardboard: () => import('@/components/user/cartones/showCardboard'),
+    ShowCardboard: () => import('@/components/user/cardboards/showCardboard'),
   },
   data(){
     return {
@@ -76,10 +85,14 @@ export default {
         },
       ],
       rows: [],
-    };
+      btnDisable: false,
+      priceCardboard: null,
+      goWallet: false
+    }
   },
   mounted () {
     this.getCardboards();
+    this.getPriceCardboard()
   },
   methods: {
     nameCardboard() {
@@ -95,6 +108,25 @@ export default {
         const res = response.data
         if (res.statusCode == 0) {
           this.rows = res.listCardboards
+        }
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+    },
+    getPriceCardboard () {
+      const data = {
+        route: 'prices',
+      }
+
+      MainService.get(data)
+      .then((response) => {
+        const res = response.data
+        if (res.statusCode == 0) {
+          this.priceCardboard = res.listPrice[0].amount
+          if (this.$store.getters.balance < this.priceCardboard) {
+            this.btnDisable = true
+          }
         }
       })
       .catch((err) => {
@@ -123,7 +155,13 @@ export default {
           .then((response) => {
             const res = response.data
             if (res.statusCode == 0) {
-              this.getCardboards()
+              this.$swal({
+                icon: 'success',
+                title: 'Ey!',
+                text: 'Tu compra ha sido exitosa',
+              })
+
+              this.$store.state.balance = this.$store.state.balance - this.priceCardboard
             }
           })
           .catch((err) => {
@@ -136,5 +174,16 @@ export default {
       this.$refs['show-cardboard'].displayModal(cardboard)
     },
   }
-};
+}
 </script>
+<style>
+.btn-white {
+  color: #fff;
+  font-weight: 800;
+  border: 1.5px solid #fff;
+}
+
+.btn-bingo:hover {
+  border: 2px solid rgb(130, 130, 130)!important;
+}
+</style>
